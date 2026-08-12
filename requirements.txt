@@ -1,0 +1,33 @@
+# Backend
+fastapi
+uvicorn[standard]
+pydantic
+pydantic-settings
+python-dotenv
+httpx
+
+# Frontend
+streamlit
+
+# AI / LLM
+langchain
+langchain-core
+langgraph
+langchain-community
+langchain-text-splitters
+langchain-groq
+google-genai
+langchain-google-genai
+
+# Database
+sqlalchemy
+psycopg2-binary
+
+# RAG / Vector Database
+qdrant-client
+pypdf
+
+
+qdrant-client
+sentence-transformers
+rank-bm25
