@@ -5,7 +5,7 @@ import uuid
 import requests
 import streamlit as st
 import streamlit.components.v1 as components
-
+import os
 # ─────────────────────────────────────────────────────────────────────────────
 # Page config
 # ─────────────────────────────────────────────────────────────────────────────
@@ -19,7 +19,10 @@ st.set_page_config(
 # ─────────────────────────────────────────────────────────────────────────────
 # Constants
 # ─────────────────────────────────────────────────────────────────────────────
-API_URL = "http://127.0.0.1:8000"
+API_URL = os.getenv(
+    "API_URL",
+    "http://127.0.0.1:8000"
+)
 _CHAT_TIMEOUT = 120
 _SEARCH_TIMEOUT = 30
 
