@@ -35,7 +35,7 @@ _gemini_llm = ChatGoogleGenerativeAI(
     model=settings.gemini_model,
     google_api_key=settings.gemini_api_key,
     max_output_tokens=8192,
-    max_retries=2,
+    max_retries=1,
 )
 
 # Fallback: Groq
@@ -47,20 +47,25 @@ if settings.groq_api_key:
             model=settings.groq_model,
             api_key=settings.groq_api_key,
             max_tokens=8192,
-            max_retries=2,
+            max_retries=1,
         )
     except ImportError:
         _groq_llm = None
 
 
 def _invoke_llm(messages):
-    """Invoke Gemini; fall back to Groq on quota errors."""
+    """Invoke Gemini; fall back to Groq if Gemini fails."""
     try:
         return _gemini_llm.invoke(messages)
+
     except Exception as exc:
-        if _is_quota_error(exc) and _groq_llm:
-            print(f"⚡ RAG: Gemini quota hit — switching to Groq. ({exc})")
+
+        if _groq_llm:
+            print(
+                f"⚡ RAG: Gemini failed — switching to Groq. ({exc})"
+            )
             return _groq_llm.invoke(messages)
+
         raise
 
 
@@ -131,10 +136,19 @@ def answer_question(
     question: str,
 ):
 
+    import time
+
+    start = time.perf_counter()
+
     results = rerank(
         query=question,
         top_k=5,
         candidate_k=15,
+    )
+
+    print(
+        f"RAG RETRIEVAL + RERANK TIME: "
+        f"{time.perf_counter() - start:.2f}s"
     )
 
     if not results:
@@ -161,6 +175,10 @@ RETRIEVED DOCUMENTS:
 Answer the question using only these documents.
 """
 
+    print("RAG → CALLING FINAL LLM")
+
+    llm_start = time.perf_counter()
+
     response = _invoke_llm(
         [
             (
@@ -172,6 +190,11 @@ Answer the question using only these documents.
                 prompt,
             ),
         ]
+    )
+
+    print(
+        f"RAG FINAL LLM TIME: "
+        f"{time.perf_counter() - llm_start:.2f}s"
     )
 
     seen = set()

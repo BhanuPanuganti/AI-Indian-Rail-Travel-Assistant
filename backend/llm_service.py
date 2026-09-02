@@ -30,7 +30,7 @@ _gemini_llm = ChatGoogleGenerativeAI(
     model=settings.gemini_model,
     google_api_key=settings.gemini_api_key,
     max_output_tokens=8192,
-    max_retries=2,          # Low retries — we want to fail fast and hit fallback
+    max_retries=1,          # Low retries — we want to fail fast and hit fallback
 )
 
 
@@ -48,7 +48,7 @@ if settings.groq_api_key:
             model=settings.groq_model,
             api_key=settings.groq_api_key,
             max_tokens=8192,
-            max_retries=2,
+            max_retries=1,
         )
         print(f"✅ Groq fallback LLM ready ({settings.groq_model})")
     except ImportError:
