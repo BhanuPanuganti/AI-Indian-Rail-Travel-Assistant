@@ -1,22 +1,34 @@
 import sys
+import os
+import atexit
 from pathlib import Path
 
+from dotenv import load_dotenv
 from qdrant_client import QdrantClient
 from sentence_transformers import SentenceTransformer
 
-for candidate in [Path(__file__).resolve().parent, *Path(__file__).resolve().parents]:
+
+load_dotenv()
+
+
+for candidate in [
+    Path(__file__).resolve().parent,
+    *Path(__file__).resolve().parents
+]:
     backend_dir = candidate / "backend"
+
     if backend_dir.exists():
+
         if str(candidate) not in sys.path:
             sys.path.insert(0, str(candidate))
+
         if str(backend_dir) not in sys.path:
             sys.path.insert(0, str(backend_dir))
+
         break
 
 
 BASE_DIR = Path(__file__).parent
-
-QDRANT_PATH = BASE_DIR / "qdrant_data"
 
 COLLECTION_NAME = "indian_railway_knowledge"
 
@@ -45,23 +57,46 @@ def get_embedding_model():
 
 
 def _get_client():
+
     global _client
+
     if _client is None:
-        _client = QdrantClient(path=str(QDRANT_PATH))
+
+        qdrant_url = os.getenv("QDRANT_URL")
+        qdrant_api_key = os.getenv("QDRANT_API_KEY")
+
+        if not qdrant_url:
+            raise RuntimeError(
+                "QDRANT_URL environment variable is not set"
+            )
+
+        if not qdrant_api_key:
+            raise RuntimeError(
+                "QDRANT_API_KEY environment variable is not set"
+            )
+
+        _client = QdrantClient(
+            url=qdrant_url,
+            api_key=qdrant_api_key,
+        )
+
     return _client
 
 
 def close():
+
     global _client
+
     if _client is not None:
+
         try:
             _client.close()
+
         except Exception:
             pass
+
         _client = None
 
-
-import atexit
 
 atexit.register(close)
 
@@ -89,15 +124,9 @@ def retrieve(
     return [
         {
             "score": result.score,
-            "chunk_id": result.payload[
-                "chunk_id"
-            ],
-            "text": result.payload[
-                "text"
-            ],
-            "metadata": result.payload[
-                "metadata"
-            ],
+            "chunk_id": result.payload["chunk_id"],
+            "text": result.payload["text"],
+            "metadata": result.payload["metadata"],
         }
         for result in results
     ]

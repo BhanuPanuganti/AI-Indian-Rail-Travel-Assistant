@@ -1,5 +1,7 @@
 from pathlib import Path
 import json
+import os
+from dotenv import load_dotenv
 
 from qdrant_client import QdrantClient
 from qdrant_client.models import (
@@ -13,7 +15,11 @@ from sentence_transformers import SentenceTransformer
 BASE_DIR = Path(__file__).parent
 
 CHUNKS_FILE = BASE_DIR / "chunks.jsonl"
-QDRANT_PATH = BASE_DIR / "qdrant_data"
+
+load_dotenv()
+
+QDRANT_URL = os.getenv("QDRANT_URL")
+QDRANT_API_KEY = os.getenv("QDRANT_API_KEY")
 
 COLLECTION_NAME = "indian_railway_knowledge"
 
@@ -64,7 +70,8 @@ def create_vector_store():
     dimension = embeddings.shape[1]
 
     client = QdrantClient(
-        path=str(QDRANT_PATH)
+        url=QDRANT_URL,
+        api_key=QDRANT_API_KEY,
     )
 
     if client.collection_exists(
