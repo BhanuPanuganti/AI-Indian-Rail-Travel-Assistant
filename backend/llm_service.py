@@ -14,12 +14,15 @@ for candidate in [Path(__file__).resolve().parent, *Path(__file__).resolve().par
 
 try:
     from backend.config import settings
-    from backend.models import TravelIntent, UserIntent
-    from backend.tools import railway_tools
+    from backend.models import UserIntent
 except ModuleNotFoundError:
     from config import settings
-    from models import TravelIntent, UserIntent
-    from tools import railway_tools
+    from models import UserIntent
+
+
+# Per-request timeout (seconds) for every LLM HTTP call. This is what actually
+# bounds how long a worker thread can be stuck waiting on the provider.
+LLM_REQUEST_TIMEOUT_SECONDS = 30
 
 
 # ---------------------------------------------------------------------------
@@ -31,6 +34,7 @@ _gemini_llm = ChatGoogleGenerativeAI(
     google_api_key=settings.gemini_api_key,
     max_output_tokens=8192,
     max_retries=1,          # Low retries — we want to fail fast and hit fallback
+    timeout=LLM_REQUEST_TIMEOUT_SECONDS,
 )
 
 
@@ -49,6 +53,7 @@ if settings.groq_api_key:
             api_key=settings.groq_api_key,
             max_tokens=8192,
             max_retries=1,
+            timeout=LLM_REQUEST_TIMEOUT_SECONDS,
         )
         print(f"✅ Groq fallback LLM ready ({settings.groq_model})")
     except ImportError:
@@ -64,9 +69,26 @@ if settings.groq_api_key:
 _QUOTA_SIGNALS = ("429", "RESOURCE_EXHAUSTED", "quota", "rate limit")
 
 
-def _is_quota_error(exc: Exception) -> bool:
+def is_quota_error(exc: Exception) -> bool:
     msg = str(exc).lower()
     return any(signal.lower() in msg for signal in _QUOTA_SIGNALS)
+
+
+# Process-wide counters, read by the offline evaluation scripts.
+LLM_STATS = {"calls": 0, "fallbacks": 0, "errors": 0, "input_tokens": 0, "output_tokens": 0}
+
+
+def reset_llm_stats() -> None:
+    for key in LLM_STATS:
+        LLM_STATS[key] = 0
+
+
+def _record_usage(result) -> None:
+    # Plain chat responses carry usage_metadata; structured-output results
+    # (pydantic objects) do not, so their tokens are not counted.
+    usage = getattr(result, "usage_metadata", None) or {}
+    LLM_STATS["input_tokens"] += usage.get("input_tokens", 0) or 0
+    LLM_STATS["output_tokens"] += usage.get("output_tokens", 0) or 0
 
 
 class FallbackLLM:
@@ -82,13 +104,19 @@ class FallbackLLM:
         self._fallback = fallback
 
     def invoke(self, messages, **kwargs):
+        LLM_STATS["calls"] += 1
         try:
-            return self._primary.invoke(messages, **kwargs)
+            result = self._primary.invoke(messages, **kwargs)
         except Exception as exc:
-            if _is_quota_error(exc) and self._fallback:
+            if is_quota_error(exc) and self._fallback:
                 print(f"⚡ Gemini quota hit — switching to Groq fallback. ({exc})")
-                return self._fallback.invoke(messages, **kwargs)
-            raise
+                LLM_STATS["fallbacks"] += 1
+                result = self._fallback.invoke(messages, **kwargs)
+            else:
+                LLM_STATS["errors"] += 1
+                raise
+        _record_usage(result)
+        return result
 
     def bind_tools(self, tools, **kwargs):
         primary_bound = self._primary.bind_tools(tools, **kwargs)
@@ -104,5 +132,3 @@ class FallbackLLM:
 llm = FallbackLLM(_gemini_llm, _groq_llm)
 
 intent_llm = llm.with_structured_output(UserIntent)
-
-tool_llm = llm.bind_tools(railway_tools)

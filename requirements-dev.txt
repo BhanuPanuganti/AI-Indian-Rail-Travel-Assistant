@@ -1,0 +1,3 @@
+# Development, tests and offline evaluation (not installed in the Docker image)
+-r requirements.txt
+pytest

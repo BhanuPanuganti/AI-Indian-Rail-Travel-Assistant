@@ -12,13 +12,14 @@
 4. [System Architecture](#system-architecture)
 5. [Tech Stack](#tech-stack)
 6. [AI & RAG Pipeline](#ai--rag-pipeline)
-7. [API Reference](#api-reference)
-8. [Project Structure](#project-structure)
-9. [Local Setup](#local-setup)
-10. [Deployment](#deployment)
-11. [Configuration](#configuration)
-12. [Security & Repository Hygiene](#security--repository-hygiene)
-13. [Limitations & Future Improvements](#limitations--future-improvements)
+7. [Evaluation](#evaluation)
+8. [API Reference](#api-reference)
+9. [Project Structure](#project-structure)
+10. [Local Setup](#local-setup)
+11. [Deployment](#deployment)
+12. [Configuration](#configuration)
+13. [Security & Repository Hygiene](#security--repository-hygiene)
+14. [Limitations & Future Improvements](#limitations--future-improvements)
 
 ---
 
@@ -255,6 +256,56 @@ LangGraph's `MemorySaver` checkpointer stores the conversation message list in m
 
 ---
 
+## Evaluation
+
+The project ships with an offline evaluation suite (`eval/`) and unit tests (`tests/`). None of it runs in the deployed backend, so it adds no memory or latency in production.
+
+| Layer | What is measured | Script | LLM calls |
+|---|---|---|---|
+| **Retrieval** | Hit@k, MRR, nDCG@k, page Recall@k, latency — for BM25, vector, hybrid (RRF) and hybrid + rerank | `eval/eval_retrieval.py` | none |
+| **Intent router** | Accuracy, macro-F1, per-intent precision/recall/F1, confusion matrix, preference accuracy, latency | `eval/eval_intent.py` | 1 per example |
+| **RAG answers** | Faithfulness, answer relevance, key-fact recall, citation precision, correct/false refusal rate, latency p50/p95, LLM calls, Groq fallbacks | `eval/eval_answers.py` | 2 per question |
+| **Train data layer** | Station resolution, direct-train search, de-duplication, midnight-crossing durations, ranking by preference, strict-JSON output | `tests/` (pytest) | none |
+
+### Golden datasets
+
+- `eval/datasets/rag_golden.jsonl` — 45 hand-written questions over the six policy PDFs. Each answerable question lists the (document, page) pairs that contain the answer and the key facts a correct answer must state; 3 questions are deliberately unanswerable from the documents to test refusals. Relevance is judged at page level, so the labels stay valid if the PDFs are re-chunked.
+- `eval/datasets/intent_golden.jsonl` — 50 labelled messages across all five intents, including multi-turn follow-ups ("which one is faster?", "show me its route") and ranking preferences.
+
+### Results
+
+<!-- EVAL_RESULTS_START -->
+**Retrieval** — 42 answerable questions, top-5 results, page-level relevance:
+
+| Method | Hit@1 | Hit@3 | Hit@5 | MRR@5 | nDCG@5 | Recall@5 |
+|---|---|---|---|---|---|---|
+| BM25 only | 0.762 | 0.881 | 0.881 | 0.810 | 0.535 | 0.821 |
+| Vector only | 0.786 | 0.905 | 0.929 | 0.851 | 0.583 | 0.871 |
+| Hybrid (RRF) | 0.810 | 0.857 | 0.929 | 0.851 | 0.597 | 0.877 |
+| **Hybrid + rerank (production)** | **0.905** | **0.976** | **0.976** | **0.937** | **0.655** | **0.931** |
+
+Each stage adds value; the cross-encoder reranker gives the largest gain (+9.5 points Hit@1 over hybrid). Full per-question output: [`eval/results/retrieval.md`](eval/results/retrieval.md).
+
+Intent-router and answer-quality results will be added after a full run.
+<!-- EVAL_RESULTS_END -->
+
+### Running the evaluation
+
+```bash
+pip install -r requirements-dev.txt
+
+pytest                                   # unit tests, no API keys needed
+python -m eval.eval_retrieval            # retrieval ablation, no LLM calls
+python -m eval.eval_intent               # needs GEMINI_API_KEY
+python -m eval.eval_answers              # needs GEMINI_API_KEY
+```
+
+Each script writes `eval/results/<name>.json` (per-question detail) and `eval/results/<name>.md` (summary tables). The retrieval and answer evals build an in-memory vector index from `chunks.jsonl` with the same embedding model and cosine distance as the Qdrant collection; add `--vector qdrant` to evaluate against the live collection. The LLM scripts throttle themselves (`--delay`) to stay within the Gemini free-tier rate limit and accept `--limit N` for a quick smoke run.
+
+The answer judge is the same Gemini model that generates the answers, so its scores are indicative rather than absolute; the retrieval evaluation, which uses no LLM, is the objective baseline.
+
+---
+
 ## API Reference
 
 The FastAPI backend exposes the following endpoints. Interactive Swagger documentation is available at `/docs` when the server is running.
@@ -446,7 +497,6 @@ AI-Indian-Rail-Travel-Assistant/
 │   ├── config.py                # Typed settings (Pydantic) — loads from .env
 │   ├── chat_service.py          # Entry point for /chat — invokes LangGraph with timeout
 │   ├── tool_graph.py            # LangGraph multi-agent graph (intent → routing → agents)
-│   ├── graph.py                 # Earlier single-path travel graph (not used by /chat)
 │   ├── intent_service.py        # LLM-based intent classification into 5 categories
 │   ├── llm_service.py           # Gemini + Groq fallback wrapper (FallbackLLM)
 │   ├── tools.py                 # LangChain @tool definitions: station_search, train_search,
@@ -476,10 +526,19 @@ AI-Indian-Rail-Travel-Assistant/
 ├── data/
 │   └── railway/
 │       └── Train_details_22122017.csv   # Static train timetable dataset (~16 MB)
+├── eval/
+│   ├── datasets/                # Golden sets: rag_golden.jsonl, intent_golden.jsonl
+│   ├── eval_retrieval.py        # Retrieval ablation (BM25 / vector / hybrid / rerank)
+│   ├── eval_intent.py           # Intent router accuracy, F1, confusion matrix
+│   ├── eval_answers.py          # RAG answer quality with an LLM judge
+│   ├── metrics.py               # Hit@k, MRR, nDCG, recall, classification report
+│   └── results/                 # Latest evaluation outputs (.json + .md)
+├── tests/                       # pytest suite for the train data layer and metrics
 ├── Dockerfile                   # Backend Docker image (python:3.11-slim, port 8000)
 ├── .dockerignore                # Excludes .venv, .env, qdrant_data from Docker build
 ├── .gitignore                   # Excludes .env, .venv, qdrant_data, model weights
 ├── requirements.txt             # All Python dependencies (backend + frontend)
+├── requirements-dev.txt         # Adds pytest for tests and evaluation
 └── README.md
 ```
 
@@ -488,7 +547,6 @@ AI-Indian-Rail-Travel-Assistant/
 | File | Notes |
 |---|---|
 | `backend/tool_graph.py` | The main chat pipeline. Contains intent routing, three specialist agents (train, RAG, chat), and the LangGraph state machine. |
-| `backend/graph.py` | An earlier, simpler train-only graph. Not connected to `/chat` in the current implementation; `tool_graph.py` is used instead. |
 | `backend/rag/ingest.py` | Run **once** to generate `chunks.jsonl` from the PDF documents. |
 | `backend/rag/vector_store.py` | Run **once** to build the Qdrant collection from `chunks.jsonl`. |
 | `backend/rag/qdrant_data/` | Generated locally; excluded from git and Docker. Must be rebuilt on a fresh clone. |
@@ -676,7 +734,7 @@ All backend variables are loaded from the `.env` file locally, or from the Railw
 - **Persistent conversation history** — store chat threads in a database so history survives backend restarts and can be retrieved across sessions.
 - **Authentication and user profiles** — enable users to save frequently used routes or receive personalised recommendations.
 - **Improved RAG source citations** — display clickable page previews or direct document links rather than just file names and page numbers.
-- **Evaluation and monitoring** — add retrieval quality metrics (e.g. NDCG, recall@k) and LLM answer quality logging to enable ongoing improvement.
+- **Evaluation in CI** — run `pytest` and the retrieval evaluation on every pull request, and fail the build if retrieval quality drops below the current baseline.
 - **Response caching** — cache common RAG answers and train search results to reduce API costs and latency.
 - **More comprehensive knowledge base** — add reservation charts, train class information, railway zone rules, and platform information documents.
 - **Indirect journey planning** — support multi-leg journeys with one or more interchange stations.

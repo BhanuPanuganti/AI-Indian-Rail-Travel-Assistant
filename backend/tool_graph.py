@@ -21,14 +21,17 @@ try:
     from backend.llm_service import llm
     from backend.tools import station_search, train_search, train_details, railway_knowledge_search
     from backend.intent_service import extract_user_intent
+    from backend.train_ranker import normalize_preference
 except ModuleNotFoundError:
     from llm_service import llm
     from tools import station_search, train_search, train_details, railway_knowledge_search
     from intent_service import extract_user_intent
+    from train_ranker import normalize_preference
 
 class ToolState(TypedDict):
     messages: Annotated[list[BaseMessage], add_messages]
     intent: str
+    preference: str | None
 
 
 train_tools = [station_search, train_search, train_details]
@@ -100,10 +103,15 @@ can help if they ask a specific question.
 def intent_node(state: ToolState):
     user_intent = extract_user_intent(state["messages"])
     intent_val = user_intent.intent.value
+    preference = (
+        normalize_preference(user_intent.preference)
+        if user_intent.preference
+        else None
+    )
 
-    print(f"ROUTER → {intent_val}")
+    print(f"ROUTER → {intent_val} (preference={preference})")
 
-    return {"intent": intent_val}
+    return {"intent": intent_val, "preference": preference}
 
 def route_intent(state: ToolState):
     intent = state.get("intent")
@@ -116,7 +124,14 @@ def route_intent(state: ToolState):
 
 def train_agent(state: ToolState):
     print("TRAIN AGENT invoked")
-    messages = [SystemMessage(content=TRAIN_SYSTEM_PROMPT)] + state["messages"]
+    system_prompt = TRAIN_SYSTEM_PROMPT
+    preference = state.get("preference")
+    if preference:
+        system_prompt += (
+            f"\nThe user's ranking preference for this request is "
+            f"'{preference}'. Pass preference='{preference}' to train_search."
+        )
+    messages = [SystemMessage(content=system_prompt)] + state["messages"]
     response = train_llm.invoke(messages)
     return {"messages": [response]}
 

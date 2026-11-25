@@ -1,8 +1,6 @@
 import sys
 from pathlib import Path
 
-from langchain_google_genai import ChatGoogleGenerativeAI
-
 for candidate in [Path(__file__).resolve().parent, *Path(__file__).resolve().parents]:
     backend_dir = candidate / "backend"
     if backend_dir.exists():
@@ -13,60 +11,19 @@ for candidate in [Path(__file__).resolve().parent, *Path(__file__).resolve().par
         break
 
 try:
-    from backend.config import settings
-except ModuleNotFoundError:
-    from config import settings
-
-try:
     from backend.rag.reranker import rerank
 except ModuleNotFoundError:
     from rag.reranker import rerank
 
-
-_QUOTA_SIGNALS = ("429", "RESOURCE_EXHAUSTED", "quota", "rate limit")
-
-def _is_quota_error(exc: Exception) -> bool:
-    msg = str(exc).lower()
-    return any(s.lower() in msg for s in _QUOTA_SIGNALS)
-
-
-# Primary: Gemini
-_gemini_llm = ChatGoogleGenerativeAI(
-    model=settings.gemini_model,
-    google_api_key=settings.gemini_api_key,
-    max_output_tokens=8192,
-    max_retries=1,
-)
-
-# Fallback: Groq
-_groq_llm = None
-if settings.groq_api_key:
-    try:
-        from langchain_groq import ChatGroq
-        _groq_llm = ChatGroq(
-            model=settings.groq_model,
-            api_key=settings.groq_api_key,
-            max_tokens=8192,
-            max_retries=1,
-        )
-    except ImportError:
-        _groq_llm = None
+try:
+    from backend.llm_service import llm
+except ModuleNotFoundError:
+    from llm_service import llm
 
 
 def _invoke_llm(messages):
-    """Invoke Gemini; fall back to Groq if Gemini fails."""
-    try:
-        return _gemini_llm.invoke(messages)
-
-    except Exception as exc:
-
-        if _groq_llm:
-            print(
-                f"⚡ RAG: Gemini failed — switching to Groq. ({exc})"
-            )
-            return _groq_llm.invoke(messages)
-
-        raise
+    """Invoke the shared LLM (Gemini, falling back to Groq on quota errors)."""
+    return llm.invoke(messages)
 
 
 def _extract_text(content) -> str:
@@ -226,4 +183,6 @@ Answer the question using only these documents.
     return {
         "answer": _extract_text(response.content),
         "sources": sources,
+        # Retrieved passages the answer was generated from (used by the evals).
+        "contexts": [result["text"] for result in results],
     }

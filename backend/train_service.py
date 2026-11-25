@@ -39,27 +39,19 @@ def search_by_stations(
     preference: str = "balanced",
 ) -> dict[str, Any]:
 
-    all_trains = []
+    trains = repository.search_trains(
+        origin=[station["Station Code"] for station in origin_stations],
+        destination=[station["Station Code"] for station in destination_stations],
+    )
 
-    for origin_station in origin_stations:
+    for train in trains:
 
-        for destination_station in destination_stations:
-
-            trains = repository.search_trains(
-                origin=origin_station["Station Code"],
-                destination=destination_station["Station Code"],
-            )
-
-            for train in trains:
-
-                train["duration"] = format_duration(
-                    train.get("duration_minutes")
-                )
-
-                all_trains.append(train)
+        train["duration"] = format_duration(
+            train.get("duration_minutes")
+        )
 
     return rank_trains(
-        all_trains,
+        trains,
         preference=preference,
     )
 

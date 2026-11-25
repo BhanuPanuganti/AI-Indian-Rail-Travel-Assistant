@@ -22,8 +22,11 @@ DOCUMENT_TOPICS = {
 
 
 def clean_text(text: str) -> str:
-    text = re.sub(r"\s+", " ", text)
-    text = re.sub(r" +", " ", text)
+    # Collapse runs of spaces/tabs but keep line breaks, so the splitter's
+    # paragraph ("\n\n") and line ("\n") separators still take effect.
+    text = re.sub(r"[ \t\f\v]+", " ", text)
+    text = re.sub(r" *\n *", "\n", text)
+    text = re.sub(r"\n{3,}", "\n\n", text)
     return text.strip()
 
 

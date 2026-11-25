@@ -4,13 +4,18 @@ from langchain_core.messages import HumanMessage
 
 try:
     from backend.tool_graph import tool_graph
+    from backend.llm_service import is_quota_error
 except ModuleNotFoundError:
     from tool_graph import tool_graph
+    from llm_service import is_quota_error
 
 
+# Upper bound on how long the HTTP request waits for an answer. Python threads
+# cannot be cancelled, so a graph run that exceeds this keeps running in the
+# background; the per-call LLM timeouts in llm_service are what bound that.
 _GRAPH_TIMEOUT_SECONDS = 60
 
-_executor = concurrent.futures.ThreadPoolExecutor(max_workers=4)
+_executor = concurrent.futures.ThreadPoolExecutor(max_workers=8)
 
 
 def _invoke_graph(message: str, thread_id: str) -> str:
@@ -68,7 +73,6 @@ def chat(
         return response
 
     except concurrent.futures.TimeoutError:
-        future.cancel()
         print(f"LANGGRAPH TIMEOUT after {_GRAPH_TIMEOUT_SECONDS}s")
         return (
             "⏱️ The request timed out — the AI took too long to respond. "
@@ -79,10 +83,10 @@ def chat(
         error_msg = str(e)
         print(f"LANGGRAPH ERROR: {error_msg}")
 
-        if "429" in error_msg or "RESOURCE_EXHAUSTED" in error_msg:
+        if is_quota_error(e):
             return (
-                "🚦 Google Gemini API rate limit reached (15 requests/minute). "
-                "Please wait about 60 seconds and try again."
+                "🚦 The AI service's rate limit has been reached. "
+                "Please wait about a minute and try again."
             )
 
         if "DEADLINE_EXCEEDED" in error_msg or "timeout" in error_msg.lower():

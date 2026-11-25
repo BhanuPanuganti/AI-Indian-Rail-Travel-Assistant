@@ -58,7 +58,6 @@ Three LLM variants are derived from `FallbackLLM`:
 |---|---|
 | `llm` | Base LLM used by agents |
 | `intent_llm` | `llm.with_structured_output(UserIntent)` — returns a typed `UserIntent` object |
-| `tool_llm` | `llm.bind_tools(railway_tools)` — used in some older code paths |
 
 ### Multi-Agent Graph (`tool_graph.py`)
 
@@ -79,10 +78,6 @@ START
 **The `train_agent` uses a tool loop**: LangGraph's `tools_condition` conditional edge routes back to `train_tools_node` if the LLM emitted tool calls, and to `END` when the LLM emits a final text response. This allows the agent to call `station_search` and then `train_search` in sequence if needed.
 
 **The `rag_agent` does not use an LLM decision loop**: it directly calls `railway_knowledge_search.invoke()`. This avoids an extra LLM API call and prevents the model from refusing to call the tool or hallucinating an answer before calling it.
-
-### Older Graph (`graph.py`)
-
-`graph.py` contains a simpler, earlier graph (`travel_graph`) that only handles train search via a fixed four-node pipeline: `extract_intent → resolve_stations → search_trains → build_response`. This graph is **not** used by the current `/chat` endpoint — `tool_graph.py` replaced it. It is preserved in the codebase but is not connected to any route.
 
 ---
 
@@ -108,7 +103,6 @@ The project uses pandas in-process rather than a database. This means:
 - No database setup required for local development.
 - The full ~16 MB dataset is loaded into memory once at first use.
 - There is no persistent storage for user data or query logs.
-- The `database.py` file exists in the backend directory but has zero bytes — it is unused.
 
 ---
 

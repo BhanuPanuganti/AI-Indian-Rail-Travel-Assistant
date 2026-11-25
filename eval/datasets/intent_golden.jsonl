@@ -1,0 +1,50 @@
+{"message": "Show me trains from Hyderabad to Chennai", "intent": "TRAIN_SEARCH"}
+{"message": "Any trains between Delhi and Mumbai tomorrow?", "intent": "TRAIN_SEARCH"}
+{"message": "I need to go from Bangalore to Mysore, what are my options?", "intent": "TRAIN_SEARCH"}
+{"message": "fastest train NDLS to HWH", "intent": "TRAIN_SEARCH", "preference": "fastest"}
+{"message": "Which train leaves earliest from Pune to Mumbai?", "intent": "TRAIN_SEARCH", "preference": "earliest"}
+{"message": "Trains from Vijayawada to Visakhapatnam please", "intent": "TRAIN_SEARCH"}
+{"message": "How can I travel by train from Kolkata to Patna?", "intent": "TRAIN_SEARCH"}
+{"message": "Shortest route train from Chennai to Madurai", "intent": "TRAIN_SEARCH", "preference": "shortest_distance"}
+{"message": "list trains secunderabad to tirupati", "intent": "TRAIN_SEARCH"}
+{"message": "Is there a direct train from Ahmedabad to Jaipur?", "intent": "TRAIN_SEARCH"}
+{"message": "Which one is the fastest?", "history": [["human", "Trains from Hyderabad to Chennai"], ["ai", "I found 2 trains between Hyderabad and Chennai. Recommended: 12604 Hyderabad Chennai Express. Other: 12760 Charminar Express."]], "intent": "TRAIN_SEARCH", "preference": "fastest"}
+{"message": "Compare the top two for me", "history": [["human", "Trains from Delhi to Mumbai"], ["ai", "I found 6 trains between Delhi and Mumbai. Recommended: 12952 Mumbai Rajdhani."]], "intent": "TRAIN_SEARCH"}
+{"message": "What about the earliest one?", "history": [["human", "Trains from Pune to Mumbai"], ["ai", "I found several trains between Pune and Mumbai."]], "intent": "TRAIN_SEARCH", "preference": "earliest"}
+{"message": "Show me the route of train 12723", "intent": "TRAIN_DETAILS"}
+{"message": "What are the stops of Telangana Express?", "intent": "TRAIN_DETAILS"}
+{"message": "Where does 12951 stop between Delhi and Mumbai?", "intent": "TRAIN_DETAILS"}
+{"message": "Give me the full schedule of the Rajdhani 12302", "intent": "TRAIN_DETAILS"}
+{"message": "Which stations does Charminar Express cover?", "intent": "TRAIN_DETAILS"}
+{"message": "Show me its route", "history": [["human", "Trains from Hyderabad to Chennai"], ["ai", "Recommended: 12604 Hyderabad Chennai Express, departs 16:45."]], "intent": "TRAIN_DETAILS"}
+{"message": "What are the stops on the recommended train?", "history": [["human", "Trains NDLS to HWH"], ["ai", "Recommended: 12302 Howrah Rajdhani Express."]], "intent": "TRAIN_DETAILS"}
+{"message": "timetable for train 12627", "intent": "TRAIN_DETAILS"}
+{"message": "What is the station code for Secunderabad?", "intent": "STATION_SEARCH"}
+{"message": "Which stations are there in Mumbai?", "intent": "STATION_SEARCH"}
+{"message": "What station is NDLS?", "intent": "STATION_SEARCH"}
+{"message": "Find stations named Vijayawada", "intent": "STATION_SEARCH"}
+{"message": "What's the code of Bangalore City station?", "intent": "STATION_SEARCH"}
+{"message": "List all railway stations in Hyderabad", "intent": "STATION_SEARCH"}
+{"message": "What are the Tatkal booking rules?", "intent": "RAILWAY_RULES"}
+{"message": "How much refund will I get if I cancel 24 hours before departure?", "intent": "RAILWAY_RULES"}
+{"message": "What ID proof do I need for travelling on an e-ticket?", "intent": "RAILWAY_RULES"}
+{"message": "How much luggage is allowed in sleeper class?", "intent": "RAILWAY_RULES"}
+{"message": "Can I carry my dog on the train?", "intent": "RAILWAY_RULES"}
+{"message": "Do senior citizens get a concession?", "intent": "RAILWAY_RULES"}
+{"message": "What is the cancellation charge for a waitlisted ticket?", "intent": "RAILWAY_RULES"}
+{"message": "How do I file a TDR?", "intent": "RAILWAY_RULES"}
+{"message": "I lost my ticket, how can I get a duplicate?", "intent": "RAILWAY_RULES"}
+{"message": "What time does Tatkal booking open for sleeper class?", "intent": "RAILWAY_RULES"}
+{"message": "Is there a concession for cancer patients?", "intent": "RAILWAY_RULES"}
+{"message": "What if my train is more than 3 hours late?", "intent": "RAILWAY_RULES"}
+{"message": "And for AC 3 tier?", "history": [["human", "How much luggage is allowed in sleeper class?"], ["ai", "Sleeper class allows 40 kg free, up to a maximum of 80 kg."]], "intent": "RAILWAY_RULES"}
+{"message": "What about waitlisted tickets?", "history": [["human", "What is the refund if I cancel a confirmed ticket 10 hours before?"], ["ai", "50% of the fare is deducted, subject to the minimum charge."]], "intent": "RAILWAY_RULES"}
+{"message": "Hi there!", "intent": "GENERAL_CHAT"}
+{"message": "Thanks, that was helpful", "intent": "GENERAL_CHAT"}
+{"message": "Good morning", "intent": "GENERAL_CHAT"}
+{"message": "Who are you?", "intent": "GENERAL_CHAT"}
+{"message": "What can you help me with?", "intent": "GENERAL_CHAT"}
+{"message": "Tell me a joke", "intent": "GENERAL_CHAT"}
+{"message": "What's the capital of France?", "intent": "GENERAL_CHAT"}
+{"message": "bye", "intent": "GENERAL_CHAT"}
+{"message": "Write me a poem about the monsoon", "intent": "GENERAL_CHAT"}

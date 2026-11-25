@@ -16,11 +16,7 @@ def time_to_minutes(time_value: str) -> int | None:
             TIME_FORMAT,
         )
 
-        return (
-            parsed.hour * 60
-            + parsed.minute
-            + parsed.second // 60
-        )
+        return parsed.hour * 60 + parsed.minute
 
     except ValueError:
         return None

@@ -106,7 +106,11 @@ def train_search(
     destination: str,
     preference: str = "balanced",
 ) -> str:
-    """Search trains between two cities or stations."""
+    """Search direct trains between two cities or stations.
+
+    preference must be one of: "balanced", "fastest",
+    "shortest_distance", "earliest".
+    """
 
     print("TRAIN SEARCH START")
 

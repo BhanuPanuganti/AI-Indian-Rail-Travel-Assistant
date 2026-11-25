@@ -5,6 +5,7 @@ pydantic
 pydantic-settings
 python-dotenv
 httpx
+pandas
 
 # Frontend
 streamlit
@@ -19,15 +20,8 @@ langchain-groq
 google-genai
 langchain-google-genai
 
-# Database
-sqlalchemy
-psycopg2-binary
-
 # RAG / Vector Database
 qdrant-client
 pypdf
-
-
-qdrant-client
 sentence-transformers
 rank-bm25

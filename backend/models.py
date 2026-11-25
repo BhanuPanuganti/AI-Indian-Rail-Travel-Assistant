@@ -48,6 +48,7 @@ class TravelIntent(BaseModel):
         "balanced",
         "fastest",
         "shortest_distance",
+        "earliest",
     ] = Field(
         default="balanced",
         description="User's preferred train ranking"
@@ -68,5 +69,5 @@ class UserIntent(BaseModel):
     )
     preference: str | None = Field(
         default=None,
-        description="Optional ranking preference if mentioned (e.g., fastest, earliest, shortest, balanced)."
+        description="Optional ranking preference if mentioned: one of fastest, earliest, shortest_distance, balanced."
     )
