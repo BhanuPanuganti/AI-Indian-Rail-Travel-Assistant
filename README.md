@@ -30,7 +30,7 @@ AI Indian Rail Travel Assistant is a full-stack application that helps users int
 - **A structured train search form** — enter an origin, destination, and preference (fastest / shortest distance / balanced) to get a ranked list of trains with departure times, arrival times, and journey duration.
 - **A conversational AI chat assistant** — ask natural-language questions about trains, routes, or official railway policies and receive grounded, contextual answers.
 
-The backend is a FastAPI service; the frontend is a Streamlit web application. The two are deployed independently and communicate over HTTP.
+The backend is a FastAPI service; the frontend is a Streamlit web application. The Streamlit app has a train search panel, a live status panel and a chat panel; every chat answer is labelled with where it came from (timetable, official documents, or RailRadar), and policy answers list their source documents and pages. The two are deployed independently and communicate over HTTP.
 
 ---
 
@@ -62,7 +62,7 @@ This project provides a unified, AI-assisted interface that combines a static tr
 | **RAG over official documents** | Policy questions are answered using hybrid retrieval over six official IRCTC and Indian Railways PDF documents, followed by cross-encoder reranking and an LLM synthesis step. |
 | **Hybrid retrieval** | Combines dense vector search (Qdrant + BAAI/bge-small-en-v1.5) and BM25 keyword search using Reciprocal Rank Fusion (RRF). |
 | **Reranking** | A `cross-encoder/ms-marco-MiniLM-L6-v2` cross-encoder reranks the 15 hybrid candidates to the top 5 most relevant chunks before passing context to the LLM. |
-| **LLM fallback** | Uses Gemini as the primary LLM. Automatically falls back to Groq (LLaMA 3.1) when Gemini hits a quota limit. |
+| **LLM fallback** | Uses Gemini as the primary LLM. Automatically falls back to Groq (gpt-oss-20b) when Gemini hits a quota limit, is overloaded, or times out. |
 | **Source citations** | RAG answers include source document names and page numbers so users can verify information. |
 
 ---
@@ -161,7 +161,7 @@ flowchart LR
 | Technology | Purpose |
 |---|---|
 | **Google Gemini** (`google-genai`, `langchain-google-genai`) | Primary LLM for chat, intent classification, and RAG answer synthesis |
-| **Groq / LLaMA 3.1** (`langchain-groq`) | Automatic fallback LLM when Gemini hits quota limits |
+| **Groq / gpt-oss-20b** (`langchain-groq`) | Automatic fallback LLM when Gemini hits quota limits |
 | **LangChain** (`langchain`, `langchain-core`, `langchain-community`) | Prompt building, tool definitions, document loaders |
 | **LangGraph** (`langgraph`) | Multi-agent graph orchestration with in-memory conversation checkpointing |
 
@@ -763,7 +763,7 @@ Tested in Docker with a hard 512 MB limit (`--memory=512m`): after 40 train-endp
 | `GEMINI_API_KEY` | **Yes** | Backend | Google Gemini API key. Primary LLM for all agents. |
 | `GEMINI_MODEL` | No | Backend | Gemini model name. Defaults to `gemini-3.1-flash-lite`. |
 | `GROQ_API_KEY` | No | Backend | Groq API key. Enables automatic LLM fallback on quota errors. Leave empty to disable. |
-| `GROQ_MODEL` | No | Backend | Groq model name. Defaults to `llama-3.1-8b-instant`. |
+| `GROQ_MODEL` | No | Backend | Groq model name. Defaults to `openai/gpt-oss-20b` (Groq retired `llama-3.1-8b-instant`). |
 | `RAILRADAR_API_KEY` | No | Backend | [RailRadar](https://railradar.in/pricing) API key. Enables live running status. Leave empty to disable. |
 | `RAILRADAR_MONTHLY_BUDGET` | No | Backend | Maximum live-status requests per month made by one backend process. Defaults to `90` (the free plan allows 100). |
 | `RAILRADAR_MIN_REMAINING` | No | Backend | Stop calling when RailRadar reports this many requests or fewer left this month. Defaults to `5`. |
@@ -802,7 +802,7 @@ All backend variables are loaded from the `.env` file locally, or from the Rende
 | **Static schedule data** | The train timetable is from December 2017. Train numbers, timings, and routes may have changed. Always verify on [IRCTC](https://www.irctc.co.in/) before booking. |
 | **Limited real-time data** | Live running status comes from RailRadar, a third-party crowdsourced service, and is capped at a monthly request budget (100 requests on the free plan). PNR status and seat availability are not supported. Train search and routes still use the 2017 timetable. |
 | **In-memory conversation history** | Chat history is held in a bounded in-process store (last 20 messages of the 200 most recent conversations). It resets when the backend restarts, including when the free Render instance sleeps, and is not shared across instances. |
-| **Travel date is UI-only** | The travel date field in the search form is displayed but not passed to the backend or used for filtering — the dataset does not include date-specific availability. |
+| **No date filtering for timetable search** | The 2017 timetable has no running days, so search lists every direct train on the route. The only date input is the journey start date in Live status, which is passed to RailRadar. |
 | **Direct trains only** | The search finds only direct trains with a common `Train No`. Multi-leg journeys requiring a change are not supported. |
 | **Single backend instance** | There is no horizontal scaling or caching layer. Multiple concurrent long-running RAG requests may slow response times. |
 

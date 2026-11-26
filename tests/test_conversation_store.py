@@ -108,3 +108,40 @@ def test_fallback_llm_does_not_hide_other_errors():
     llm = FallbackLLM(_Raises(ValueError("400 INVALID_ARGUMENT: bad request")), _Returns())
     with pytest.raises(ValueError):
         llm.invoke("hi")
+
+
+def test_chat_with_details_reports_intent_and_tools(monkeypatch):
+    from backend import chat_service
+
+    class FakeGraph:
+        def invoke(self, state):
+            call = AIMessage(content="", tool_calls=[{"name": "train_search", "args": {}, "id": "c1"}])
+            result = ToolMessage(content="{}", tool_call_id="c1", name="train_search")
+            answer = AIMessage(content="2 trains found")
+            return {"messages": state["messages"] + [call, result, answer], "intent": "TRAIN_SEARCH"}
+
+    monkeypatch.setattr(chat_service, "tool_graph", FakeGraph())
+    monkeypatch.setattr(chat_service, "conversation_store", ConversationStore())
+
+    details = chat_service.chat_with_details("trains from A to B", "t")
+    assert details == {
+        "response": "2 trains found",
+        "intent": "TRAIN_SEARCH",
+        "tools_used": ["train_search"],
+        "error": False,
+    }
+
+
+def test_chat_with_details_marks_errors(monkeypatch):
+    from backend import chat_service
+
+    class Broken:
+        def invoke(self, state):
+            raise RuntimeError("503 UNAVAILABLE high demand")
+
+    monkeypatch.setattr(chat_service, "tool_graph", Broken())
+    monkeypatch.setattr(chat_service, "conversation_store", ConversationStore())
+
+    details = chat_service.chat_with_details("hi", "t")
+    assert details["error"] is True
+    assert "busy" in details["response"]

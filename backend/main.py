@@ -1,4 +1,13 @@
+import sys
 import time
+
+# Log lines contain emoji; on Windows, redirected output defaults to a legacy
+# code page that cannot encode them and would crash the server at startup.
+for _stream in (sys.stdout, sys.stderr):
+    try:
+        _stream.reconfigure(encoding="utf-8", errors="replace")
+    except (AttributeError, ValueError):
+        pass
 
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
@@ -14,7 +23,7 @@ from backend.train_service import (
     get_train_route,
 )
 
-from backend.chat_service import chat
+from backend.chat_service import chat_with_details
 from backend.railradar_client import get_live_train_status
 
 from langchain_core.messages import HumanMessage
@@ -172,7 +181,7 @@ def chat_endpoint(
     print("\n========== CHAT REQUEST ==========")
     print("USER:", request.message)
 
-    response = chat(
+    result = chat_with_details(
         message=request.message,
         thread_id=request.thread_id,
     )
@@ -182,8 +191,12 @@ def chat_endpoint(
 
     return {
         "message": request.message,
-        "response": response,
+        "response": result["response"],
         "thread_id": request.thread_id,
+        # How the answer was produced, for the UI's source labels.
+        "intent": result["intent"],
+        "tools_used": result["tools_used"],
+        "error": result["error"],
     }
 
 @app.get("/trains/{train_number}/live")

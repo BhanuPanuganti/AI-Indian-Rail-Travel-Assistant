@@ -12,7 +12,7 @@ class Settings(BaseSettings):
 
     # Fallback LLM (Groq) — used automatically when Gemini hits quota
     groq_api_key: str = ""
-    groq_model: str = "llama-3.1-8b-instant"
+    groq_model: str = "openai/gpt-oss-20b"
 
     # Optional live running status (RailRadar). Disabled when the key is empty.
     railradar_api_key: str = ""
