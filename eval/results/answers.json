@@ -1,0 +1,1552 @@
+{
+  "generated_at": "2026-11-26T02:00:16.322977+00:00",
+  "summary": {
+    "n_questions": 45,
+    "n_errors": 1,
+    "faithfulness": 1.0,
+    "answer_relevance": 0.9829268292682927,
+    "key_fact_recall": 0.8780487804878049,
+    "citation_precision": 0.4044715447154471,
+    "correct_refusal_rate": 1.0,
+    "false_refusal_rate": 0.024390243902439025,
+    "latency_p50_s": 2.4814983000105713,
+    "latency_p95_s": 30.60380179999629,
+    "llm_calls": 90,
+    "llm_fallbacks": 5,
+    "llm_errors": 0,
+    "input_tokens": 53444,
+    "output_tokens": 3480
+  },
+  "rows": [
+    {
+      "id": "eticket_id_proofs",
+      "question": "Which photo ID cards are accepted when travelling on an e-ticket?",
+      "answerable": true,
+      "error": "Error code: 400 - {'error': {'message': 'Tool choice is required, but model did not call a tool', 'type': 'invalid_request_error', 'code': 'tool_use_failed', 'failed_generation': '[true, true, true, true, false]'}}"
+    },
+    {
+      "id": "eticket_digilocker",
+      "question": "Can I show my Aadhaar from DigiLocker as ID proof?",
+      "answerable": true,
+      "error": null,
+      "answer": "Yes, you can use your Aadhaar from DigiLocker as valid proof of identity, provided it is from the \"Issued Document\" section by logging into your DigiLocker account. Documents uploaded by the user in the \"Uploaded Document\" section will not be considered a valid proof of identity.",
+      "sources": [
+        {
+          "source": "irctc_terms_conditions.pdf",
+          "page": 3,
+          "score": 6.559407711029053
+        },
+        {
+          "source": "irctc_eticket_faq.pdf",
+          "page": 1,
+          "score": 6.213218688964844
+        },
+        {
+          "source": "irctc_terms_conditions.pdf",
+          "page": 6,
+          "score": 5.447705268859863
+        }
+      ],
+      "faithfulness": 1.0,
+      "answer_relevance": 1.0,
+      "key_facts_covered": [
+        true,
+        true
+      ],
+      "is_refusal": false,
+      "citation_precision": 1.0
+    },
+    {
+      "id": "eticket_cancel_how",
+      "question": "How do I cancel an e-ticket and where does the refund go?",
+      "answerable": true,
+      "error": null,
+      "answer": "To cancel an e-ticket, you can log on to \"www.irctc.co.in,\" go to \"My Account,\" then \"My Transactions,\" and select \"Booked Ticket History.\" From there, select the ticket to be cancelled and initiate the process by selecting the specific passengers. You can perform this cancellation online until the time of chart preparation.\n\nIf you encounter problems cancelling online, you should apply for cancellation by sending your e-ticket details via email to \"etickets@irctc.co.in.\"\n\nRegarding the refund, it will be credited back to the account used for the original booking. In cases of partial cancellation, you must ensure that the modified Electronic Reservation Slip (ERS) is printed separately. All cancellations and refunds are processed according to extant Railway Rules.",
+      "sources": [
+        {
+          "source": "irctc_eticket_faq.pdf",
+          "page": 2,
+          "score": 8.539587020874023
+        },
+        {
+          "source": "irctc_terms_conditions.pdf",
+          "page": 6,
+          "score": 7.058166027069092
+        },
+        {
+          "source": "irctc_terms_conditions.pdf",
+          "page": 5,
+          "score": 5.6870927810668945
+        },
+        {
+          "source": "irctc_cancellation_refund_rules.pdf",
+          "page": 1,
+          "score": 4.988912105560303
+        }
+      ],
+      "faithfulness": 1.0,
+      "answer_relevance": 1.0,
+      "key_facts_covered": [
+        true,
+        true
+      ],
+      "is_refusal": false,
+      "citation_precision": 0.5
+    },
+    {
+      "id": "eticket_partial_cancel",
+      "question": "Is partial cancellation possible on an e-ticket?",
+      "answerable": true,
+      "error": null,
+      "answer": "Yes, partial cancellation is possible for an e-ticket. \n\nTo perform a partial cancellation, you must log on to www.irctc.co.in, go to \"My Account,\" then \"My Transactions,\" and select the \"Booked Ticket History\" link. From there, you can select the ticket and initiate the cancellation by choosing the specific passengers to be cancelled. \n\nIf there is a partial cancellation, you must ensure that the modified Electronic Reservation Slip (ERS) is printed separately. All cancellations and refunds are processed according to extant Railway Rules.",
+      "sources": [
+        {
+          "source": "irctc_terms_conditions.pdf",
+          "page": 6,
+          "score": 6.5246901512146
+        },
+        {
+          "source": "irctc_eticket_faq.pdf",
+          "page": 2,
+          "score": 6.14766788482666
+        },
+        {
+          "source": "irctc_eticket_faq.pdf",
+          "page": 1,
+          "score": 3.2947092056274414
+        },
+        {
+          "source": "irctc_cancellation_refund_rules.pdf",
+          "page": 2,
+          "score": 3.259312152862549
+        }
+      ],
+      "faithfulness": 1.0,
+      "answer_relevance": 1.0,
+      "key_facts_covered": [
+        true,
+        true
+      ],
+      "is_refusal": false,
+      "citation_precision": 0.25
+    },
+    {
+      "id": "eticket_student_concession",
+      "question": "Can I get a student concession when booking an e-ticket online?",
+      "answerable": true,
+      "error": null,
+      "answer": "No, the student concession facility is not available for e-tickets.",
+      "sources": [
+        {
+          "source": "irctc_eticket_faq.pdf",
+          "page": 2,
+          "score": 5.398691654205322
+        },
+        {
+          "source": "irctc_eticket_faq.pdf",
+          "page": 1,
+          "score": 3.841435194015503
+        },
+        {
+          "source": "irctc_terms_conditions.pdf",
+          "page": 2,
+          "score": 2.7189700603485107
+        },
+        {
+          "source": "irctc_terms_conditions.pdf",
+          "page": 6,
+          "score": 0.9309055209159851
+        }
+      ],
+      "faithfulness": 1.0,
+      "answer_relevance": 0.5,
+      "key_facts_covered": [
+        true,
+        false
+      ],
+      "is_refusal": false,
+      "citation_precision": 0.5
+    },
+    {
+      "id": "eticket_break_journey",
+      "question": "Can I book a break-journey ticket on the internet?",
+      "answerable": true,
+      "error": null,
+      "answer": "No, you cannot book a break-journey ticket on the internet. According to the IRCTC e-ticket FAQ, this facility is presently not available for internet tickets.",
+      "sources": [
+        {
+          "source": "irctc_eticket_faq.pdf",
+          "page": 2,
+          "score": 6.240078449249268
+        },
+        {
+          "source": "irctc_eticket_faq.pdf",
+          "page": 1,
+          "score": 4.010243892669678
+        },
+        {
+          "source": "indian_railways_concession_rules.pdf",
+          "page": 7,
+          "score": 1.390137791633606
+        },
+        {
+          "source": "indian_railways_concession_rules.pdf",
+          "page": 6,
+          "score": 0.9774988889694214
+        }
+      ],
+      "faithfulness": 1.0,
+      "answer_relevance": 1.0,
+      "key_facts_covered": [
+        true
+      ],
+      "is_refusal": false,
+      "citation_precision": 0.25
+    },
+    {
+      "id": "booking_quotas_online",
+      "question": "Which quotas can I book against on the IRCTC website?",
+      "answerable": true,
+      "error": null,
+      "answer": "You can book tickets on the IRCTC website against the following quotas:\n\n- General (GN)  \n- Senior Citizen (SS)  \n- Ladies (LD)  \n- Tatkal (TQ)\n\n(When booking Tatkal, you cannot select the Ladies or General quota simultaneously.)",
+      "sources": [
+        {
+          "source": "irctc_terms_conditions.pdf",
+          "page": 1,
+          "score": 5.119017124176025
+        },
+        {
+          "source": "irctc_tatkal_faq.pdf",
+          "page": 1,
+          "score": 1.9035171270370483
+        },
+        {
+          "source": "irctc_terms_conditions.pdf",
+          "page": 3,
+          "score": -0.5659950971603394
+        },
+        {
+          "source": "irctc_terms_conditions.pdf",
+          "page": 7,
+          "score": -1.163447380065918
+        }
+      ],
+      "faithfulness": 1.0,
+      "answer_relevance": 1.0,
+      "key_facts_covered": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "is_refusal": false,
+      "citation_precision": 0.25
+    },
+    {
+      "id": "booking_hours",
+      "question": "During what hours is internet ticket booking allowed?",
+      "answerable": true,
+      "error": null,
+      "answer": "The provided documents do not state specific hours during which internet ticket booking is allowed.",
+      "sources": [
+        {
+          "source": "irctc_terms_conditions.pdf",
+          "page": 4,
+          "score": 0.5479850172996521
+        },
+        {
+          "source": "irctc_cancellation_refund_rules.pdf",
+          "page": 1,
+          "score": 0.2568972110748291
+        },
+        {
+          "source": "irctc_terms_conditions.pdf",
+          "page": 6,
+          "score": -0.000663118262309581
+        },
+        {
+          "source": "indian_railways_concession_rules.pdf",
+          "page": 17,
+          "score": -0.002338849939405918
+        }
+      ],
+      "faithfulness": 1.0,
+      "answer_relevance": 1.0,
+      "key_facts_covered": [
+        false,
+        false
+      ],
+      "is_refusal": true,
+      "citation_precision": 0.25
+    },
+    {
+      "id": "advance_reservation_period",
+      "question": "How many days in advance can I book a train ticket and when does opening-day booking start?",
+      "answerable": true,
+      "error": null,
+      "answer": "You can book a train ticket up to 120 days in advance (excluding the date of the journey). Opening-day booking for these tickets becomes available at 8:00 AM. Please note that for some intercity day trains, the Advance Reservation Period (ARP) is less than 60 days.\n\nFor Tatkal booking, you can book one day in advance (excluding the date of the journey from the originating station). The opening time for Tatkal booking is 10:00 AM for AC classes (2A/3A/CC/EC/3E) and 11:00 AM for non-AC classes (SL/FC/2S).",
+      "sources": [
+        {
+          "source": "irctc_terms_conditions.pdf",
+          "page": 4,
+          "score": 6.338435649871826
+        },
+        {
+          "source": "irctc_tatkal_faq.pdf",
+          "page": 2,
+          "score": 3.0484769344329834
+        },
+        {
+          "source": "irctc_terms_conditions.pdf",
+          "page": 7,
+          "score": 1.0955686569213867
+        },
+        {
+          "source": "indian_railways_concession_rules.pdf",
+          "page": 17,
+          "score": -1.0270824432373047
+        }
+      ],
+      "faithfulness": 1.0,
+      "answer_relevance": 1.0,
+      "key_facts_covered": [
+        true,
+        true
+      ],
+      "is_refusal": false,
+      "citation_precision": 0.25
+    },
+    {
+      "id": "eticket_cancel_counter",
+      "question": "Can I cancel my e-ticket at a railway reservation counter?",
+      "answerable": true,
+      "error": null,
+      "answer": "No, you cannot cancel an e-ticket at a railway reservation counter. According to the provided documents, e-tickets can be cancelled only through the IRCTC eTicketing website (www.irctc.co.in) until the time of chart preparation for the train. Cancellation is not allowed at face-to-face railway counters.",
+      "sources": [
+        {
+          "source": "irctc_eticket_faq.pdf",
+          "page": 2,
+          "score": 7.253176212310791
+        },
+        {
+          "source": "irctc_terms_conditions.pdf",
+          "page": 2,
+          "score": 7.016736030578613
+        },
+        {
+          "source": "irctc_terms_conditions.pdf",
+          "page": 6,
+          "score": 6.097461700439453
+        }
+      ],
+      "faithfulness": 1.0,
+      "answer_relevance": 1.0,
+      "key_facts_covered": [
+        true,
+        true
+      ],
+      "is_refusal": false,
+      "citation_precision": 0.3333333333333333
+    },
+    {
+      "id": "cancel_problem_email",
+      "question": "What should I do if I cannot cancel my e-ticket online?",
+      "answerable": true,
+      "error": null,
+      "answer": "If you face a problem while attempting to cancel an e-ticket online, you should apply for cancellation by sending the e-ticket details via email to etickets@irctc.co.in. \n\nIRCTC will then process the case with the Railways to seek the due refund. Please note that the time taken and the final refund amount granted are dependent on the merit of each individual case as decided by the Railways.",
+      "sources": [
+        {
+          "source": "irctc_terms_conditions.pdf",
+          "page": 6,
+          "score": 7.522464275360107
+        },
+        {
+          "source": "irctc_eticket_faq.pdf",
+          "page": 2,
+          "score": 7.253988265991211
+        },
+        {
+          "source": "irctc_terms_conditions.pdf",
+          "page": 5,
+          "score": 7.085841655731201
+        },
+        {
+          "source": "irctc_cancellation_refund_rules.pdf",
+          "page": 1,
+          "score": 4.411689281463623
+        },
+        {
+          "source": "irctc_terms_conditions.pdf",
+          "page": 2,
+          "score": 4.142787933349609
+        }
+      ],
+      "faithfulness": 1.0,
+      "answer_relevance": 1.0,
+      "key_facts_covered": [
+        true
+      ],
+      "is_refusal": false,
+      "citation_precision": 0.2
+    },
+    {
+      "id": "tatkal_opening_time",
+      "question": "What time does Tatkal booking open for AC and non-AC classes?",
+      "answerable": true,
+      "error": null,
+      "answer": "Tatkal E-ticket booking opens one day in advance (excluding the date of the journey) from the train's originating station. The opening times are as follows:\n\n*   AC classes (2A/3A/CC/EC/3E): Booking commences at 10:00 AM.\n*   Non-AC classes (SL/FC/2S): Booking commences at 11:00 AM.",
+      "sources": [
+        {
+          "source": "irctc_tatkal_faq.pdf",
+          "page": 2,
+          "score": 7.460846424102783
+        },
+        {
+          "source": "irctc_terms_conditions.pdf",
+          "page": 7,
+          "score": 5.116837501525879
+        },
+        {
+          "source": "irctc_terms_conditions.pdf",
+          "page": 4,
+          "score": 4.557229518890381
+        },
+        {
+          "source": "irctc_terms_conditions.pdf",
+          "page": 1,
+          "score": 1.8785184621810913
+        }
+      ],
+      "faithfulness": 1.0,
+      "answer_relevance": 1.0,
+      "key_facts_covered": [
+        true,
+        true,
+        true
+      ],
+      "is_refusal": false,
+      "citation_precision": 0.75
+    },
+    {
+      "id": "tatkal_classes",
+      "question": "In which classes is Tatkal booking not allowed?",
+      "answerable": true,
+      "error": null,
+      "answer": "Based on the provided documents, Tatkal booking is not allowed in the following classes:\n\n* First Class Air-conditioned (1A)\n* Executive class",
+      "sources": [
+        {
+          "source": "irctc_terms_conditions.pdf",
+          "page": 1,
+          "score": 5.894367694854736
+        },
+        {
+          "source": "irctc_tatkal_faq.pdf",
+          "page": 1,
+          "score": 5.409514904022217
+        },
+        {
+          "source": "irctc_tatkal_faq.pdf",
+          "page": 2,
+          "score": 5.189435005187988
+        }
+      ],
+      "faithfulness": 1.0,
+      "answer_relevance": 1.0,
+      "key_facts_covered": [
+        true,
+        true
+      ],
+      "is_refusal": false,
+      "citation_precision": 0.6666666666666666
+    },
+    {
+      "id": "tatkal_charges",
+      "question": "How are Tatkal charges calculated?",
+      "answerable": true,
+      "error": null,
+      "answer": "Tatkal charges are calculated as a percentage of the basic fare in addition to the normal ticket price. The rates are as follows:\n\n- Second class: 10% of the basic fare.\n- All other classes: 30% of the basic fare.\n\nThese charges are subject to the following minimum and maximum limits (in Rs.) per passenger:\n\nClass of Travel | Minimum Charges | Maximum Charges\n--- | --- | ---\nSecond (sitting) | 10 | 15\nSleeper | 100 | 200\nAC Chair Car | 125 | 225\nAC 3 Tier | 300 | 400\nAC 2 Tier | 400 | 500\nExecutive | 400 | 500",
+      "sources": [
+        {
+          "source": "irctc_tatkal_faq.pdf",
+          "page": 1,
+          "score": 3.01515531539917
+        },
+        {
+          "source": "irctc_tatkal_faq.pdf",
+          "page": 2,
+          "score": 2.6157829761505127
+        },
+        {
+          "source": "irctc_terms_conditions.pdf",
+          "page": 7,
+          "score": 1.5770074129104614
+        },
+        {
+          "source": "indian_railways_concession_rules.pdf",
+          "page": 18,
+          "score": 1.381739854812622
+        }
+      ],
+      "faithfulness": 1.0,
+      "answer_relevance": 1.0,
+      "key_facts_covered": [
+        true,
+        true,
+        true
+      ],
+      "is_refusal": false,
+      "citation_precision": 0.5
+    },
+    {
+      "id": "tatkal_sleeper_max",
+      "question": "What is the maximum Tatkal charge for Sleeper class?",
+      "answerable": true,
+      "error": null,
+      "answer": "The maximum Tatkal charge for Sleeper class is Rs. 200.",
+      "sources": [
+        {
+          "source": "irctc_tatkal_faq.pdf",
+          "page": 2,
+          "score": 6.527108192443848
+        },
+        {
+          "source": "indian_railways_luggage_rules.pdf",
+          "page": 5,
+          "score": 1.6359007358551025
+        },
+        {
+          "source": "irctc_tatkal_faq.pdf",
+          "page": 1,
+          "score": 1.1073917150497437
+        },
+        {
+          "source": "irctc_terms_conditions.pdf",
+          "page": 7,
+          "score": 0.7382928729057312
+        },
+        {
+          "source": "indian_railways_luggage_rules.pdf",
+          "page": 1,
+          "score": 0.6853450536727905
+        }
+      ],
+      "faithfulness": 1.0,
+      "answer_relevance": 1.0,
+      "key_facts_covered": [
+        true,
+        false
+      ],
+      "is_refusal": false,
+      "citation_precision": 0.2
+    },
+    {
+      "id": "tatkal_refund",
+      "question": "Will I get a refund if I cancel a confirmed Tatkal ticket?",
+      "answerable": true,
+      "error": null,
+      "answer": "No, refund will not be granted on the cancellation of confirmed Tatkal tickets.",
+      "sources": [
+        {
+          "source": "irctc_tatkal_faq.pdf",
+          "page": 2,
+          "score": 7.871096134185791
+        },
+        {
+          "source": "irctc_terms_conditions.pdf",
+          "page": 7,
+          "score": 7.140644550323486
+        },
+        {
+          "source": "indian_railways_concession_rules.pdf",
+          "page": 12,
+          "score": 6.122216701507568
+        },
+        {
+          "source": "indian_railways_concession_rules.pdf",
+          "page": 18,
+          "score": 5.612688064575195
+        },
+        {
+          "source": "irctc_eticket_faq.pdf",
+          "page": 2,
+          "score": 2.8477118015289307
+        }
+      ],
+      "faithfulness": 1.0,
+      "answer_relevance": 1.0,
+      "key_facts_covered": [
+        true,
+        false
+      ],
+      "is_refusal": false,
+      "citation_precision": 0.4
+    },
+    {
+      "id": "tatkal_concession",
+      "question": "Are any concessions available on Tatkal tickets?",
+      "answerable": true,
+      "error": null,
+      "answer": "No, there are no concessions allowed in Tatkal booking.",
+      "sources": [
+        {
+          "source": "irctc_tatkal_faq.pdf",
+          "page": 1,
+          "score": 7.365870952606201
+        },
+        {
+          "source": "irctc_terms_conditions.pdf",
+          "page": 1,
+          "score": 5.418707370758057
+        },
+        {
+          "source": "irctc_tatkal_faq.pdf",
+          "page": 2,
+          "score": 3.233356475830078
+        },
+        {
+          "source": "irctc_terms_conditions.pdf",
+          "page": 7,
+          "score": 1.3788831233978271
+        }
+      ],
+      "faithfulness": 1.0,
+      "answer_relevance": 1.0,
+      "key_facts_covered": [
+        true
+      ],
+      "is_refusal": false,
+      "citation_precision": 0.25
+    },
+    {
+      "id": "tatkal_ladies_quota",
+      "question": "Can I choose ladies quota together with Tatkal quota?",
+      "answerable": true,
+      "error": null,
+      "answer": "No, you cannot choose the ladies quota along with the Tatkal quota. According to the provided documents, ladies and general quotas cannot be opted for in conjunction with the Tatkal quota.",
+      "sources": [
+        {
+          "source": "irctc_tatkal_faq.pdf",
+          "page": 1,
+          "score": 6.887150287628174
+        },
+        {
+          "source": "irctc_terms_conditions.pdf",
+          "page": 1,
+          "score": 5.673104763031006
+        },
+        {
+          "source": "irctc_terms_conditions.pdf",
+          "page": 5,
+          "score": 2.650275707244873
+        }
+      ],
+      "faithfulness": 1.0,
+      "answer_relevance": 1.0,
+      "key_facts_covered": [
+        true
+      ],
+      "is_refusal": false,
+      "citation_precision": 0.3333333333333333
+    },
+    {
+      "id": "tatkal_max_passengers",
+      "question": "How many passengers can be booked on one Tatkal e-ticket PNR?",
+      "answerable": true,
+      "error": null,
+      "answer": "A maximum of four passengers can be booked on one Tatkal e-ticket PNR.",
+      "sources": [
+        {
+          "source": "irctc_terms_conditions.pdf",
+          "page": 7,
+          "score": 8.000835418701172
+        },
+        {
+          "source": "irctc_terms_conditions.pdf",
+          "page": 1,
+          "score": 5.51548433303833
+        },
+        {
+          "source": "irctc_tatkal_faq.pdf",
+          "page": 2,
+          "score": 3.3517723083496094
+        }
+      ],
+      "faithfulness": 1.0,
+      "answer_relevance": 1.0,
+      "key_facts_covered": [
+        true
+      ],
+      "is_refusal": false,
+      "citation_precision": 0.3333333333333333
+    },
+    {
+      "id": "cancel_more_48h",
+      "question": "What is the cancellation charge if I cancel a confirmed ticket more than 48 hours before departure?",
+      "answerable": true,
+      "error": null,
+      "answer": "If a confirmed ticket is cancelled online more than 48 hours before the scheduled departure of the train, a minimum per passenger cancellation charge at a flat rate is deducted as follows:\n\n- Executive Class (EC): ₹240/- + GST\n- AC Chair Car (CC): ₹180/- + GST",
+      "sources": [
+        {
+          "source": "irctc_cancellation_refund_rules.pdf",
+          "page": 1,
+          "score": 8.403390884399414
+        },
+        {
+          "source": "indian_railways_concession_rules.pdf",
+          "page": 15,
+          "score": 6.088036060333252
+        },
+        {
+          "source": "irctc_cancellation_refund_rules.pdf",
+          "page": 2,
+          "score": 6.000853538513184
+        },
+        {
+          "source": "indian_railways_luggage_rules.pdf",
+          "page": 2,
+          "score": 5.692548751831055
+        }
+      ],
+      "faithfulness": 1.0,
+      "answer_relevance": 1.0,
+      "key_facts_covered": [
+        true,
+        true,
+        true
+      ],
+      "is_refusal": false,
+      "citation_precision": 0.5
+    },
+    {
+      "id": "cancel_12_to_4h",
+      "question": "How much is deducted if I cancel a confirmed ticket between 12 and 4 hours before departure?",
+      "answerable": true,
+      "error": null,
+      "answer": "For a confirmed ticket cancelled online between 12 and 4 hours before the scheduled departure of the train, the cancellation charge is 50% of the fare, subject to the minimum cancellation charge referred to in clause 1(a) of the IRCTC cancellation rules, plus applicable GST for all AC classes.",
+      "sources": [
+        {
+          "source": "irctc_cancellation_refund_rules.pdf",
+          "page": 1,
+          "score": 7.812087059020996
+        },
+        {
+          "source": "indian_railways_concession_rules.pdf",
+          "page": 15,
+          "score": 4.967397689819336
+        },
+        {
+          "source": "indian_railways_luggage_rules.pdf",
+          "page": 2,
+          "score": 3.586731433868408
+        }
+      ],
+      "faithfulness": 1.0,
+      "answer_relevance": 1.0,
+      "key_facts_covered": [
+        true,
+        true
+      ],
+      "is_refusal": false,
+      "citation_precision": 0.3333333333333333
+    },
+    {
+      "id": "cancel_48_to_12h",
+      "question": "What percentage is deducted when a confirmed ticket is cancelled between 48 and 12 hours before departure?",
+      "answerable": true,
+      "error": null,
+      "answer": "For a confirmed ticket cancelled online between forty-eight (48) hours and up to twelve (12) hours before the scheduled departure of the train, the cancellation charge is 25% (twenty-five percent) of the fare, subject to the minimum cancellation charge plus applicable GST for all AC classes.",
+      "sources": [
+        {
+          "source": "irctc_cancellation_refund_rules.pdf",
+          "page": 1,
+          "score": 8.690061569213867
+        },
+        {
+          "source": "indian_railways_concession_rules.pdf",
+          "page": 11,
+          "score": 4.625903606414795
+        },
+        {
+          "source": "indian_railways_concession_rules.pdf",
+          "page": 15,
+          "score": 3.4835727214813232
+        }
+      ],
+      "faithfulness": 1.0,
+      "answer_relevance": 1.0,
+      "key_facts_covered": [
+        true,
+        true
+      ],
+      "is_refusal": false,
+      "citation_precision": 0.3333333333333333
+    },
+    {
+      "id": "waitlist_cancel_charge",
+      "question": "What is the cancellation fee for a waitlisted ticket?",
+      "answerable": true,
+      "error": null,
+      "answer": "The cancellation fees for waitlisted tickets are as follows:\n\n1. Online Cancellation: If an online waitlisted ticket is cancelled up to four hours before the scheduled departure of the train, a cancellation charge of ₹ 20/- plus GST per passenger is deducted.\n\n2. Automatic Cancellation: If all passengers on a ticket remain on the waiting list after the first charting, the ticket is cancelled automatically by the system, and a full refund is provided without any cancellation charges.\n\n3. Submission at Stations (Clerkage): If an unused waitlisted ticket is presented for cancellation at a station after the train's actual departure, no cancellation charge is payable, except for the deduction of clerkage. This applies within the following time limits based on distance:\n- Up to three hours for destinations up to 200 kilometers.\n- Up to six hours for destinations between 200 and 500 kilometers.\n- Up to twelve hours for destinations over 500 kilometers.\n(For night trains leaving between 21.00 and 06.00 hours, the refund is admissible within the time limits above or within the first four hours after the reservation office opens, whichever is later.)",
+      "sources": [
+        {
+          "source": "irctc_cancellation_refund_rules.pdf",
+          "page": 1,
+          "score": 6.99236536026001
+        },
+        {
+          "source": "indian_railways_concession_rules.pdf",
+          "page": 16,
+          "score": 4.773947715759277
+        },
+        {
+          "source": "irctc_cancellation_refund_rules.pdf",
+          "page": 2,
+          "score": 3.992035150527954
+        }
+      ],
+      "faithfulness": 1.0,
+      "answer_relevance": 1.0,
+      "key_facts_covered": [
+        true,
+        true
+      ],
+      "is_refusal": false,
+      "citation_precision": 0.3333333333333333
+    },
+    {
+      "id": "waitlist_after_chart",
+      "question": "My ticket is still waitlisted after the chart is prepared. Do I need to cancel it?",
+      "answerable": true,
+      "error": null,
+      "answer": "If all passengers on an e-ticket remain on the waiting list after the reservation chart is prepared, you do not need to cancel the ticket. The system will automatically cancel such tickets, and the full fare will be credited back to the account used for the booking without any deduction of cancellation charges.",
+      "sources": [
+        {
+          "source": "irctc_cancellation_refund_rules.pdf",
+          "page": 1,
+          "score": 5.308215618133545
+        },
+        {
+          "source": "irctc_cancellation_refund_rules.pdf",
+          "page": 2,
+          "score": 4.165415287017822
+        },
+        {
+          "source": "indian_railways_concession_rules.pdf",
+          "page": 16,
+          "score": 3.8593814373016357
+        },
+        {
+          "source": "irctc_terms_conditions.pdf",
+          "page": 6,
+          "score": 1.9970324039459229
+        }
+      ],
+      "faithfulness": 1.0,
+      "answer_relevance": 1.0,
+      "key_facts_covered": [
+        true,
+        true,
+        true
+      ],
+      "is_refusal": false,
+      "citation_precision": 0.5
+    },
+    {
+      "id": "train_late_3h",
+      "question": "The train is running more than three hours late and I don't want to travel. Can I get a full refund?",
+      "answerable": true,
+      "error": null,
+      "answer": "Yes, you can receive a full refund if the train is running more than three hours late and you do not travel, provided you meet the following conditions:\n\n1. The train must be running late by more than three hours at your boarding station.\n2. You must file a TDR (Ticket Deposit Receipt) online before the actual departure of the train from your boarding station.\n3. All passengers booked on the PNR must not have traveled.\n\nPlease note that if the ticket is cancelled or the refund request is filed online after the actual departure of the train, no refund will be admissible.",
+      "sources": [
+        {
+          "source": "irctc_cancellation_refund_rules.pdf",
+          "page": 3,
+          "score": 7.560675144195557
+        },
+        {
+          "source": "indian_railways_concession_rules.pdf",
+          "page": 18,
+          "score": 5.5228986740112305
+        },
+        {
+          "source": "indian_railways_concession_rules.pdf",
+          "page": 16,
+          "score": 3.3302812576293945
+        },
+        {
+          "source": "indian_railways_concession_rules.pdf",
+          "page": 19,
+          "score": 1.9782131910324097
+        }
+      ],
+      "faithfulness": 1.0,
+      "answer_relevance": 1.0,
+      "key_facts_covered": [
+        true,
+        true
+      ],
+      "is_refusal": false,
+      "citation_precision": 0.5
+    },
+    {
+      "id": "tdr_ac_failure",
+      "question": "What is the time limit to file a TDR for AC failure?",
+      "answerable": true,
+      "error": null,
+      "answer": "The time limit to file a TDR for AC failure is within 20 hours of the actual arrival time of the train at the passenger's destination station.",
+      "sources": [
+        {
+          "source": "irctc_cancellation_refund_rules.pdf",
+          "page": 3,
+          "score": 6.009740829467773
+        },
+        {
+          "source": "irctc_cancellation_refund_rules.pdf",
+          "page": 2,
+          "score": 0.990947425365448
+        },
+        {
+          "source": "irctc_cancellation_refund_rules.pdf",
+          "page": 1,
+          "score": 0.2447514832019806
+        },
+        {
+          "source": "irctc_cancellation_refund_rules.pdf",
+          "page": 4,
+          "score": 0.18622367084026337
+        }
+      ],
+      "faithfulness": 1.0,
+      "answer_relevance": 1.0,
+      "key_facts_covered": [
+        true
+      ],
+      "is_refusal": false,
+      "citation_precision": 0.25
+    },
+    {
+      "id": "train_fully_cancelled",
+      "question": "What happens to my e-ticket refund if the railway cancels the whole train?",
+      "answerable": true,
+      "error": null,
+      "answer": "If the railway administration cancels a train, no cancellation charge is levied, and a full refund of the fare is granted.\n\nAccording to the provided documents, if the train is cancelled due to unforeseen circumstances such as accidents, breaches, or floods, the ticket must be surrendered for refund within three days, excluding the scheduled day of departure of the train. In cases where the railway is unable to provide accommodation, a full refund is granted if the ticket is surrendered within three hours from the actual departure of the train.",
+      "sources": [
+        {
+          "source": "irctc_terms_conditions.pdf",
+          "page": 6,
+          "score": 4.978316307067871
+        },
+        {
+          "source": "irctc_eticket_faq.pdf",
+          "page": 2,
+          "score": 4.358220100402832
+        },
+        {
+          "source": "irctc_cancellation_refund_rules.pdf",
+          "page": 1,
+          "score": 4.221230983734131
+        },
+        {
+          "source": "indian_railways_concession_rules.pdf",
+          "page": 15,
+          "score": 3.62150239944458
+        },
+        {
+          "source": "indian_railways_concession_rules.pdf",
+          "page": 19,
+          "score": 3.598296642303467
+        }
+      ],
+      "faithfulness": 1.0,
+      "answer_relevance": 0.8,
+      "key_facts_covered": [
+        false,
+        false
+      ],
+      "is_refusal": false,
+      "citation_precision": 0.0
+    },
+    {
+      "id": "luggage_free_sleeper",
+      "question": "How much luggage can I carry free in Sleeper class?",
+      "answerable": true,
+      "error": null,
+      "answer": "In Sleeper class, you are allowed a free luggage allowance of 40 Kgs.",
+      "sources": [
+        {
+          "source": "indian_railways_luggage_rules.pdf",
+          "page": 5,
+          "score": 5.651527404785156
+        },
+        {
+          "source": "indian_railways_luggage_rules.pdf",
+          "page": 4,
+          "score": 0.1372961848974228
+        },
+        {
+          "source": "indian_railways_luggage_rules.pdf",
+          "page": 6,
+          "score": -0.4169175922870636
+        }
+      ],
+      "faithfulness": 1.0,
+      "answer_relevance": 1.0,
+      "key_facts_covered": [
+        true,
+        false
+      ],
+      "is_refusal": false,
+      "citation_precision": 0.6666666666666666
+    },
+    {
+      "id": "luggage_excess_unbooked",
+      "question": "What is the penalty for carrying unbooked luggage above the free allowance?",
+      "answerable": true,
+      "error": null,
+      "answer": "The penalty for carrying unbooked luggage that exceeds the free allowance is:\n\n* **Within the marginal allowance** – the excess weight is charged at **1.5 times the luggage scale rate**.  \n* **Beyond the maximum limit** – the excess weight is charged at **six times the luggage scale rate**, with a minimum charge of **Rs. 50**.",
+      "sources": [
+        {
+          "source": "indian_railways_luggage_rules.pdf",
+          "page": 5,
+          "score": 5.723875522613525
+        },
+        {
+          "source": "indian_railways_luggage_rules.pdf",
+          "page": 4,
+          "score": 1.3827317953109741
+        },
+        {
+          "source": "indian_railways_concession_rules.pdf",
+          "page": 21,
+          "score": -0.9534603953361511
+        }
+      ],
+      "faithfulness": 1.0,
+      "answer_relevance": 1.0,
+      "key_facts_covered": [
+        true,
+        true,
+        true
+      ],
+      "is_refusal": false,
+      "citation_precision": 0.3333333333333333
+    },
+    {
+      "id": "luggage_suitcase_size",
+      "question": "What is the maximum suitcase size allowed in the passenger compartment?",
+      "answerable": true,
+      "error": null,
+      "answer": "The maximum size for trunks, suitcases, and boxes allowed in passenger compartments as personal luggage is 100 cms x 60 cms x 25 cms (length x breadth x height). \n\nHowever, for AC-3 tier and AC Chair Car compartments, the maximum size for trunks/suitcases is restricted to 55 cms x 45 cms x 22.5 cms. If any dimension exceeds these measurements, the articles must be booked and carried in the brake van.",
+      "sources": [
+        {
+          "source": "indian_railways_luggage_rules.pdf",
+          "page": 4,
+          "score": 6.379022598266602
+        },
+        {
+          "source": "indian_railways_luggage_rules.pdf",
+          "page": 5,
+          "score": 0.4394707977771759
+        }
+      ],
+      "faithfulness": 1.0,
+      "answer_relevance": 1.0,
+      "key_facts_covered": [
+        true,
+        true
+      ],
+      "is_refusal": false,
+      "citation_precision": 0.5
+    },
+    {
+      "id": "luggage_banned_items",
+      "question": "Which items are not allowed to be booked as luggage?",
+      "answerable": true,
+      "error": null,
+      "answer": "According to the provided documents, the following items are not permitted to be booked as luggage:\n\n* Offensive articles\n* Explosives\n* Dangerous and inflammable articles\n* Empty gas cylinders\n* Dead poultry and game\n* Acids and other corrosive substances\n* Merchandized items (not permitted for booking and carriage in the compartment as personal luggage)",
+      "sources": [
+        {
+          "source": "indian_railways_luggage_rules.pdf",
+          "page": 4,
+          "score": 5.292459964752197
+        },
+        {
+          "source": "indian_railways_concession_rules.pdf",
+          "page": 22,
+          "score": 0.6444547772407532
+        },
+        {
+          "source": "indian_railways_luggage_rules.pdf",
+          "page": 5,
+          "score": 0.4226400852203369
+        }
+      ],
+      "faithfulness": 1.0,
+      "answer_relevance": 1.0,
+      "key_facts_covered": [
+        true,
+        true,
+        true
+      ],
+      "is_refusal": false,
+      "citation_precision": 0.3333333333333333
+    },
+    {
+      "id": "luggage_bulky",
+      "question": "When is a bulky surcharge applied on luggage?",
+      "answerable": true,
+      "error": null,
+      "answer": "A bulky surcharge is applied to packages weighing above 100 kgs or those exceeding the outside measurement of 1m x 1m x 0.7m.\n\nIf a package exceeds any one of these specified dimensions, it is treated as bulky even if the actual weight is less than 100 kgs. However, if only one dimension is exceeded by 10% of the prescribed measurement and the weight is within 100 kgs (on a volumetric basis), it will not be treated as bulky. \n\nWhen applied, the bulky surcharge is levied at double the normal rate.",
+      "sources": [
+        {
+          "source": "indian_railways_luggage_rules.pdf",
+          "page": 4,
+          "score": 4.260725498199463
+        },
+        {
+          "source": "indian_railways_luggage_rules.pdf",
+          "page": 5,
+          "score": -4.631950378417969
+        },
+        {
+          "source": "indian_railways_concession_rules.pdf",
+          "page": 21,
+          "score": -6.284182071685791
+        }
+      ],
+      "faithfulness": 1.0,
+      "answer_relevance": 1.0,
+      "key_facts_covered": [
+        true,
+        true
+      ],
+      "is_refusal": false,
+      "citation_precision": 0.3333333333333333
+    },
+    {
+      "id": "pet_dog_classes",
+      "question": "Can I take my pet dog with me in AC 2-tier?",
+      "answerable": true,
+      "error": null,
+      "answer": "No, you cannot take your pet dog with you in AC 2-tier. According to the Indian Railways luggage rules, dogs are not allowed to be carried in AC 2-tier, AC 3-tier, AC Chair Car, Sleeper Class, or Second Class compartments.",
+      "sources": [
+        {
+          "source": "indian_railways_luggage_rules.pdf",
+          "page": 6,
+          "score": 3.219432830810547
+        },
+        {
+          "source": "indian_railways_concession_rules.pdf",
+          "page": 5,
+          "score": -3.6289265155792236
+        },
+        {
+          "source": "indian_railways_luggage_rules.pdf",
+          "page": 5,
+          "score": -5.168026447296143
+        },
+        {
+          "source": "indian_railways_concession_rules.pdf",
+          "page": 3,
+          "score": -6.157155513763428
+        }
+      ],
+      "faithfulness": 1.0,
+      "answer_relevance": 1.0,
+      "key_facts_covered": [
+        true,
+        true,
+        true
+      ],
+      "is_refusal": false,
+      "citation_precision": 0.25
+    },
+    {
+      "id": "concession_cancer",
+      "question": "What rail concession do cancer patients get in Sleeper and 3AC?",
+      "answerable": true,
+      "error": null,
+      "answer": "For cancer patients traveling for treatment or periodic check-ups, the rail concession is 100% in Sleeper (SL) and 3AC classes. For an escort accompanying a cancer patient, the concession is 75% in these classes.",
+      "sources": [
+        {
+          "source": "indian_railways_concession_rules.pdf",
+          "page": 2,
+          "score": 3.3012356758117676
+        },
+        {
+          "source": "indian_railways_concession_rules.pdf",
+          "page": 5,
+          "score": -1.4232944250106812
+        },
+        {
+          "source": "indian_railways_concession_rules.pdf",
+          "page": 3,
+          "score": -1.9151240587234497
+        }
+      ],
+      "faithfulness": 1.0,
+      "answer_relevance": 1.0,
+      "key_facts_covered": [
+        true,
+        true
+      ],
+      "is_refusal": false,
+      "citation_precision": 0.3333333333333333
+    },
+    {
+      "id": "concession_students_hometown",
+      "question": "What concession do general category students get for going to their hometown?",
+      "answerable": true,
+      "error": null,
+      "answer": "General category students traveling to their hometown are eligible for a 50% concession in 2nd and Sleeper (SL) class, as well as a 50% concession in MST (Monthly Season Ticket) and QST (Quarterly Season Ticket).",
+      "sources": [
+        {
+          "source": "indian_railways_concession_rules.pdf",
+          "page": 3,
+          "score": 4.545791149139404
+        },
+        {
+          "source": "indian_railways_concession_rules.pdf",
+          "page": 5,
+          "score": -2.0361762046813965
+        }
+      ],
+      "faithfulness": 1.0,
+      "answer_relevance": 1.0,
+      "key_facts_covered": [
+        true,
+        false
+      ],
+      "is_refusal": false,
+      "citation_precision": 0.5
+    },
+    {
+      "id": "concession_min_distance",
+      "question": "Is there a minimum distance for railway concessions to apply?",
+      "answerable": true,
+      "error": null,
+      "answer": "Yes, there is a minimum distance requirement for railway concessions. Concessions are generally admissible subject to a minimum distance of 300 kms.\n\nHowever, this distance restriction does not apply to the following categories:\n* Students\n* Blind persons\n* Orthopaedically handicapped/paraplegic persons\n* TB and Cancer patients\n* Kidney patients\n* Non-infectious leprosy patients\n* Mentally retarded persons\n* Thalassemia major disease patients\n* Heart and Haemophilia patients and their escorts (wherever admissible under the rules)\n\nAdditionally, the distance restrictions otherwise applicable to the general public for travel in each individual train apply to the issuance of concessional tickets.",
+      "sources": [
+        {
+          "source": "indian_railways_concession_rules.pdf",
+          "page": 5,
+          "score": 4.572906970977783
+        },
+        {
+          "source": "indian_railways_concession_rules.pdf",
+          "page": 6,
+          "score": 0.024239875376224518
+        },
+        {
+          "source": "indian_railways_luggage_rules.pdf",
+          "page": 1,
+          "score": -3.061784267425537
+        }
+      ],
+      "faithfulness": 1.0,
+      "answer_relevance": 1.0,
+      "key_facts_covered": [
+        true,
+        true
+      ],
+      "is_refusal": false,
+      "citation_precision": 0.3333333333333333
+    },
+    {
+      "id": "concession_premium_trains",
+      "question": "Can I use a concession ticket on Rajdhani or Vande Bharat trains?",
+      "answerable": true,
+      "error": null,
+      "answer": "No, concession is not admissible on prestigious trains like Rajdhani Express and Vande Bharat, unless otherwise specifically provided.",
+      "sources": [
+        {
+          "source": "indian_railways_concession_rules.pdf",
+          "page": 5,
+          "score": 6.5435638427734375
+        },
+        {
+          "source": "indian_railways_concession_rules.pdf",
+          "page": 22,
+          "score": -0.40166351199150085
+        },
+        {
+          "source": "indian_railways_concession_rules.pdf",
+          "page": 6,
+          "score": -0.4869541525840759
+        }
+      ],
+      "faithfulness": 1.0,
+      "answer_relevance": 1.0,
+      "key_facts_covered": [
+        true
+      ],
+      "is_refusal": false,
+      "citation_precision": 0.3333333333333333
+    },
+    {
+      "id": "season_ticket_distance",
+      "question": "Up to what distance are season tickets issued?",
+      "answerable": true,
+      "error": null,
+      "answer": "Season tickets are issued up to 150 km. Season tickets for more than 150 km are issued only on those sections where they were being issued prior to 1951, excluding sections where they have been withdrawn due to lack of demand.",
+      "sources": [
+        {
+          "source": "indian_railways_concession_rules.pdf",
+          "page": 8,
+          "score": 8.290051460266113
+        },
+        {
+          "source": "indian_railways_concession_rules.pdf",
+          "page": 9,
+          "score": 4.802671432495117
+        }
+      ],
+      "faithfulness": 1.0,
+      "answer_relevance": 1.0,
+      "key_facts_covered": [
+        true
+      ],
+      "is_refusal": false,
+      "citation_precision": 1.0
+    },
+    {
+      "id": "free_mst_students",
+      "question": "Who is eligible for free monthly season tickets as students?",
+      "answerable": true,
+      "error": null,
+      "answer": "According to the provided documents, the facility of Free Monthly Season Tickets (MSTs) is available to the following students for commuting daily between stations serving their place of residence and school:\n\n* Boy students studying in classes up to the 10th standard.\n* Girl students studying in classes up to the 12th standard.\n\nThese free MSTs are subject to the following conditions:\n* They are issued for second class only.\n* They are not valid for travel in any Mail/Express or superfast train.\n* They are issued for a maximum distance of 150 kilometers.\n* Only MSTs are issued; Quarterly Season Tickets (QSTs) are not available under this facility.",
+      "sources": [
+        {
+          "source": "indian_railways_concession_rules.pdf",
+          "page": 9,
+          "score": 5.692488670349121
+        },
+        {
+          "source": "indian_railways_concession_rules.pdf",
+          "page": 8,
+          "score": -4.215469837188721
+        }
+      ],
+      "faithfulness": 1.0,
+      "answer_relevance": 1.0,
+      "key_facts_covered": [
+        true,
+        true,
+        true
+      ],
+      "is_refusal": false,
+      "citation_precision": 0.5
+    },
+    {
+      "id": "duplicate_ticket_after_chart",
+      "question": "How much do I pay for a duplicate of a lost reserved ticket after the chart is prepared?",
+      "answerable": true,
+      "error": null,
+      "answer": "If a duplicate ticket in lieu of a lost or misplaced reserved ticket is sought after the preparation of the reservation chart, it will be issued upon payment of a charge equivalent to 50 percent of the total fare.",
+      "sources": [
+        {
+          "source": "indian_railways_concession_rules.pdf",
+          "page": 21,
+          "score": 5.489495277404785
+        },
+        {
+          "source": "indian_railways_concession_rules.pdf",
+          "page": 12,
+          "score": 3.679471015930176
+        },
+        {
+          "source": "indian_railways_concession_rules.pdf",
+          "page": 20,
+          "score": -0.002808358520269394
+        }
+      ],
+      "faithfulness": 1.0,
+      "answer_relevance": 1.0,
+      "key_facts_covered": [
+        true,
+        false
+      ],
+      "is_refusal": false,
+      "citation_precision": 0.6666666666666666
+    },
+    {
+      "id": "duplicate_ticket_fir",
+      "question": "Do I need to file an FIR to get a duplicate ticket for a lost ticket?",
+      "answerable": true,
+      "error": null,
+      "answer": "No, you do not need to file an FIR to get a duplicate ticket for a lost or misplaced ticket.",
+      "sources": [
+        {
+          "source": "indian_railways_concession_rules.pdf",
+          "page": 22,
+          "score": 7.970499038696289
+        },
+        {
+          "source": "indian_railways_concession_rules.pdf",
+          "page": 12,
+          "score": 3.815431594848633
+        },
+        {
+          "source": "indian_railways_concession_rules.pdf",
+          "page": 21,
+          "score": 2.9202754497528076
+        }
+      ],
+      "faithfulness": 1.0,
+      "answer_relevance": 1.0,
+      "key_facts_covered": [
+        true
+      ],
+      "is_refusal": false,
+      "citation_precision": 0.3333333333333333
+    },
+    {
+      "id": "ac_failure_refund",
+      "question": "If the AC doesn't work in my 3-tier AC coach, what refund do I get?",
+      "answerable": true,
+      "error": null,
+      "answer": "If the air-conditioning facility fails in an AC 3-tier coach for a portion of the journey, the refund granted is the difference between the AC 3-tier sleeper class fare and the sleeper class fare (Mail and Express).\n\nTo claim this, you should approach the Guard, Conductor, or TTE In-charge of the coach to obtain the requisite Guard Certificate.",
+      "sources": [
+        {
+          "source": "indian_railways_concession_rules.pdf",
+          "page": 20,
+          "score": 3.775423526763916
+        },
+        {
+          "source": "indian_railways_concession_rules.pdf",
+          "page": 22,
+          "score": -2.1437041759490967
+        },
+        {
+          "source": "indian_railways_concession_rules.pdf",
+          "page": 8,
+          "score": -3.479452133178711
+        },
+        {
+          "source": "indian_railways_concession_rules.pdf",
+          "page": 5,
+          "score": -3.6479341983795166
+        },
+        {
+          "source": "indian_railways_luggage_rules.pdf",
+          "page": 2,
+          "score": -4.853341579437256
+        }
+      ],
+      "faithfulness": 1.0,
+      "answer_relevance": 1.0,
+      "key_facts_covered": [
+        true
+      ],
+      "is_refusal": false,
+      "citation_precision": 0.2
+    },
+    {
+      "id": "unanswerable_wifi",
+      "question": "Is free Wi-Fi available on Indian trains?",
+      "answerable": false,
+      "error": null,
+      "answer": "The provided documents do not contain any information about free Wi‑Fi on Indian trains.",
+      "sources": [
+        {
+          "source": "indian_railways_concession_rules.pdf",
+          "page": 9,
+          "score": -2.3432953357696533
+        },
+        {
+          "source": "irctc_terms_conditions.pdf",
+          "page": 4,
+          "score": -3.7346348762512207
+        },
+        {
+          "source": "irctc_terms_conditions.pdf",
+          "page": 9,
+          "score": -5.08521032333374
+        },
+        {
+          "source": "indian_railways_concession_rules.pdf",
+          "page": 19,
+          "score": -5.104531764984131
+        }
+      ],
+      "faithfulness": 1.0,
+      "answer_relevance": 1.0,
+      "key_facts_covered": [],
+      "is_refusal": true,
+      "citation_precision": null
+    },
+    {
+      "id": "unanswerable_food",
+      "question": "What is the price of a vegetarian meal on the Rajdhani Express?",
+      "answerable": false,
+      "error": null,
+      "answer": "The provided documents do not contain information regarding the price of a vegetarian meal on the Rajdhani Express.",
+      "sources": [
+        {
+          "source": "indian_railways_concession_rules.pdf",
+          "page": 22,
+          "score": -7.6838860511779785
+        },
+        {
+          "source": "indian_railways_concession_rules.pdf",
+          "page": 5,
+          "score": -8.367573738098145
+        },
+        {
+          "source": "indian_railways_concession_rules.pdf",
+          "page": 6,
+          "score": -8.996045112609863
+        },
+        {
+          "source": "indian_railways_luggage_rules.pdf",
+          "page": 6,
+          "score": -10.712943077087402
+        },
+        {
+          "source": "indian_railways_concession_rules.pdf",
+          "page": 10,
+          "score": -10.837789535522461
+        }
+      ],
+      "faithfulness": 1.0,
+      "answer_relevance": 1.0,
+      "key_facts_covered": [],
+      "is_refusal": true,
+      "citation_precision": null
+    },
+    {
+      "id": "unanswerable_platform_ticket",
+      "question": "How much does a platform ticket cost at New Delhi station?",
+      "answerable": false,
+      "error": null,
+      "answer": "The available documents do not provide information regarding the cost of a platform ticket at New Delhi station.",
+      "sources": [
+        {
+          "source": "irctc_cancellation_refund_rules.pdf",
+          "page": 2,
+          "score": -5.773250579833984
+        },
+        {
+          "source": "irctc_terms_conditions.pdf",
+          "page": 4,
+          "score": -6.096041679382324
+        },
+        {
+          "source": "indian_railways_concession_rules.pdf",
+          "page": 15,
+          "score": -6.867135047912598
+        },
+        {
+          "source": "irctc_terms_conditions.pdf",
+          "page": 7,
+          "score": -7.986265659332275
+        }
+      ],
+      "faithfulness": 1.0,
+      "answer_relevance": 1.0,
+      "key_facts_covered": [],
+      "is_refusal": true,
+      "citation_precision": null
+    }
+  ]
+}

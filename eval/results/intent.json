@@ -1,0 +1,582 @@
+{
+  "generated_at": "2026-11-26T01:47:18.543381+00:00",
+  "n_examples": 54,
+  "report": {
+    "accuracy": 1.0,
+    "macro_f1": 1.0,
+    "per_label": {
+      "GENERAL_CHAT": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 9
+      },
+      "RAILWAY_RULES": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 14
+      },
+      "STATION_SEARCH": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 6
+      },
+      "TRAIN_DETAILS": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 12
+      },
+      "TRAIN_SEARCH": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 13
+      }
+    },
+    "labels": [
+      "GENERAL_CHAT",
+      "RAILWAY_RULES",
+      "STATION_SEARCH",
+      "TRAIN_DETAILS",
+      "TRAIN_SEARCH"
+    ],
+    "confusion": [
+      [
+        9,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        14,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        6,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        12,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        13
+      ]
+    ]
+  },
+  "preference_accuracy": 1.0,
+  "latency_p50_s": 1.4849144000036176,
+  "latency_p95_s": 5.747808400003123,
+  "llm_stats": {
+    "calls": 54,
+    "fallbacks": 0,
+    "errors": 0,
+    "input_tokens": 0,
+    "output_tokens": 0
+  },
+  "rows": [
+    {
+      "message": "Show me trains from Hyderabad to Chennai",
+      "gold": "TRAIN_SEARCH",
+      "predicted": "TRAIN_SEARCH",
+      "gold_preference": null,
+      "predicted_preference": null,
+      "latency_s": 1.3543805999943288,
+      "error": null
+    },
+    {
+      "message": "Any trains between Delhi and Mumbai tomorrow?",
+      "gold": "TRAIN_SEARCH",
+      "predicted": "TRAIN_SEARCH",
+      "gold_preference": null,
+      "predicted_preference": null,
+      "latency_s": 2.164054599998053,
+      "error": null
+    },
+    {
+      "message": "I need to go from Bangalore to Mysore, what are my options?",
+      "gold": "TRAIN_SEARCH",
+      "predicted": "TRAIN_SEARCH",
+      "gold_preference": null,
+      "predicted_preference": null,
+      "latency_s": 0.9536440999945626,
+      "error": null
+    },
+    {
+      "message": "fastest train NDLS to HWH",
+      "gold": "TRAIN_SEARCH",
+      "predicted": "TRAIN_SEARCH",
+      "gold_preference": "fastest",
+      "predicted_preference": "fastest",
+      "latency_s": 1.1110410000110278,
+      "error": null
+    },
+    {
+      "message": "Which train leaves earliest from Pune to Mumbai?",
+      "gold": "TRAIN_SEARCH",
+      "predicted": "TRAIN_SEARCH",
+      "gold_preference": "earliest",
+      "predicted_preference": "earliest",
+      "latency_s": 5.840789000008954,
+      "error": null
+    },
+    {
+      "message": "Trains from Vijayawada to Visakhapatnam please",
+      "gold": "TRAIN_SEARCH",
+      "predicted": "TRAIN_SEARCH",
+      "gold_preference": null,
+      "predicted_preference": null,
+      "latency_s": 5.749933600003715,
+      "error": null
+    },
+    {
+      "message": "How can I travel by train from Kolkata to Patna?",
+      "gold": "TRAIN_SEARCH",
+      "predicted": "TRAIN_SEARCH",
+      "gold_preference": null,
+      "predicted_preference": null,
+      "latency_s": 4.098375599991414,
+      "error": null
+    },
+    {
+      "message": "Shortest route train from Chennai to Madurai",
+      "gold": "TRAIN_SEARCH",
+      "predicted": "TRAIN_SEARCH",
+      "gold_preference": "shortest_distance",
+      "predicted_preference": "shortest_distance",
+      "latency_s": 1.281201499994495,
+      "error": null
+    },
+    {
+      "message": "list trains secunderabad to tirupati",
+      "gold": "TRAIN_SEARCH",
+      "predicted": "TRAIN_SEARCH",
+      "gold_preference": null,
+      "predicted_preference": null,
+      "latency_s": 0.9083080999989761,
+      "error": null
+    },
+    {
+      "message": "Is there a direct train from Ahmedabad to Jaipur?",
+      "gold": "TRAIN_SEARCH",
+      "predicted": "TRAIN_SEARCH",
+      "gold_preference": null,
+      "predicted_preference": null,
+      "latency_s": 0.951307800001814,
+      "error": null
+    },
+    {
+      "message": "Which one is the fastest?",
+      "gold": "TRAIN_SEARCH",
+      "predicted": "TRAIN_SEARCH",
+      "gold_preference": "fastest",
+      "predicted_preference": "fastest",
+      "latency_s": 1.6800406999973347,
+      "error": null
+    },
+    {
+      "message": "Compare the top two for me",
+      "gold": "TRAIN_SEARCH",
+      "predicted": "TRAIN_SEARCH",
+      "gold_preference": null,
+      "predicted_preference": "balanced",
+      "latency_s": 0.9456361000047764,
+      "error": null
+    },
+    {
+      "message": "What about the earliest one?",
+      "gold": "TRAIN_SEARCH",
+      "predicted": "TRAIN_SEARCH",
+      "gold_preference": "earliest",
+      "predicted_preference": "earliest",
+      "latency_s": 1.8538603999913903,
+      "error": null
+    },
+    {
+      "message": "Show me the route of train 12723",
+      "gold": "TRAIN_DETAILS",
+      "predicted": "TRAIN_DETAILS",
+      "gold_preference": null,
+      "predicted_preference": null,
+      "latency_s": 1.1855915000051027,
+      "error": null
+    },
+    {
+      "message": "What are the stops of Telangana Express?",
+      "gold": "TRAIN_DETAILS",
+      "predicted": "TRAIN_DETAILS",
+      "gold_preference": null,
+      "predicted_preference": null,
+      "latency_s": 0.8237994999944931,
+      "error": null
+    },
+    {
+      "message": "Where does 12951 stop between Delhi and Mumbai?",
+      "gold": "TRAIN_DETAILS",
+      "predicted": "TRAIN_DETAILS",
+      "gold_preference": null,
+      "predicted_preference": null,
+      "latency_s": 1.5662297999951988,
+      "error": null
+    },
+    {
+      "message": "Give me the full schedule of the Rajdhani 12302",
+      "gold": "TRAIN_DETAILS",
+      "predicted": "TRAIN_DETAILS",
+      "gold_preference": null,
+      "predicted_preference": null,
+      "latency_s": 1.0118908000004012,
+      "error": null
+    },
+    {
+      "message": "Which stations does Charminar Express cover?",
+      "gold": "TRAIN_DETAILS",
+      "predicted": "TRAIN_DETAILS",
+      "gold_preference": null,
+      "predicted_preference": null,
+      "latency_s": 4.539118599990616,
+      "error": null
+    },
+    {
+      "message": "Show me its route",
+      "gold": "TRAIN_DETAILS",
+      "predicted": "TRAIN_DETAILS",
+      "gold_preference": null,
+      "predicted_preference": null,
+      "latency_s": 3.101424999986193,
+      "error": null
+    },
+    {
+      "message": "What are the stops on the recommended train?",
+      "gold": "TRAIN_DETAILS",
+      "predicted": "TRAIN_DETAILS",
+      "gold_preference": null,
+      "predicted_preference": null,
+      "latency_s": 1.0789703000045847,
+      "error": null
+    },
+    {
+      "message": "timetable for train 12627",
+      "gold": "TRAIN_DETAILS",
+      "predicted": "TRAIN_DETAILS",
+      "gold_preference": null,
+      "predicted_preference": null,
+      "latency_s": 3.210055599993211,
+      "error": null
+    },
+    {
+      "message": "What is the station code for Secunderabad?",
+      "gold": "STATION_SEARCH",
+      "predicted": "STATION_SEARCH",
+      "gold_preference": null,
+      "predicted_preference": null,
+      "latency_s": 2.7272396000043955,
+      "error": null
+    },
+    {
+      "message": "Which stations are there in Mumbai?",
+      "gold": "STATION_SEARCH",
+      "predicted": "STATION_SEARCH",
+      "gold_preference": null,
+      "predicted_preference": null,
+      "latency_s": 6.771798999994644,
+      "error": null
+    },
+    {
+      "message": "What station is NDLS?",
+      "gold": "STATION_SEARCH",
+      "predicted": "STATION_SEARCH",
+      "gold_preference": null,
+      "predicted_preference": null,
+      "latency_s": 1.212597999998252,
+      "error": null
+    },
+    {
+      "message": "Find stations named Vijayawada",
+      "gold": "STATION_SEARCH",
+      "predicted": "STATION_SEARCH",
+      "gold_preference": null,
+      "predicted_preference": null,
+      "latency_s": 3.443459799993434,
+      "error": null
+    },
+    {
+      "message": "What's the code of Bangalore City station?",
+      "gold": "STATION_SEARCH",
+      "predicted": "STATION_SEARCH",
+      "gold_preference": null,
+      "predicted_preference": null,
+      "latency_s": 2.485182700009318,
+      "error": null
+    },
+    {
+      "message": "List all railway stations in Hyderabad",
+      "gold": "STATION_SEARCH",
+      "predicted": "STATION_SEARCH",
+      "gold_preference": null,
+      "predicted_preference": null,
+      "latency_s": 3.598540899998625,
+      "error": null
+    },
+    {
+      "message": "What are the Tatkal booking rules?",
+      "gold": "RAILWAY_RULES",
+      "predicted": "RAILWAY_RULES",
+      "gold_preference": null,
+      "predicted_preference": null,
+      "latency_s": 4.74163970000518,
+      "error": null
+    },
+    {
+      "message": "How much refund will I get if I cancel 24 hours before departure?",
+      "gold": "RAILWAY_RULES",
+      "predicted": "RAILWAY_RULES",
+      "gold_preference": null,
+      "predicted_preference": null,
+      "latency_s": 0.9985278000094695,
+      "error": null
+    },
+    {
+      "message": "What ID proof do I need for travelling on an e-ticket?",
+      "gold": "RAILWAY_RULES",
+      "predicted": "RAILWAY_RULES",
+      "gold_preference": null,
+      "predicted_preference": null,
+      "latency_s": 5.530189600001904,
+      "error": null
+    },
+    {
+      "message": "How much luggage is allowed in sleeper class?",
+      "gold": "RAILWAY_RULES",
+      "predicted": "RAILWAY_RULES",
+      "gold_preference": null,
+      "predicted_preference": null,
+      "latency_s": 3.4976716000091983,
+      "error": null
+    },
+    {
+      "message": "Can I carry my dog on the train?",
+      "gold": "RAILWAY_RULES",
+      "predicted": "RAILWAY_RULES",
+      "gold_preference": null,
+      "predicted_preference": null,
+      "latency_s": 2.175136999998358,
+      "error": null
+    },
+    {
+      "message": "Do senior citizens get a concession?",
+      "gold": "RAILWAY_RULES",
+      "predicted": "RAILWAY_RULES",
+      "gold_preference": null,
+      "predicted_preference": null,
+      "latency_s": 0.8296096999984002,
+      "error": null
+    },
+    {
+      "message": "What is the cancellation charge for a waitlisted ticket?",
+      "gold": "RAILWAY_RULES",
+      "predicted": "RAILWAY_RULES",
+      "gold_preference": null,
+      "predicted_preference": null,
+      "latency_s": 0.9403578999917954,
+      "error": null
+    },
+    {
+      "message": "How do I file a TDR?",
+      "gold": "RAILWAY_RULES",
+      "predicted": "RAILWAY_RULES",
+      "gold_preference": null,
+      "predicted_preference": null,
+      "latency_s": 1.090850099993986,
+      "error": null
+    },
+    {
+      "message": "I lost my ticket, how can I get a duplicate?",
+      "gold": "RAILWAY_RULES",
+      "predicted": "RAILWAY_RULES",
+      "gold_preference": null,
+      "predicted_preference": null,
+      "latency_s": 2.4593425000057323,
+      "error": null
+    },
+    {
+      "message": "What time does Tatkal booking open for sleeper class?",
+      "gold": "RAILWAY_RULES",
+      "predicted": "RAILWAY_RULES",
+      "gold_preference": null,
+      "predicted_preference": null,
+      "latency_s": 1.9598186999937752,
+      "error": null
+    },
+    {
+      "message": "Is there a concession for cancer patients?",
+      "gold": "RAILWAY_RULES",
+      "predicted": "RAILWAY_RULES",
+      "gold_preference": null,
+      "predicted_preference": null,
+      "latency_s": 0.7415251999918837,
+      "error": null
+    },
+    {
+      "message": "What if my train is more than 3 hours late?",
+      "gold": "RAILWAY_RULES",
+      "predicted": "RAILWAY_RULES",
+      "gold_preference": null,
+      "predicted_preference": null,
+      "latency_s": 1.0201684999919962,
+      "error": null
+    },
+    {
+      "message": "And for AC 3 tier?",
+      "gold": "RAILWAY_RULES",
+      "predicted": "RAILWAY_RULES",
+      "gold_preference": null,
+      "predicted_preference": null,
+      "latency_s": 0.9516892999963602,
+      "error": null
+    },
+    {
+      "message": "What about waitlisted tickets?",
+      "gold": "RAILWAY_RULES",
+      "predicted": "RAILWAY_RULES",
+      "gold_preference": null,
+      "predicted_preference": null,
+      "latency_s": 1.42460719999508,
+      "error": null
+    },
+    {
+      "message": "Hi there!",
+      "gold": "GENERAL_CHAT",
+      "predicted": "GENERAL_CHAT",
+      "gold_preference": null,
+      "predicted_preference": null,
+      "latency_s": 1.4849144000036176,
+      "error": null
+    },
+    {
+      "message": "Thanks, that was helpful",
+      "gold": "GENERAL_CHAT",
+      "predicted": "GENERAL_CHAT",
+      "gold_preference": null,
+      "predicted_preference": null,
+      "latency_s": 0.9808048999984749,
+      "error": null
+    },
+    {
+      "message": "Good morning",
+      "gold": "GENERAL_CHAT",
+      "predicted": "GENERAL_CHAT",
+      "gold_preference": null,
+      "predicted_preference": null,
+      "latency_s": 0.8288900000043213,
+      "error": null
+    },
+    {
+      "message": "Who are you?",
+      "gold": "GENERAL_CHAT",
+      "predicted": "GENERAL_CHAT",
+      "gold_preference": null,
+      "predicted_preference": null,
+      "latency_s": 0.9564520999992965,
+      "error": null
+    },
+    {
+      "message": "What can you help me with?",
+      "gold": "GENERAL_CHAT",
+      "predicted": "GENERAL_CHAT",
+      "gold_preference": null,
+      "predicted_preference": null,
+      "latency_s": 1.2288670999987517,
+      "error": null
+    },
+    {
+      "message": "Tell me a joke",
+      "gold": "GENERAL_CHAT",
+      "predicted": "GENERAL_CHAT",
+      "gold_preference": null,
+      "predicted_preference": null,
+      "latency_s": 1.0415830999991158,
+      "error": null
+    },
+    {
+      "message": "What's the capital of France?",
+      "gold": "GENERAL_CHAT",
+      "predicted": "GENERAL_CHAT",
+      "gold_preference": null,
+      "predicted_preference": null,
+      "latency_s": 1.856646100000944,
+      "error": null
+    },
+    {
+      "message": "bye",
+      "gold": "GENERAL_CHAT",
+      "predicted": "GENERAL_CHAT",
+      "gold_preference": null,
+      "predicted_preference": null,
+      "latency_s": 2.149451000004774,
+      "error": null
+    },
+    {
+      "message": "Write me a poem about the monsoon",
+      "gold": "GENERAL_CHAT",
+      "predicted": "GENERAL_CHAT",
+      "gold_preference": null,
+      "predicted_preference": null,
+      "latency_s": 1.2907266000111122,
+      "error": null
+    },
+    {
+      "message": "Where is train 12302 right now?",
+      "gold": "TRAIN_DETAILS",
+      "predicted": "TRAIN_DETAILS",
+      "gold_preference": null,
+      "predicted_preference": null,
+      "latency_s": 5.747808400003123,
+      "error": null
+    },
+    {
+      "message": "Is the Rajdhani running late today?",
+      "gold": "TRAIN_DETAILS",
+      "predicted": "TRAIN_DETAILS",
+      "gold_preference": null,
+      "predicted_preference": null,
+      "latency_s": 2.044826199999079,
+      "error": null
+    },
+    {
+      "message": "What's the live running status of 12723?",
+      "gold": "TRAIN_DETAILS",
+      "predicted": "TRAIN_DETAILS",
+      "gold_preference": null,
+      "predicted_preference": null,
+      "latency_s": 5.183109699995839,
+      "error": null
+    },
+    {
+      "message": "How late is it?",
+      "gold": "TRAIN_DETAILS",
+      "predicted": "TRAIN_DETAILS",
+      "gold_preference": null,
+      "predicted_preference": null,
+      "latency_s": 1.5578634999983478,
+      "error": null
+    }
+  ]
+}
