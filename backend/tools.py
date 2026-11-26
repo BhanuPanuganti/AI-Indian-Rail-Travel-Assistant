@@ -16,6 +16,11 @@ for candidate in [Path(__file__).resolve().parent, *Path(__file__).resolve().par
 from rag.rag_service import answer_question
 
 try:
+    from backend.railradar_client import get_live_train_status
+except ModuleNotFoundError:
+    from railradar_client import get_live_train_status
+
+try:
     from backend.train_service import (
         resolve_station,
         get_train_route,
@@ -180,9 +185,30 @@ def train_details(
     return json.dumps(results, ensure_ascii=False)
 
 
+@tool
+def live_train_status(
+    train_number: str,
+    date: str = "",
+) -> str:
+    """Get the LIVE running status of one train: where it is now, its delay,
+    and its previous/next halt. Use only when the user asks about current
+    position, delay or whether a train is running late, not for timetables.
+
+    train_number: the train number, e.g. "12302".
+    date: optional journey start date (YYYY-MM-DD) when the train departed its
+    source station; leave empty for the current run.
+    """
+
+    return json.dumps(
+        get_live_train_status(train_number, date or None),
+        ensure_ascii=False,
+    )
+
+
 railway_tools = [
     station_search,
     train_search,
     train_details,
+    live_train_status,
     railway_knowledge_search,
 ]

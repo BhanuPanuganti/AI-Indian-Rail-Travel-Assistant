@@ -48,3 +48,7 @@
 {"message": "What's the capital of France?", "intent": "GENERAL_CHAT"}
 {"message": "bye", "intent": "GENERAL_CHAT"}
 {"message": "Write me a poem about the monsoon", "intent": "GENERAL_CHAT"}
+{"message": "Where is train 12302 right now?", "intent": "TRAIN_DETAILS"}
+{"message": "Is the Rajdhani running late today?", "intent": "TRAIN_DETAILS"}
+{"message": "What's the live running status of 12723?", "intent": "TRAIN_DETAILS"}
+{"message": "How late is it?", "history": [["human", "Trains from Hyderabad to Chennai"], ["ai", "Recommended: 12604 Hyderabad Chennai Express, departs 16:45."]], "intent": "TRAIN_DETAILS"}

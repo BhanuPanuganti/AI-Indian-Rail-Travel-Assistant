@@ -54,3 +54,9 @@ temp/
 
 # Local vector database
 backend/rag/qdrant_data/
+# Generated train timetable database (built from the CSV)
+data/railway/trains.sqlite
+data/railway/*.tmp
+
+# Downloaded ONNX models (fastembed)
+.model_cache/

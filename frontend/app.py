@@ -37,6 +37,7 @@ FOLLOWUP_BUTTONS = [
     ("🌅 Earliest", "Which train departs earliest?"),
     ("🗺️ Route", "Show me the route of the recommended train"),
     ("🔄 Compare", "Compare the top 2-3 trains for me"),
+    ("📍 Live status", "What is the live running status of the recommended train?"),
 ]
 
 TRAIN_KEYWORDS = [
@@ -213,7 +214,7 @@ def render_source_block(sources_text: str):
 def render_followup_buttons(key_prefix: str, search_context: str = None):
     """Render follow-up suggestion buttons after a train-related response."""
     st.markdown('<div class="followup-label">💡 Ask a follow-up</div>', unsafe_allow_html=True)
-    cols = st.columns(4)
+    cols = st.columns(len(FOLLOWUP_BUTTONS))
     for i, (label, prompt) in enumerate(FOLLOWUP_BUTTONS):
         with cols[i]:
             if st.button(label, key=f"{key_prefix}_fu_{i}", use_container_width=True):
@@ -512,9 +513,8 @@ with st.expander("🔍 Search Trains", expanded=True):
                 '<div class="followup-label">💡 Ask the AI about these results</div>',
                 unsafe_allow_html=True,
             )
-            fc1, fc2, fc3, fc4 = st.columns(4)
             for col, (label, prompt) in zip(
-                [fc1, fc2, fc3, fc4], FOLLOWUP_BUTTONS
+                st.columns(len(FOLLOWUP_BUTTONS)), FOLLOWUP_BUTTONS
             ):
                 with col:
                     if st.button(label, key=f"mfu_{label}", use_container_width=True):

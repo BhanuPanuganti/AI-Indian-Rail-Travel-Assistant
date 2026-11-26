@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-11-25T22:53:53.627246+00:00",
+  "generated_at": "2026-11-26T00:27:33.040706+00:00",
   "vector_backend": "local",
   "n_questions": 42,
   "methods": {
     "bm25": {
       "summary": {
-        "latency_ms": 0.3381666666384609,
+        "latency_ms": 0.5207452375630272,
         "mrr": 0.8095238095238095,
         "hit@1": 0.7619047619047619,
         "ndcg@1": 0.7619047619047619,
@@ -20,7 +20,7 @@
       "per_question": [
         {
           "id": "eticket_id_proofs",
-          "latency_ms": 0.4058999984408729,
+          "latency_ms": 0.486999997519888,
           "mrr": 1.0,
           "retrieved": [
             "irctc_eticket_faq.pdf p2",
@@ -41,7 +41,7 @@
         },
         {
           "id": "eticket_digilocker",
-          "latency_ms": 0.3136000013910234,
+          "latency_ms": 0.3873000096064061,
           "mrr": 1.0,
           "retrieved": [
             "irctc_terms_conditions.pdf p6",
@@ -62,7 +62,7 @@
         },
         {
           "id": "eticket_cancel_how",
-          "latency_ms": 0.39370000013150275,
+          "latency_ms": 0.5109000048832968,
           "mrr": 1.0,
           "retrieved": [
             "irctc_eticket_faq.pdf p2",
@@ -83,7 +83,7 @@
         },
         {
           "id": "eticket_partial_cancel",
-          "latency_ms": 0.2666000000317581,
+          "latency_ms": 0.30669999250676483,
           "mrr": 1.0,
           "retrieved": [
             "irctc_eticket_faq.pdf p2",
@@ -104,7 +104,7 @@
         },
         {
           "id": "eticket_student_concession",
-          "latency_ms": 0.32449999707750976,
+          "latency_ms": 0.39849999302532524,
           "mrr": 1.0,
           "retrieved": [
             "irctc_eticket_faq.pdf p2",
@@ -125,7 +125,7 @@
         },
         {
           "id": "eticket_break_journey",
-          "latency_ms": 0.28619999648071826,
+          "latency_ms": 0.34240000240970403,
           "mrr": 1.0,
           "retrieved": [
             "irctc_eticket_faq.pdf p2",
@@ -146,7 +146,7 @@
         },
         {
           "id": "booking_quotas_online",
-          "latency_ms": 0.2792000013869256,
+          "latency_ms": 0.342100000125356,
           "mrr": 1.0,
           "retrieved": [
             "irctc_terms_conditions.pdf p1",
@@ -167,7 +167,7 @@
         },
         {
           "id": "booking_hours",
-          "latency_ms": 0.2426999999443069,
+          "latency_ms": 0.29769999673590064,
           "mrr": 0.0,
           "retrieved": [
             "irctc_tatkal_faq.pdf p1",
@@ -188,7 +188,7 @@
         },
         {
           "id": "advance_reservation_period",
-          "latency_ms": 0.4904000015812926,
+          "latency_ms": 0.6001000001560897,
           "mrr": 0.3333333333333333,
           "retrieved": [
             "irctc_tatkal_faq.pdf p1",
@@ -209,7 +209,7 @@
         },
         {
           "id": "eticket_cancel_counter",
-          "latency_ms": 0.32550000469200313,
+          "latency_ms": 0.3836999967461452,
           "mrr": 0.0,
           "retrieved": [
             "irctc_eticket_faq.pdf p2",
@@ -230,7 +230,7 @@
         },
         {
           "id": "cancel_problem_email",
-          "latency_ms": 0.31879999733064324,
+          "latency_ms": 0.8265000069513917,
           "mrr": 0.0,
           "retrieved": [
             "irctc_tatkal_faq.pdf p1",
@@ -251,7 +251,7 @@
         },
         {
           "id": "tatkal_opening_time",
-          "latency_ms": 0.331000002915971,
+          "latency_ms": 0.4271000070730224,
           "mrr": 0.5,
           "retrieved": [
             "irctc_tatkal_faq.pdf p1",
@@ -272,7 +272,7 @@
         },
         {
           "id": "tatkal_classes",
-          "latency_ms": 0.23939999664435163,
+          "latency_ms": 0.33510000503156334,
           "mrr": 1.0,
           "retrieved": [
             "irctc_tatkal_faq.pdf p1",
@@ -293,7 +293,7 @@
         },
         {
           "id": "tatkal_charges",
-          "latency_ms": 0.1731000011204742,
+          "latency_ms": 0.44359998719301075,
           "mrr": 1.0,
           "retrieved": [
             "irctc_tatkal_faq.pdf p1",
@@ -314,7 +314,7 @@
         },
         {
           "id": "tatkal_sleeper_max",
-          "latency_ms": 0.2905000001192093,
+          "latency_ms": 0.8233999978983775,
           "mrr": 0.3333333333333333,
           "retrieved": [
             "irctc_tatkal_faq.pdf p1",
@@ -335,7 +335,7 @@
         },
         {
           "id": "tatkal_refund",
-          "latency_ms": 0.3721000030054711,
+          "latency_ms": 0.6886000046506524,
           "mrr": 0.5,
           "retrieved": [
             "irctc_tatkal_faq.pdf p1",
@@ -356,7 +356,7 @@
         },
         {
           "id": "tatkal_concession",
-          "latency_ms": 0.24739999935263768,
+          "latency_ms": 0.453799992101267,
           "mrr": 1.0,
           "retrieved": [
             "irctc_tatkal_faq.pdf p1",
@@ -377,7 +377,7 @@
         },
         {
           "id": "tatkal_ladies_quota",
-          "latency_ms": 0.261799999861978,
+          "latency_ms": 0.570699994568713,
           "mrr": 1.0,
           "retrieved": [
             "irctc_tatkal_faq.pdf p1",
@@ -398,7 +398,7 @@
         },
         {
           "id": "tatkal_max_passengers",
-          "latency_ms": 0.33409999741706997,
+          "latency_ms": 0.6877999985590577,
           "mrr": 1.0,
           "retrieved": [
             "irctc_terms_conditions.pdf p7",
@@ -419,7 +419,7 @@
         },
         {
           "id": "cancel_more_48h",
-          "latency_ms": 0.4484000019147061,
+          "latency_ms": 0.9695000044303015,
           "mrr": 1.0,
           "retrieved": [
             "irctc_cancellation_refund_rules.pdf p1",
@@ -440,7 +440,7 @@
         },
         {
           "id": "cancel_12_to_4h",
-          "latency_ms": 0.44609999895328656,
+          "latency_ms": 0.977099989540875,
           "mrr": 1.0,
           "retrieved": [
             "irctc_cancellation_refund_rules.pdf p1",
@@ -461,7 +461,7 @@
         },
         {
           "id": "cancel_48_to_12h",
-          "latency_ms": 0.4377999939606525,
+          "latency_ms": 0.8934000070439652,
           "mrr": 1.0,
           "retrieved": [
             "irctc_cancellation_refund_rules.pdf p1",
@@ -482,7 +482,7 @@
         },
         {
           "id": "waitlist_cancel_charge",
-          "latency_ms": 0.24979999579954892,
+          "latency_ms": 0.5940999981248751,
           "mrr": 0.3333333333333333,
           "retrieved": [
             "irctc_tatkal_faq.pdf p2",
@@ -503,7 +503,7 @@
         },
         {
           "id": "waitlist_after_chart",
-          "latency_ms": 0.41730000521056354,
+          "latency_ms": 0.8843999967211857,
           "mrr": 1.0,
           "retrieved": [
             "irctc_cancellation_refund_rules.pdf p1",
@@ -524,7 +524,7 @@
         },
         {
           "id": "train_late_3h",
-          "latency_ms": 0.5537999968510121,
+          "latency_ms": 1.1138999980175868,
           "mrr": 1.0,
           "retrieved": [
             "irctc_cancellation_refund_rules.pdf p3",
@@ -545,7 +545,7 @@
         },
         {
           "id": "tdr_ac_failure",
-          "latency_ms": 0.33679999614832923,
+          "latency_ms": 0.40869999793358147,
           "mrr": 1.0,
           "retrieved": [
             "irctc_cancellation_refund_rules.pdf p3",
@@ -566,7 +566,7 @@
         },
         {
           "id": "train_fully_cancelled",
-          "latency_ms": 0.3636999972513877,
+          "latency_ms": 0.43280000681988895,
           "mrr": 0.0,
           "retrieved": [
             "irctc_eticket_faq.pdf p2",
@@ -587,7 +587,7 @@
         },
         {
           "id": "luggage_free_sleeper",
-          "latency_ms": 0.2701999983401038,
+          "latency_ms": 0.3690000012284145,
           "mrr": 1.0,
           "retrieved": [
             "indian_railways_luggage_rules.pdf p5",
@@ -608,7 +608,7 @@
         },
         {
           "id": "luggage_excess_unbooked",
-          "latency_ms": 0.31229999876813963,
+          "latency_ms": 0.5910000036237761,
           "mrr": 1.0,
           "retrieved": [
             "indian_railways_luggage_rules.pdf p5",
@@ -629,7 +629,7 @@
         },
         {
           "id": "luggage_suitcase_size",
-          "latency_ms": 0.28899999597342685,
+          "latency_ms": 0.32589999318588525,
           "mrr": 1.0,
           "retrieved": [
             "indian_railways_luggage_rules.pdf p4",
@@ -650,7 +650,7 @@
         },
         {
           "id": "luggage_banned_items",
-          "latency_ms": 0.2818000066326931,
+          "latency_ms": 0.3097000007983297,
           "mrr": 1.0,
           "retrieved": [
             "indian_railways_luggage_rules.pdf p4",
@@ -671,7 +671,7 @@
         },
         {
           "id": "luggage_bulky",
-          "latency_ms": 0.23610000062035397,
+          "latency_ms": 0.28169999131932855,
           "mrr": 1.0,
           "retrieved": [
             "indian_railways_luggage_rules.pdf p4",
@@ -692,7 +692,7 @@
         },
         {
           "id": "pet_dog_classes",
-          "latency_ms": 0.3169000046909787,
+          "latency_ms": 0.3600000054575503,
           "mrr": 1.0,
           "retrieved": [
             "indian_railways_luggage_rules.pdf p6",
@@ -713,7 +713,7 @@
         },
         {
           "id": "concession_cancer",
-          "latency_ms": 0.30169999809004366,
+          "latency_ms": 0.3152999997837469,
           "mrr": 1.0,
           "retrieved": [
             "indian_railways_concession_rules.pdf p2",
@@ -734,7 +734,7 @@
         },
         {
           "id": "concession_students_hometown",
-          "latency_ms": 0.3260000012232922,
+          "latency_ms": 0.4428999964147806,
           "mrr": 1.0,
           "retrieved": [
             "indian_railways_concession_rules.pdf p3",
@@ -755,7 +755,7 @@
         },
         {
           "id": "concession_min_distance",
-          "latency_ms": 0.2863000045181252,
+          "latency_ms": 0.4512000014074147,
           "mrr": 1.0,
           "retrieved": [
             "indian_railways_concession_rules.pdf p5",
@@ -776,7 +776,7 @@
         },
         {
           "id": "concession_premium_trains",
-          "latency_ms": 0.3364999938639812,
+          "latency_ms": 0.5606000049738213,
           "mrr": 1.0,
           "retrieved": [
             "indian_railways_concession_rules.pdf p5",
@@ -797,7 +797,7 @@
         },
         {
           "id": "season_ticket_distance",
-          "latency_ms": 0.2375999974901788,
+          "latency_ms": 0.37489998794626445,
           "mrr": 1.0,
           "retrieved": [
             "indian_railways_concession_rules.pdf p8",
@@ -818,7 +818,7 @@
         },
         {
           "id": "free_mst_students",
-          "latency_ms": 0.276099999609869,
+          "latency_ms": 0.31259999377653,
           "mrr": 1.0,
           "retrieved": [
             "indian_railways_concession_rules.pdf p9",
@@ -839,7 +839,7 @@
         },
         {
           "id": "duplicate_ticket_after_chart",
-          "latency_ms": 0.47360000462504104,
+          "latency_ms": 0.5861000099685043,
           "mrr": 1.0,
           "retrieved": [
             "indian_railways_concession_rules.pdf p12",
@@ -860,7 +860,7 @@
         },
         {
           "id": "duplicate_ticket_fir",
-          "latency_ms": 0.6321000037132762,
+          "latency_ms": 0.47250000352505594,
           "mrr": 1.0,
           "retrieved": [
             "indian_railways_concession_rules.pdf p22",
@@ -881,7 +881,7 @@
         },
         {
           "id": "ac_failure_refund",
-          "latency_ms": 0.4766000056406483,
+          "latency_ms": 0.530999997863546,
           "mrr": 0.0,
           "retrieved": [
             "irctc_tatkal_faq.pdf p1",
@@ -904,7 +904,7 @@
     },
     "vector": {
       "summary": {
-        "latency_ms": 11.877026190632023,
+        "latency_ms": 20.035750000845706,
         "mrr": 0.8511904761904762,
         "hit@1": 0.7857142857142857,
         "ndcg@1": 0.7857142857142857,
@@ -919,14 +919,14 @@
       "per_question": [
         {
           "id": "eticket_id_proofs",
-          "latency_ms": 13.56839999789372,
+          "latency_ms": 20.993099999031983,
           "mrr": 1.0,
           "retrieved": [
             "irctc_eticket_faq.pdf p1",
             "irctc_terms_conditions.pdf p6",
             "indian_railways_concession_rules.pdf p8",
-            "irctc_eticket_faq.pdf p2",
-            "irctc_terms_conditions.pdf p6"
+            "irctc_terms_conditions.pdf p6",
+            "irctc_eticket_faq.pdf p2"
           ],
           "hit@1": 1.0,
           "ndcg@1": 1.0,
@@ -940,7 +940,7 @@
         },
         {
           "id": "eticket_digilocker",
-          "latency_ms": 14.080499997362494,
+          "latency_ms": 21.51009999215603,
           "mrr": 1.0,
           "retrieved": [
             "irctc_eticket_faq.pdf p1",
@@ -961,7 +961,7 @@
         },
         {
           "id": "eticket_cancel_how",
-          "latency_ms": 12.83730000432115,
+          "latency_ms": 12.846300000092015,
           "mrr": 1.0,
           "retrieved": [
             "irctc_eticket_faq.pdf p2",
@@ -982,7 +982,7 @@
         },
         {
           "id": "eticket_partial_cancel",
-          "latency_ms": 11.097899994638283,
+          "latency_ms": 15.771799997310154,
           "mrr": 0.5,
           "retrieved": [
             "irctc_terms_conditions.pdf p6",
@@ -1003,7 +1003,7 @@
         },
         {
           "id": "eticket_student_concession",
-          "latency_ms": 11.194900005648378,
+          "latency_ms": 13.626800006022677,
           "mrr": 0.5,
           "retrieved": [
             "irctc_terms_conditions.pdf p5",
@@ -1024,7 +1024,7 @@
         },
         {
           "id": "eticket_break_journey",
-          "latency_ms": 11.600899997574743,
+          "latency_ms": 19.146200007526204,
           "mrr": 1.0,
           "retrieved": [
             "irctc_eticket_faq.pdf p2",
@@ -1045,7 +1045,7 @@
         },
         {
           "id": "booking_quotas_online",
-          "latency_ms": 11.927499996090773,
+          "latency_ms": 25.75450000585988,
           "mrr": 0.25,
           "retrieved": [
             "irctc_terms_conditions.pdf p5",
@@ -1066,7 +1066,7 @@
         },
         {
           "id": "booking_hours",
-          "latency_ms": 10.687800000596326,
+          "latency_ms": 19.16219999839086,
           "mrr": 0.5,
           "retrieved": [
             "irctc_terms_conditions.pdf p6",
@@ -1087,7 +1087,7 @@
         },
         {
           "id": "advance_reservation_period",
-          "latency_ms": 11.424099997384474,
+          "latency_ms": 32.80320001067594,
           "mrr": 1.0,
           "retrieved": [
             "irctc_terms_conditions.pdf p4",
@@ -1108,7 +1108,7 @@
         },
         {
           "id": "eticket_cancel_counter",
-          "latency_ms": 11.546400004590396,
+          "latency_ms": 15.128900005947798,
           "mrr": 0.0,
           "retrieved": [
             "irctc_eticket_faq.pdf p2",
@@ -1129,7 +1129,7 @@
         },
         {
           "id": "cancel_problem_email",
-          "latency_ms": 11.178700005984865,
+          "latency_ms": 19.747900005313568,
           "mrr": 0.5,
           "retrieved": [
             "irctc_eticket_faq.pdf p2",
@@ -1150,7 +1150,7 @@
         },
         {
           "id": "tatkal_opening_time",
-          "latency_ms": 13.091100001474842,
+          "latency_ms": 22.83299999544397,
           "mrr": 1.0,
           "retrieved": [
             "irctc_tatkal_faq.pdf p2",
@@ -1171,7 +1171,7 @@
         },
         {
           "id": "tatkal_classes",
-          "latency_ms": 12.476600000809412,
+          "latency_ms": 22.453900004620664,
           "mrr": 1.0,
           "retrieved": [
             "irctc_tatkal_faq.pdf p1",
@@ -1192,7 +1192,7 @@
         },
         {
           "id": "tatkal_charges",
-          "latency_ms": 9.972500003641471,
+          "latency_ms": 13.788800002657808,
           "mrr": 1.0,
           "retrieved": [
             "irctc_tatkal_faq.pdf p2",
@@ -1213,7 +1213,7 @@
         },
         {
           "id": "tatkal_sleeper_max",
-          "latency_ms": 18.52560000406811,
+          "latency_ms": 20.775500001036562,
           "mrr": 1.0,
           "retrieved": [
             "irctc_tatkal_faq.pdf p2",
@@ -1234,7 +1234,7 @@
         },
         {
           "id": "tatkal_refund",
-          "latency_ms": 11.653100002149586,
+          "latency_ms": 23.164000012911856,
           "mrr": 0.0,
           "retrieved": [
             "indian_railways_concession_rules.pdf p12",
@@ -1255,7 +1255,7 @@
         },
         {
           "id": "tatkal_concession",
-          "latency_ms": 9.551700000884011,
+          "latency_ms": 16.788499997346662,
           "mrr": 1.0,
           "retrieved": [
             "irctc_tatkal_faq.pdf p1",
@@ -1276,7 +1276,7 @@
         },
         {
           "id": "tatkal_ladies_quota",
-          "latency_ms": 12.141999999585096,
+          "latency_ms": 18.77099998819176,
           "mrr": 1.0,
           "retrieved": [
             "irctc_tatkal_faq.pdf p1",
@@ -1297,7 +1297,7 @@
         },
         {
           "id": "tatkal_max_passengers",
-          "latency_ms": 12.220199998409953,
+          "latency_ms": 25.023299996973947,
           "mrr": 1.0,
           "retrieved": [
             "irctc_terms_conditions.pdf p7",
@@ -1318,7 +1318,7 @@
         },
         {
           "id": "cancel_more_48h",
-          "latency_ms": 11.426799996115733,
+          "latency_ms": 18.76540000375826,
           "mrr": 1.0,
           "retrieved": [
             "irctc_cancellation_refund_rules.pdf p1",
@@ -1339,7 +1339,7 @@
         },
         {
           "id": "cancel_12_to_4h",
-          "latency_ms": 11.027399996237364,
+          "latency_ms": 23.02560000680387,
           "mrr": 1.0,
           "retrieved": [
             "irctc_cancellation_refund_rules.pdf p1",
@@ -1360,7 +1360,7 @@
         },
         {
           "id": "cancel_48_to_12h",
-          "latency_ms": 12.367600000288803,
+          "latency_ms": 27.135399999679066,
           "mrr": 1.0,
           "retrieved": [
             "irctc_cancellation_refund_rules.pdf p1",
@@ -1381,7 +1381,7 @@
         },
         {
           "id": "waitlist_cancel_charge",
-          "latency_ms": 9.82780000049388,
+          "latency_ms": 18.444900008034892,
           "mrr": 1.0,
           "retrieved": [
             "irctc_cancellation_refund_rules.pdf p1",
@@ -1402,7 +1402,7 @@
         },
         {
           "id": "waitlist_after_chart",
-          "latency_ms": 12.577900000906084,
+          "latency_ms": 15.25969999784138,
           "mrr": 1.0,
           "retrieved": [
             "irctc_cancellation_refund_rules.pdf p1",
@@ -1423,7 +1423,7 @@
         },
         {
           "id": "train_late_3h",
-          "latency_ms": 12.949600000865757,
+          "latency_ms": 17.160899995360523,
           "mrr": 1.0,
           "retrieved": [
             "irctc_cancellation_refund_rules.pdf p3",
@@ -1444,7 +1444,7 @@
         },
         {
           "id": "tdr_ac_failure",
-          "latency_ms": 9.485800001129974,
+          "latency_ms": 20.667099990532734,
           "mrr": 1.0,
           "retrieved": [
             "irctc_cancellation_refund_rules.pdf p3",
@@ -1465,7 +1465,7 @@
         },
         {
           "id": "train_fully_cancelled",
-          "latency_ms": 14.191400005074684,
+          "latency_ms": 26.184899994404987,
           "mrr": 0.0,
           "retrieved": [
             "irctc_terms_conditions.pdf p5",
@@ -1486,7 +1486,7 @@
         },
         {
           "id": "luggage_free_sleeper",
-          "latency_ms": 11.71950000571087,
+          "latency_ms": 18.324099990422837,
           "mrr": 1.0,
           "retrieved": [
             "indian_railways_luggage_rules.pdf p5",
@@ -1507,7 +1507,7 @@
         },
         {
           "id": "luggage_excess_unbooked",
-          "latency_ms": 13.747599994530901,
+          "latency_ms": 22.30500000587199,
           "mrr": 1.0,
           "retrieved": [
             "indian_railways_luggage_rules.pdf p5",
@@ -1528,7 +1528,7 @@
         },
         {
           "id": "luggage_suitcase_size",
-          "latency_ms": 11.232600001676474,
+          "latency_ms": 16.71889999124687,
           "mrr": 1.0,
           "retrieved": [
             "indian_railways_luggage_rules.pdf p4",
@@ -1549,7 +1549,7 @@
         },
         {
           "id": "luggage_banned_items",
-          "latency_ms": 10.634300000674557,
+          "latency_ms": 13.977199996588752,
           "mrr": 1.0,
           "retrieved": [
             "indian_railways_luggage_rules.pdf p4",
@@ -1570,7 +1570,7 @@
         },
         {
           "id": "luggage_bulky",
-          "latency_ms": 12.044600000081118,
+          "latency_ms": 22.82990000094287,
           "mrr": 1.0,
           "retrieved": [
             "indian_railways_luggage_rules.pdf p4",
@@ -1591,7 +1591,7 @@
         },
         {
           "id": "pet_dog_classes",
-          "latency_ms": 11.987099998805206,
+          "latency_ms": 21.65209999657236,
           "mrr": 1.0,
           "retrieved": [
             "indian_railways_luggage_rules.pdf p6",
@@ -1612,7 +1612,7 @@
         },
         {
           "id": "concession_cancer",
-          "latency_ms": 9.270000002288725,
+          "latency_ms": 20.69590000610333,
           "mrr": 1.0,
           "retrieved": [
             "indian_railways_concession_rules.pdf p2",
@@ -1633,7 +1633,7 @@
         },
         {
           "id": "concession_students_hometown",
-          "latency_ms": 9.597199998097494,
+          "latency_ms": 20.20319999428466,
           "mrr": 0.5,
           "retrieved": [
             "indian_railways_concession_rules.pdf p5",
@@ -1654,7 +1654,7 @@
         },
         {
           "id": "concession_min_distance",
-          "latency_ms": 12.274600005184766,
+          "latency_ms": 13.42050000675954,
           "mrr": 1.0,
           "retrieved": [
             "indian_railways_concession_rules.pdf p5",
@@ -1675,7 +1675,7 @@
         },
         {
           "id": "concession_premium_trains",
-          "latency_ms": 11.721799994120374,
+          "latency_ms": 21.419099997729063,
           "mrr": 1.0,
           "retrieved": [
             "indian_railways_concession_rules.pdf p5",
@@ -1696,7 +1696,7 @@
         },
         {
           "id": "season_ticket_distance",
-          "latency_ms": 10.406699999293778,
+          "latency_ms": 15.656400006264448,
           "mrr": 1.0,
           "retrieved": [
             "indian_railways_concession_rules.pdf p8",
@@ -1717,7 +1717,7 @@
         },
         {
           "id": "free_mst_students",
-          "latency_ms": 10.386099995230325,
+          "latency_ms": 21.538800006965175,
           "mrr": 1.0,
           "retrieved": [
             "indian_railways_concession_rules.pdf p9",
@@ -1738,7 +1738,7 @@
         },
         {
           "id": "duplicate_ticket_after_chart",
-          "latency_ms": 11.525900001288392,
+          "latency_ms": 19.58440001180861,
           "mrr": 1.0,
           "retrieved": [
             "indian_railways_concession_rules.pdf p12",
@@ -1759,7 +1759,7 @@
         },
         {
           "id": "duplicate_ticket_fir",
-          "latency_ms": 11.982799995166715,
+          "latency_ms": 22.76940000592731,
           "mrr": 1.0,
           "retrieved": [
             "indian_railways_concession_rules.pdf p22",
@@ -1780,7 +1780,7 @@
         },
         {
           "id": "ac_failure_refund",
-          "latency_ms": 15.672800000174902,
+          "latency_ms": 23.673699994105846,
           "mrr": 1.0,
           "retrieved": [
             "indian_railways_concession_rules.pdf p20",
@@ -1803,7 +1803,7 @@
     },
     "hybrid": {
       "summary": {
-        "latency_ms": 11.977190476976656,
+        "latency_ms": 20.46080000235677,
         "mrr": 0.8511904761904762,
         "hit@1": 0.8095238095238095,
         "ndcg@1": 0.8095238095238095,
@@ -1818,14 +1818,14 @@
       "per_question": [
         {
           "id": "eticket_id_proofs",
-          "latency_ms": 10.06240000424441,
+          "latency_ms": 20.465699999476783,
           "mrr": 1.0,
           "retrieved": [
             "irctc_terms_conditions.pdf p6",
             "irctc_eticket_faq.pdf p1",
             "irctc_eticket_faq.pdf p2",
-            "irctc_terms_conditions.pdf p3",
-            "irctc_terms_conditions.pdf p6"
+            "irctc_terms_conditions.pdf p6",
+            "irctc_terms_conditions.pdf p3"
           ],
           "hit@1": 1.0,
           "ndcg@1": 1.0,
@@ -1839,7 +1839,7 @@
         },
         {
           "id": "eticket_digilocker",
-          "latency_ms": 14.03819999541156,
+          "latency_ms": 24.77760000328999,
           "mrr": 1.0,
           "retrieved": [
             "irctc_eticket_faq.pdf p1",
@@ -1860,7 +1860,7 @@
         },
         {
           "id": "eticket_cancel_how",
-          "latency_ms": 12.39979999809293,
+          "latency_ms": 26.779500010889024,
           "mrr": 1.0,
           "retrieved": [
             "irctc_eticket_faq.pdf p2",
@@ -1881,7 +1881,7 @@
         },
         {
           "id": "eticket_partial_cancel",
-          "latency_ms": 14.217500000086147,
+          "latency_ms": 12.719799997285008,
           "mrr": 0.5,
           "retrieved": [
             "irctc_terms_conditions.pdf p6",
@@ -1902,7 +1902,7 @@
         },
         {
           "id": "eticket_student_concession",
-          "latency_ms": 13.030800000706222,
+          "latency_ms": 12.190499997814186,
           "mrr": 1.0,
           "retrieved": [
             "irctc_eticket_faq.pdf p2",
@@ -1923,7 +1923,7 @@
         },
         {
           "id": "eticket_break_journey",
-          "latency_ms": 12.136500001361128,
+          "latency_ms": 20.37870000640396,
           "mrr": 1.0,
           "retrieved": [
             "irctc_eticket_faq.pdf p2",
@@ -1944,7 +1944,7 @@
         },
         {
           "id": "booking_quotas_online",
-          "latency_ms": 12.713000003714114,
+          "latency_ms": 16.412000011769123,
           "mrr": 0.25,
           "retrieved": [
             "irctc_terms_conditions.pdf p3",
@@ -1965,7 +1965,7 @@
         },
         {
           "id": "booking_hours",
-          "latency_ms": 9.997299996030051,
+          "latency_ms": 10.255300003336743,
           "mrr": 0.25,
           "retrieved": [
             "irctc_cancellation_refund_rules.pdf p4",
@@ -1986,7 +1986,7 @@
         },
         {
           "id": "advance_reservation_period",
-          "latency_ms": 13.969400002679322,
+          "latency_ms": 19.925000000512227,
           "mrr": 1.0,
           "retrieved": [
             "irctc_terms_conditions.pdf p4",
@@ -2007,7 +2007,7 @@
         },
         {
           "id": "eticket_cancel_counter",
-          "latency_ms": 10.506999999051914,
+          "latency_ms": 20.726000002468936,
           "mrr": 0.0,
           "retrieved": [
             "irctc_eticket_faq.pdf p2",
@@ -2028,7 +2028,7 @@
         },
         {
           "id": "cancel_problem_email",
-          "latency_ms": 10.73270000051707,
+          "latency_ms": 12.000600007013418,
           "mrr": 0.0,
           "retrieved": [
             "irctc_eticket_faq.pdf p2",
@@ -2049,7 +2049,7 @@
         },
         {
           "id": "tatkal_opening_time",
-          "latency_ms": 12.18700000026729,
+          "latency_ms": 21.72940000309609,
           "mrr": 1.0,
           "retrieved": [
             "irctc_tatkal_faq.pdf p2",
@@ -2070,7 +2070,7 @@
         },
         {
           "id": "tatkal_classes",
-          "latency_ms": 12.120199993660208,
+          "latency_ms": 19.017600003280677,
           "mrr": 1.0,
           "retrieved": [
             "irctc_tatkal_faq.pdf p1",
@@ -2091,7 +2091,7 @@
         },
         {
           "id": "tatkal_charges",
-          "latency_ms": 8.98550000420073,
+          "latency_ms": 13.603100000182167,
           "mrr": 1.0,
           "retrieved": [
             "irctc_tatkal_faq.pdf p2",
@@ -2112,7 +2112,7 @@
         },
         {
           "id": "tatkal_sleeper_max",
-          "latency_ms": 10.560000002442393,
+          "latency_ms": 20.759100007126108,
           "mrr": 1.0,
           "retrieved": [
             "irctc_tatkal_faq.pdf p2",
@@ -2133,7 +2133,7 @@
         },
         {
           "id": "tatkal_refund",
-          "latency_ms": 12.61510000040289,
+          "latency_ms": 24.361700008739717,
           "mrr": 0.5,
           "retrieved": [
             "irctc_eticket_faq.pdf p2",
@@ -2154,7 +2154,7 @@
         },
         {
           "id": "tatkal_concession",
-          "latency_ms": 10.333600002923049,
+          "latency_ms": 20.26010000554379,
           "mrr": 1.0,
           "retrieved": [
             "irctc_tatkal_faq.pdf p1",
@@ -2175,7 +2175,7 @@
         },
         {
           "id": "tatkal_ladies_quota",
-          "latency_ms": 11.295500000414904,
+          "latency_ms": 22.974299994530156,
           "mrr": 1.0,
           "retrieved": [
             "irctc_tatkal_faq.pdf p1",
@@ -2196,7 +2196,7 @@
         },
         {
           "id": "tatkal_max_passengers",
-          "latency_ms": 13.629599998239428,
+          "latency_ms": 23.601599998073652,
           "mrr": 1.0,
           "retrieved": [
             "irctc_terms_conditions.pdf p7",
@@ -2217,7 +2217,7 @@
         },
         {
           "id": "cancel_more_48h",
-          "latency_ms": 11.63770000130171,
+          "latency_ms": 17.372700007399544,
           "mrr": 1.0,
           "retrieved": [
             "irctc_cancellation_refund_rules.pdf p1",
@@ -2238,7 +2238,7 @@
         },
         {
           "id": "cancel_12_to_4h",
-          "latency_ms": 12.554900000395719,
+          "latency_ms": 18.31790000142064,
           "mrr": 1.0,
           "retrieved": [
             "irctc_cancellation_refund_rules.pdf p1",
@@ -2259,7 +2259,7 @@
         },
         {
           "id": "cancel_48_to_12h",
-          "latency_ms": 13.689899999008048,
+          "latency_ms": 33.075999992433935,
           "mrr": 1.0,
           "retrieved": [
             "irctc_cancellation_refund_rules.pdf p1",
@@ -2280,7 +2280,7 @@
         },
         {
           "id": "waitlist_cancel_charge",
-          "latency_ms": 13.4840999962762,
+          "latency_ms": 21.087100001750514,
           "mrr": 1.0,
           "retrieved": [
             "irctc_cancellation_refund_rules.pdf p1",
@@ -2301,7 +2301,7 @@
         },
         {
           "id": "waitlist_after_chart",
-          "latency_ms": 12.177900003734976,
+          "latency_ms": 23.13230000436306,
           "mrr": 1.0,
           "retrieved": [
             "irctc_cancellation_refund_rules.pdf p1",
@@ -2322,7 +2322,7 @@
         },
         {
           "id": "train_late_3h",
-          "latency_ms": 12.980900006368756,
+          "latency_ms": 36.92579999915324,
           "mrr": 1.0,
           "retrieved": [
             "irctc_cancellation_refund_rules.pdf p3",
@@ -2343,7 +2343,7 @@
         },
         {
           "id": "tdr_ac_failure",
-          "latency_ms": 10.670100004062988,
+          "latency_ms": 13.63820000551641,
           "mrr": 1.0,
           "retrieved": [
             "irctc_cancellation_refund_rules.pdf p3",
@@ -2364,7 +2364,7 @@
         },
         {
           "id": "train_fully_cancelled",
-          "latency_ms": 12.83289999992121,
+          "latency_ms": 26.721700007328764,
           "mrr": 0.0,
           "retrieved": [
             "irctc_eticket_faq.pdf p2",
@@ -2385,7 +2385,7 @@
         },
         {
           "id": "luggage_free_sleeper",
-          "latency_ms": 10.707100002036896,
+          "latency_ms": 15.48120001098141,
           "mrr": 1.0,
           "retrieved": [
             "indian_railways_luggage_rules.pdf p5",
@@ -2406,7 +2406,7 @@
         },
         {
           "id": "luggage_excess_unbooked",
-          "latency_ms": 12.771300003805663,
+          "latency_ms": 11.644400001387112,
           "mrr": 1.0,
           "retrieved": [
             "indian_railways_luggage_rules.pdf p5",
@@ -2427,7 +2427,7 @@
         },
         {
           "id": "luggage_suitcase_size",
-          "latency_ms": 12.399800005368888,
+          "latency_ms": 15.661500001442619,
           "mrr": 1.0,
           "retrieved": [
             "indian_railways_luggage_rules.pdf p4",
@@ -2448,7 +2448,7 @@
         },
         {
           "id": "luggage_banned_items",
-          "latency_ms": 10.372500000812579,
+          "latency_ms": 22.342299998854287,
           "mrr": 1.0,
           "retrieved": [
             "indian_railways_luggage_rules.pdf p4",
@@ -2469,7 +2469,7 @@
         },
         {
           "id": "luggage_bulky",
-          "latency_ms": 11.624900005699601,
+          "latency_ms": 20.99160000216216,
           "mrr": 1.0,
           "retrieved": [
             "indian_railways_luggage_rules.pdf p4",
@@ -2490,7 +2490,7 @@
         },
         {
           "id": "pet_dog_classes",
-          "latency_ms": 12.382699998852331,
+          "latency_ms": 21.07580000301823,
           "mrr": 1.0,
           "retrieved": [
             "indian_railways_luggage_rules.pdf p6",
@@ -2511,7 +2511,7 @@
         },
         {
           "id": "concession_cancer",
-          "latency_ms": 10.68680000025779,
+          "latency_ms": 19.195799992303364,
           "mrr": 1.0,
           "retrieved": [
             "indian_railways_concession_rules.pdf p2",
@@ -2532,7 +2532,7 @@
         },
         {
           "id": "concession_students_hometown",
-          "latency_ms": 13.31229999777861,
+          "latency_ms": 21.078500009025447,
           "mrr": 1.0,
           "retrieved": [
             "indian_railways_concession_rules.pdf p3",
@@ -2553,7 +2553,7 @@
         },
         {
           "id": "concession_min_distance",
-          "latency_ms": 11.266599998634774,
+          "latency_ms": 16.026800003601238,
           "mrr": 1.0,
           "retrieved": [
             "indian_railways_concession_rules.pdf p5",
@@ -2574,7 +2574,7 @@
         },
         {
           "id": "concession_premium_trains",
-          "latency_ms": 12.59810000192374,
+          "latency_ms": 19.698000003700145,
           "mrr": 1.0,
           "retrieved": [
             "indian_railways_concession_rules.pdf p5",
@@ -2595,7 +2595,7 @@
         },
         {
           "id": "season_ticket_distance",
-          "latency_ms": 10.504699996090494,
+          "latency_ms": 15.288900001905859,
           "mrr": 1.0,
           "retrieved": [
             "indian_railways_concession_rules.pdf p8",
@@ -2616,7 +2616,7 @@
         },
         {
           "id": "free_mst_students",
-          "latency_ms": 10.595200001262128,
+          "latency_ms": 20.4059999960009,
           "mrr": 1.0,
           "retrieved": [
             "indian_railways_concession_rules.pdf p9",
@@ -2637,7 +2637,7 @@
         },
         {
           "id": "duplicate_ticket_after_chart",
-          "latency_ms": 12.690100003965199,
+          "latency_ms": 32.72580000339076,
           "mrr": 1.0,
           "retrieved": [
             "indian_railways_concession_rules.pdf p12",
@@ -2658,7 +2658,7 @@
         },
         {
           "id": "duplicate_ticket_fir",
-          "latency_ms": 12.96590000129072,
+          "latency_ms": 25.035099999513477,
           "mrr": 1.0,
           "retrieved": [
             "indian_railways_concession_rules.pdf p22",
@@ -2679,7 +2679,7 @@
         },
         {
           "id": "ac_failure_refund",
-          "latency_ms": 12.604499999724794,
+          "latency_ms": 29.492599991499446,
           "mrr": 0.25,
           "retrieved": [
             "indian_railways_concession_rules.pdf p22",
@@ -2702,29 +2702,29 @@
     },
     "hybrid+rerank": {
       "summary": {
-        "latency_ms": 350.17586666591734,
+        "latency_ms": 995.5816761908603,
         "mrr": 0.9365079365079365,
         "hit@1": 0.9047619047619048,
         "ndcg@1": 0.9047619047619048,
         "recall@1": 0.6924603174603174,
         "hit@3": 0.9761904761904762,
-        "ndcg@3": 0.7103965649278634,
+        "ndcg@3": 0.7062728312360327,
         "recall@3": 0.9305555555555556,
         "hit@5": 0.9761904761904762,
-        "ndcg@5": 0.6545237731866397,
+        "ndcg@5": 0.6520570001732643,
         "recall@5": 0.9305555555555556
       },
       "per_question": [
         {
           "id": "eticket_id_proofs",
-          "latency_ms": 321.2178999965545,
+          "latency_ms": 1031.1320000037085,
           "mrr": 1.0,
           "retrieved": [
             "irctc_eticket_faq.pdf p2",
             "irctc_terms_conditions.pdf p6",
             "irctc_eticket_faq.pdf p1",
             "indian_railways_concession_rules.pdf p8",
-            "irctc_terms_conditions.pdf p6"
+            "irctc_terms_conditions.pdf p2"
           ],
           "hit@1": 1.0,
           "ndcg@1": 1.0,
@@ -2733,12 +2733,12 @@
           "ndcg@3": 1.0,
           "recall@3": 0.75,
           "hit@5": 1.0,
-          "ndcg@5": 0.8539316501572937,
+          "ndcg@5": 0.7227265726449519,
           "recall@5": 0.75
         },
         {
           "id": "eticket_digilocker",
-          "latency_ms": 344.4926999945892,
+          "latency_ms": 1125.6925000052433,
           "mrr": 1.0,
           "retrieved": [
             "irctc_terms_conditions.pdf p3",
@@ -2759,7 +2759,7 @@
         },
         {
           "id": "eticket_cancel_how",
-          "latency_ms": 375.975599999947,
+          "latency_ms": 983.3180999994511,
           "mrr": 1.0,
           "retrieved": [
             "irctc_eticket_faq.pdf p2",
@@ -2780,14 +2780,14 @@
         },
         {
           "id": "eticket_partial_cancel",
-          "latency_ms": 333.92230000026757,
+          "latency_ms": 897.4751999921864,
           "mrr": 0.5,
           "retrieved": [
             "irctc_terms_conditions.pdf p6",
             "irctc_eticket_faq.pdf p2",
             "irctc_eticket_faq.pdf p2",
-            "irctc_cancellation_refund_rules.pdf p2",
-            "irctc_eticket_faq.pdf p1"
+            "irctc_eticket_faq.pdf p1",
+            "irctc_cancellation_refund_rules.pdf p2"
           ],
           "hit@1": 0.0,
           "ndcg@1": 0.0,
@@ -2801,14 +2801,14 @@
         },
         {
           "id": "eticket_student_concession",
-          "latency_ms": 366.398999998637,
+          "latency_ms": 1171.701100000064,
           "mrr": 1.0,
           "retrieved": [
             "irctc_eticket_faq.pdf p2",
             "irctc_eticket_faq.pdf p1",
             "irctc_terms_conditions.pdf p2",
             "irctc_terms_conditions.pdf p6",
-            "indian_railways_concession_rules.pdf p5"
+            "irctc_terms_conditions.pdf p6"
           ],
           "hit@1": 1.0,
           "ndcg@1": 1.0,
@@ -2822,7 +2822,7 @@
         },
         {
           "id": "eticket_break_journey",
-          "latency_ms": 357.8205999947386,
+          "latency_ms": 1129.5047999883536,
           "mrr": 1.0,
           "retrieved": [
             "irctc_eticket_faq.pdf p2",
@@ -2843,7 +2843,7 @@
         },
         {
           "id": "booking_quotas_online",
-          "latency_ms": 339.6894000034081,
+          "latency_ms": 1104.1027000028407,
           "mrr": 1.0,
           "retrieved": [
             "irctc_terms_conditions.pdf p1",
@@ -2864,28 +2864,28 @@
         },
         {
           "id": "booking_hours",
-          "latency_ms": 330.0139999992098,
+          "latency_ms": 1034.9678000056883,
           "mrr": 1.0,
           "retrieved": [
             "irctc_terms_conditions.pdf p4",
             "irctc_cancellation_refund_rules.pdf p1",
-            "irctc_terms_conditions.pdf p6",
             "irctc_terms_conditions.pdf p4",
+            "irctc_terms_conditions.pdf p6",
             "indian_railways_concession_rules.pdf p17"
           ],
           "hit@1": 1.0,
           "ndcg@1": 1.0,
           "recall@1": 1.0,
           "hit@3": 1.0,
-          "ndcg@3": 0.46927872602275644,
+          "ndcg@3": 0.7039180890341347,
           "recall@3": 1.0,
           "hit@5": 1.0,
-          "ndcg@5": 0.48522855511632257,
+          "ndcg@5": 0.5087403079104241,
           "recall@5": 1.0
         },
         {
           "id": "advance_reservation_period",
-          "latency_ms": 386.1873999994714,
+          "latency_ms": 1314.6993999980623,
           "mrr": 1.0,
           "retrieved": [
             "irctc_terms_conditions.pdf p4",
@@ -2906,7 +2906,7 @@
         },
         {
           "id": "eticket_cancel_counter",
-          "latency_ms": 367.27350000001024,
+          "latency_ms": 1077.184900001157,
           "mrr": 0.5,
           "retrieved": [
             "irctc_eticket_faq.pdf p2",
@@ -2927,7 +2927,7 @@
         },
         {
           "id": "cancel_problem_email",
-          "latency_ms": 336.09539999451954,
+          "latency_ms": 994.3242000008468,
           "mrr": 0.3333333333333333,
           "retrieved": [
             "irctc_terms_conditions.pdf p6",
@@ -2948,7 +2948,7 @@
         },
         {
           "id": "tatkal_opening_time",
-          "latency_ms": 355.2456999968854,
+          "latency_ms": 1173.6086000018986,
           "mrr": 1.0,
           "retrieved": [
             "irctc_tatkal_faq.pdf p2",
@@ -2969,28 +2969,28 @@
         },
         {
           "id": "tatkal_classes",
-          "latency_ms": 369.0520999953151,
+          "latency_ms": 1104.5925000071293,
           "mrr": 1.0,
           "retrieved": [
             "irctc_terms_conditions.pdf p1",
             "irctc_tatkal_faq.pdf p1",
-            "irctc_tatkal_faq.pdf p1",
             "irctc_tatkal_faq.pdf p2",
+            "irctc_tatkal_faq.pdf p1",
             "irctc_tatkal_faq.pdf p2"
           ],
           "hit@1": 1.0,
           "ndcg@1": 1.0,
           "recall@1": 0.3333333333333333,
           "hit@3": 1.0,
-          "ndcg@3": 1.0,
+          "ndcg@3": 0.7653606369886217,
           "recall@3": 0.6666666666666666,
           "hit@5": 1.0,
-          "ndcg@5": 0.7227265726449519,
+          "ndcg@5": 0.6992148198508501,
           "recall@5": 0.6666666666666666
         },
         {
           "id": "tatkal_charges",
-          "latency_ms": 368.8190999964718,
+          "latency_ms": 1236.5800999978092,
           "mrr": 1.0,
           "retrieved": [
             "irctc_tatkal_faq.pdf p1",
@@ -3011,7 +3011,7 @@
         },
         {
           "id": "tatkal_sleeper_max",
-          "latency_ms": 372.62389999523293,
+          "latency_ms": 1016.9828000070993,
           "mrr": 1.0,
           "retrieved": [
             "irctc_tatkal_faq.pdf p2",
@@ -3032,7 +3032,7 @@
         },
         {
           "id": "tatkal_refund",
-          "latency_ms": 372.9842999964603,
+          "latency_ms": 915.0892000034219,
           "mrr": 1.0,
           "retrieved": [
             "irctc_tatkal_faq.pdf p2",
@@ -3053,7 +3053,7 @@
         },
         {
           "id": "tatkal_concession",
-          "latency_ms": 365.5483999973512,
+          "latency_ms": 1211.3662000047043,
           "mrr": 1.0,
           "retrieved": [
             "irctc_tatkal_faq.pdf p1",
@@ -3074,7 +3074,7 @@
         },
         {
           "id": "tatkal_ladies_quota",
-          "latency_ms": 367.8368000037153,
+          "latency_ms": 1048.4823000006145,
           "mrr": 1.0,
           "retrieved": [
             "irctc_tatkal_faq.pdf p1",
@@ -3095,7 +3095,7 @@
         },
         {
           "id": "tatkal_max_passengers",
-          "latency_ms": 377.12070000270614,
+          "latency_ms": 1146.2652000045637,
           "mrr": 1.0,
           "retrieved": [
             "irctc_terms_conditions.pdf p7",
@@ -3116,7 +3116,7 @@
         },
         {
           "id": "cancel_more_48h",
-          "latency_ms": 331.41450000402983,
+          "latency_ms": 924.668899999233,
           "mrr": 1.0,
           "retrieved": [
             "irctc_cancellation_refund_rules.pdf p1",
@@ -3137,7 +3137,7 @@
         },
         {
           "id": "cancel_12_to_4h",
-          "latency_ms": 339.15780000097584,
+          "latency_ms": 1042.7448999980697,
           "mrr": 1.0,
           "retrieved": [
             "irctc_cancellation_refund_rules.pdf p1",
@@ -3158,7 +3158,7 @@
         },
         {
           "id": "cancel_48_to_12h",
-          "latency_ms": 310.7657000000472,
+          "latency_ms": 814.431799997692,
           "mrr": 1.0,
           "retrieved": [
             "irctc_cancellation_refund_rules.pdf p1",
@@ -3179,7 +3179,7 @@
         },
         {
           "id": "waitlist_cancel_charge",
-          "latency_ms": 328.7121999965166,
+          "latency_ms": 818.9574999996694,
           "mrr": 1.0,
           "retrieved": [
             "irctc_cancellation_refund_rules.pdf p1",
@@ -3200,7 +3200,7 @@
         },
         {
           "id": "waitlist_after_chart",
-          "latency_ms": 333.2027999931597,
+          "latency_ms": 888.8689000013983,
           "mrr": 1.0,
           "retrieved": [
             "irctc_cancellation_refund_rules.pdf p1",
@@ -3221,7 +3221,7 @@
         },
         {
           "id": "train_late_3h",
-          "latency_ms": 375.5123000009917,
+          "latency_ms": 1020.1060000108555,
           "mrr": 1.0,
           "retrieved": [
             "irctc_cancellation_refund_rules.pdf p3",
@@ -3242,7 +3242,7 @@
         },
         {
           "id": "tdr_ac_failure",
-          "latency_ms": 364.1962000037893,
+          "latency_ms": 932.2394000046188,
           "mrr": 1.0,
           "retrieved": [
             "irctc_cancellation_refund_rules.pdf p3",
@@ -3263,7 +3263,7 @@
         },
         {
           "id": "train_fully_cancelled",
-          "latency_ms": 357.9920999982278,
+          "latency_ms": 1028.9249000052223,
           "mrr": 0.0,
           "retrieved": [
             "irctc_terms_conditions.pdf p6",
@@ -3284,7 +3284,7 @@
         },
         {
           "id": "luggage_free_sleeper",
-          "latency_ms": 340.3609000015422,
+          "latency_ms": 1074.1019000124652,
           "mrr": 1.0,
           "retrieved": [
             "indian_railways_luggage_rules.pdf p5",
@@ -3305,7 +3305,7 @@
         },
         {
           "id": "luggage_excess_unbooked",
-          "latency_ms": 331.50949999981094,
+          "latency_ms": 1113.3471999928588,
           "mrr": 1.0,
           "retrieved": [
             "indian_railways_luggage_rules.pdf p5",
@@ -3326,12 +3326,12 @@
         },
         {
           "id": "luggage_suitcase_size",
-          "latency_ms": 325.7588000051328,
+          "latency_ms": 933.8922999886563,
           "mrr": 1.0,
           "retrieved": [
             "indian_railways_luggage_rules.pdf p4",
-            "indian_railways_luggage_rules.pdf p5",
             "indian_railways_luggage_rules.pdf p4",
+            "indian_railways_luggage_rules.pdf p5",
             "indian_railways_luggage_rules.pdf p4",
             "indian_railways_luggage_rules.pdf p5"
           ],
@@ -3339,15 +3339,15 @@
           "ndcg@1": 1.0,
           "recall@1": 1.0,
           "hit@3": 1.0,
-          "ndcg@3": 0.7039180890341347,
+          "ndcg@3": 0.7653606369886217,
           "recall@3": 1.0,
           "hit@5": 1.0,
-          "ndcg@5": 0.75369761125927,
+          "ndcg@5": 0.8048099750039491,
           "recall@5": 1.0
         },
         {
           "id": "luggage_banned_items",
-          "latency_ms": 312.39430000277935,
+          "latency_ms": 1029.3407999997726,
           "mrr": 1.0,
           "retrieved": [
             "indian_railways_luggage_rules.pdf p4",
@@ -3368,7 +3368,7 @@
         },
         {
           "id": "luggage_bulky",
-          "latency_ms": 328.30610000382876,
+          "latency_ms": 874.2406999954255,
           "mrr": 1.0,
           "retrieved": [
             "indian_railways_luggage_rules.pdf p4",
@@ -3389,7 +3389,7 @@
         },
         {
           "id": "pet_dog_classes",
-          "latency_ms": 361.2091999966651,
+          "latency_ms": 991.2384999915957,
           "mrr": 1.0,
           "retrieved": [
             "indian_railways_luggage_rules.pdf p6",
@@ -3410,7 +3410,7 @@
         },
         {
           "id": "concession_cancer",
-          "latency_ms": 354.11159999785013,
+          "latency_ms": 992.6401999982772,
           "mrr": 1.0,
           "retrieved": [
             "indian_railways_concession_rules.pdf p2",
@@ -3431,7 +3431,7 @@
         },
         {
           "id": "concession_students_hometown",
-          "latency_ms": 349.95250000065425,
+          "latency_ms": 789.895300011267,
           "mrr": 1.0,
           "retrieved": [
             "indian_railways_concession_rules.pdf p3",
@@ -3452,7 +3452,7 @@
         },
         {
           "id": "concession_min_distance",
-          "latency_ms": 387.7266999988933,
+          "latency_ms": 726.576599990949,
           "mrr": 1.0,
           "retrieved": [
             "indian_railways_concession_rules.pdf p5",
@@ -3473,28 +3473,28 @@
         },
         {
           "id": "concession_premium_trains",
-          "latency_ms": 356.32759999862174,
+          "latency_ms": 794.9116000090726,
           "mrr": 1.0,
           "retrieved": [
             "indian_railways_concession_rules.pdf p5",
             "indian_railways_concession_rules.pdf p22",
-            "indian_railways_concession_rules.pdf p5",
             "indian_railways_concession_rules.pdf p6",
+            "indian_railways_concession_rules.pdf p5",
             "indian_railways_concession_rules.pdf p5"
           ],
           "hit@1": 1.0,
           "ndcg@1": 1.0,
           "recall@1": 1.0,
           "hit@3": 1.0,
-          "ndcg@3": 0.7039180890341347,
+          "ndcg@3": 0.46927872602275644,
           "recall@3": 1.0,
           "hit@5": 1.0,
-          "ndcg@5": 0.639945385422766,
+          "ndcg@5": 0.6164336326286644,
           "recall@5": 1.0
         },
         {
           "id": "season_ticket_distance",
-          "latency_ms": 340.9490000049118,
+          "latency_ms": 764.3363999959547,
           "mrr": 1.0,
           "retrieved": [
             "indian_railways_concession_rules.pdf p8",
@@ -3515,7 +3515,7 @@
         },
         {
           "id": "free_mst_students",
-          "latency_ms": 290.37870000320254,
+          "latency_ms": 631.2707999895792,
           "mrr": 1.0,
           "retrieved": [
             "indian_railways_concession_rules.pdf p9",
@@ -3536,7 +3536,7 @@
         },
         {
           "id": "duplicate_ticket_after_chart",
-          "latency_ms": 350.9608999956981,
+          "latency_ms": 875.5735000013374,
           "mrr": 1.0,
           "retrieved": [
             "indian_railways_concession_rules.pdf p21",
@@ -3557,7 +3557,7 @@
         },
         {
           "id": "duplicate_ticket_fir",
-          "latency_ms": 341.34980000089854,
+          "latency_ms": 1013.056299998425,
           "mrr": 1.0,
           "retrieved": [
             "indian_railways_concession_rules.pdf p22",
@@ -3578,7 +3578,7 @@
         },
         {
           "id": "ac_failure_refund",
-          "latency_ms": 386.8183999948087,
+          "latency_ms": 1021.9963999988977,
           "mrr": 1.0,
           "retrieved": [
             "indian_railways_concession_rules.pdf p20",

@@ -15,16 +15,15 @@ from langchain_core.messages import AIMessage, BaseMessage, SystemMessage
 from langgraph.graph import START, END, StateGraph
 from langgraph.graph.message import add_messages
 from langgraph.prebuilt import ToolNode, tools_condition
-from langgraph.checkpoint.memory import MemorySaver
 
 try:
     from backend.llm_service import llm
-    from backend.tools import station_search, train_search, train_details, railway_knowledge_search
+    from backend.tools import station_search, train_search, train_details, live_train_status, railway_knowledge_search
     from backend.intent_service import extract_user_intent
     from backend.train_ranker import normalize_preference
 except ModuleNotFoundError:
     from llm_service import llm
-    from tools import station_search, train_search, train_details, railway_knowledge_search
+    from tools import station_search, train_search, train_details, live_train_status, railway_knowledge_search
     from intent_service import extract_user_intent
     from train_ranker import normalize_preference
 
@@ -34,7 +33,7 @@ class ToolState(TypedDict):
     preference: str | None
 
 
-train_tools = [station_search, train_search, train_details]
+train_tools = [station_search, train_search, train_details, live_train_status]
 rag_tools = [railway_knowledge_search]
 
 train_llm = llm.bind_tools(train_tools)
@@ -58,7 +57,16 @@ CRITICAL RULES:
    and ask the user to specify which one they mean.
 7. If station_search returns a "no_stations_found" error, tell the user the station
    was not found and ask them to check the spelling or provide a station code.
-8. If the user asks a follow-up like "which one is faster?" or "compare them" but
+8. For questions about where a train is NOW, its current delay, or whether it is
+   running late, call live_train_status with the train number. If the train
+   number is not known, find it with train_search first or ask the user.
+   Report the current/last station, delay in minutes, next halt and the
+   last_updated_at time, and say the data is live from RailRadar (crowdsourced).
+   If live_train_status returns an "error", relay its message and offer the
+   scheduled timetable from train_details instead. Never guess live positions.
+9. Timetable results from train_search and train_details come from a static
+   2017 schedule; mention this briefly when presenting them.
+10. If the user asks a follow-up like "which one is faster?" or "compare them" but
    there are NO previous train search results visible in the conversation history,
    politely tell them you don't have a previous search result to compare —
    ask them to first search for trains between their desired stations.
@@ -193,5 +201,6 @@ builder.add_edge("rag_agent", END)
 
 builder.add_edge("chat_agent", END)
 
-memory = MemorySaver()
-tool_graph = builder.compile(checkpointer=memory)
+# No checkpointer: chat history is kept by conversation_store (bounded), and
+# passed in with each request.
+tool_graph = builder.compile()

@@ -14,6 +14,16 @@ class Settings(BaseSettings):
     groq_api_key: str = ""
     groq_model: str = "llama-3.1-8b-instant"
 
+    # Optional live running status (RailRadar). Disabled when the key is empty.
+    railradar_api_key: str = ""
+    railradar_base_url: str = "https://api.railradar.in"
+    # Stop calling once this many requests were made in the current month by
+    # this process, or when RailRadar reports this few requests left.
+    railradar_monthly_budget: int = 90
+    railradar_min_remaining: int = 5
+    railradar_cache_ttl_seconds: int = 300
+    railradar_timeout_seconds: float = 10.0
+
     model_config = SettingsConfigDict(
         env_file=".env",
         env_file_encoding="utf-8",

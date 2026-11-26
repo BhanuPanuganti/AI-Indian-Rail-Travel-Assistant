@@ -9,7 +9,13 @@ from qdrant_client.models import (
     PointStruct,
     VectorParams,
 )
-from sentence_transformers import SentenceTransformer
+
+try:
+    from backend.rag.retriever import COLLECTION_NAME, embed_texts
+except ModuleNotFoundError:
+    import sys
+    sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+    from backend.rag.retriever import COLLECTION_NAME, embed_texts
 
 
 BASE_DIR = Path(__file__).parent
@@ -21,9 +27,6 @@ load_dotenv()
 QDRANT_URL = os.getenv("QDRANT_URL")
 QDRANT_API_KEY = os.getenv("QDRANT_API_KEY")
 
-COLLECTION_NAME = "indian_railway_knowledge"
-
-MODEL_NAME = "BAAI/bge-small-en-v1.5"
 
 
 def load_chunks():
@@ -44,12 +47,6 @@ def load_chunks():
 
 def create_vector_store():
 
-    print("Loading embedding model...")
-
-    model = SentenceTransformer(
-        MODEL_NAME
-    )
-
     chunks = load_chunks()
 
     print(
@@ -61,11 +58,8 @@ def create_vector_store():
         for chunk in chunks
     ]
 
-    embeddings = model.encode(
-        texts,
-        normalize_embeddings=True,
-        show_progress_bar=True,
-    )
+    # Same embedding function the backend uses at query time.
+    embeddings = embed_texts(texts)
 
     dimension = embeddings.shape[1]
 

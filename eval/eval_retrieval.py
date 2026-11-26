@@ -3,7 +3,7 @@ Retrieval evaluation with an ablation over the RAG pipeline's stages.
 
 Compares, on the golden question set:
   bm25            keyword search only
-  vector          dense search only (bge-small-en-v1.5, cosine)
+  vector          dense search only (bge-small-en-v1.5 via fastembed/ONNX, cosine)
   hybrid          vector + BM25 fused with Reciprocal Rank Fusion
   hybrid+rerank   hybrid candidates re-scored by the cross-encoder (production path)
 
@@ -38,7 +38,7 @@ from eval.metrics import hit_at_k, ndcg_at_k, page_recall_at_k, reciprocal_rank
 
 from backend.rag.bm25_store import bm25_search
 from backend.rag.hybrid_retriever import reciprocal_rank_fusion
-from backend.rag.reranker import get_reranker
+from backend.rag.reranker import score
 from backend.rag.retriever import embed_texts, retrieve
 
 K_VALUES = (1, 3, 5)
@@ -69,8 +69,6 @@ class LocalVectorIndex:
 
 
 def build_methods(vector_search):
-    reranker = get_reranker()
-
     def bm25(query):
         return bm25_search(query, top_k=CANDIDATE_K)
 
@@ -83,7 +81,7 @@ def build_methods(vector_search):
 
     def hybrid_rerank(query):
         candidates = hybrid(query)
-        scores = reranker.predict([(query, c["text"]) for c in candidates])
+        scores = score(query, [c["text"] for c in candidates])
         order = sorted(range(len(candidates)), key=lambda i: float(scores[i]), reverse=True)
         return [candidates[i] for i in order[:FINAL_K]]
 

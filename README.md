@@ -56,6 +56,7 @@ This project provides a unified, AI-assisted interface that combines a static tr
 | **Train ranking** | Results can be sorted by fastest, shortest distance, or a balanced score combining both. A single recommended train is always highlighted. |
 | **Station search** | Resolve a city or partial station name to matching station codes from the timetable dataset. |
 | **Train route / stops** | Retrieve the full ordered stop list for any train number. |
+| **Live running status (optional)** | Ask "where is 12302 right now?" or "is it running late?" to get the train's current station, delay, and next halt from the [RailRadar](https://railradar.in/docs) API. Off unless `RAILRADAR_API_KEY` is set; responses are cached and calls stop at a monthly budget, so the free 100-requests/month plan is never overrun. |
 | **Conversational AI assistant** | Multi-turn chat backed by a LangGraph agent. Maintains conversation memory within a session. |
 | **Intent detection & routing** | Every user message is classified into one of five intents (train search, train details, station search, railway rules, or general chat) before routing to the correct agent. |
 | **RAG over official documents** | Policy questions are answered using hybrid retrieval over six official IRCTC and Indian Railways PDF documents, followed by cross-encoder reranking and an LLM synthesis step. |
@@ -122,16 +123,16 @@ flowchart TD
 flowchart LR
     Browser([Browser])
     StreamlitCloud[Streamlit Community Cloud\nfrontend/app.py]
-    RailwayPlatform[Railway Platform\nDocker · FastAPI backend]
+    RailwayPlatform[Render\nDocker · FastAPI backend]
 
     Browser -->|HTTPS| StreamlitCloud
     StreamlitCloud -->|API_URL env var\nHTTPS| RailwayPlatform
 ```
 
 - The **Streamlit frontend** is deployed on Streamlit Community Cloud.
-- The **FastAPI backend** is deployed on Railway using the provided `Dockerfile`.
+- The **FastAPI backend** is deployed on Render using the provided `Dockerfile`.
 - The frontend communicates with the backend exclusively via the `API_URL` environment variable / Streamlit secret.
-- All API keys (`GEMINI_API_KEY`, `GROQ_API_KEY`) live only in the backend's Railway environment — they are never exposed to or stored in the frontend.
+- All API keys (`GEMINI_API_KEY`, `GROQ_API_KEY`) live only in the backend's Render environment — they are never exposed to or stored in the frontend.
 
 ---
 
@@ -153,7 +154,7 @@ flowchart LR
 | **Uvicorn** | ASGI server (standard extras) |
 | **Pydantic / pydantic-settings** | Request/response validation and typed settings from `.env` |
 | **python-dotenv** | Loads `.env` into environment on local runs |
-| **pandas** | In-memory train schedule dataset loading and querying |
+| **SQLite** | Indexed train timetable built from the CSV; queried from disk to keep memory low |
 
 ### AI / LLM
 
@@ -168,11 +169,11 @@ flowchart LR
 
 | Technology | Purpose |
 |---|---|
-| **Qdrant** (`qdrant-client`) | Local on-disk vector store for dense document retrieval |
-| **BAAI/bge-small-en-v1.5** (`sentence-transformers`) | Embedding model used for both ingestion and query encoding |
+| **Qdrant Cloud** (`qdrant-client`) | Hosted vector store for dense document retrieval |
+| **BAAI/bge-small-en-v1.5** (`fastembed`, ONNX Runtime) | Embedding model used for both ingestion and query encoding |
 | **BM25Okapi** (`rank-bm25`) | Keyword-based retrieval using BM25 scoring |
 | **Reciprocal Rank Fusion** | Custom implementation merging vector and BM25 result lists |
-| **cross-encoder/ms-marco-MiniLM-L6-v2** (`sentence-transformers`) | Cross-encoder reranker that rescores the top 15 hybrid candidates |
+| **ms-marco-MiniLM-L-6-v2** cross-encoder (`fastembed`, ONNX Runtime) | Reranker that rescores the top 15 hybrid candidates |
 | **PyPDF** (`pypdf`) | PDF loading during document ingestion |
 | **LangChain text splitters** | Recursive character text splitting during ingestion |
 
@@ -189,7 +190,7 @@ flowchart LR
 | Technology | Purpose |
 |---|---|
 | **Docker** | Containerises the FastAPI backend (`python:3.11-slim` base image) |
-| **Railway** | Cloud platform hosting the backend container |
+| **Render** | Cloud platform hosting the backend container (free 512 MB instance) |
 | **Streamlit Community Cloud** | Hosts the frontend application |
 
 ---
@@ -210,7 +211,7 @@ flowchart TD
     C -->|calls| F["station_search tool"]
     C -->|calls| G["train_search tool"]
     C -->|calls| H["train_details tool"]
-    F & G & H --> I["railway_repository.py\n(pandas on CSV)"]
+    F & G & H --> I["railway_repository.py\n(SQLite timetable)"]
     I --> C --> J["LLM formats answer"]
 
     D --> K["railway_knowledge_search tool\n(tools.py)"]
@@ -252,7 +253,7 @@ For policy and rules questions, the agent directly calls `railway_knowledge_sear
 The `FallbackLLM` wrapper tries Gemini first. On any `429 / RESOURCE_EXHAUSTED / quota` error, it transparently retries with the Groq/LLaMA fallback. The fallback applies to `.invoke()`, `.bind_tools()`, and `.with_structured_output()`, making it a seamless drop-in replacement.
 
 **Conversation memory**  
-LangGraph's `MemorySaver` checkpointer stores the conversation message list in memory, keyed by `thread_id`. Each browser session gets a unique UUID thread. Memory is not persisted to disk — it resets when the backend restarts.
+A bounded in-memory store (`conversation_store.py`) keeps each conversation's recent messages, keyed by `thread_id`, and passes them to the graph with every request. Each browser session gets a unique UUID thread. History is trimmed to the last 20 messages (always starting at a user message) and only the 200 most recently used conversations are kept. It is not persisted to disk and resets when the backend restarts.
 
 ---
 
@@ -270,7 +271,7 @@ The project ships with an offline evaluation suite (`eval/`) and unit tests (`te
 ### Golden datasets
 
 - `eval/datasets/rag_golden.jsonl` — 45 hand-written questions over the six policy PDFs. Each answerable question lists the (document, page) pairs that contain the answer and the key facts a correct answer must state; 3 questions are deliberately unanswerable from the documents to test refusals. Relevance is judged at page level, so the labels stay valid if the PDFs are re-chunked.
-- `eval/datasets/intent_golden.jsonl` — 50 labelled messages across all five intents, including multi-turn follow-ups ("which one is faster?", "show me its route") and ranking preferences.
+- `eval/datasets/intent_golden.jsonl` — 54 labelled messages across all five intents, including multi-turn follow-ups ("which one is faster?", "show me its route", "how late is it?") and ranking preferences.
 
 ### Results
 
@@ -282,9 +283,9 @@ The project ships with an offline evaluation suite (`eval/`) and unit tests (`te
 | BM25 only | 0.762 | 0.881 | 0.881 | 0.810 | 0.535 | 0.821 |
 | Vector only | 0.786 | 0.905 | 0.929 | 0.851 | 0.583 | 0.871 |
 | Hybrid (RRF) | 0.810 | 0.857 | 0.929 | 0.851 | 0.597 | 0.877 |
-| **Hybrid + rerank (production)** | **0.905** | **0.976** | **0.976** | **0.937** | **0.655** | **0.931** |
+| **Hybrid + rerank (production)** | **0.905** | **0.976** | **0.976** | **0.937** | **0.652** | **0.931** |
 
-Each stage adds value; the cross-encoder reranker gives the largest gain (+9.5 points Hit@1 over hybrid). Full per-question output: [`eval/results/retrieval.md`](eval/results/retrieval.md).
+Each stage adds value; the cross-encoder reranker gives the largest gain (+9.5 points Hit@1 over hybrid). Scores are identical whether the vector search runs against the live Qdrant Cloud collection or the in-memory index, and the production int8 reranker matches the fp32 one on every metric except nDCG@5 (0.652 vs 0.655). Full per-question output: [`eval/results/retrieval.md`](eval/results/retrieval.md).
 
 Intent-router and answer-quality results will be added after a full run.
 <!-- EVAL_RESULTS_END -->
@@ -458,6 +459,35 @@ Returns the full, ordered list of stops for a given train.
 
 ---
 
+### `GET /trains/{train_number}/live`
+
+Live running status from RailRadar. Requires `RAILRADAR_API_KEY`; without it the response carries `"error": "live_status_not_configured"`.
+
+**Path parameter:** `train_number` — e.g. `12302`
+**Query parameter (optional):** `date` — journey start date `YYYY-MM-DD` (the day the train left its source station); omit for the current run.
+
+**Example response**
+```json
+{
+  "train_number": "12919",
+  "live": {
+    "train_name": "Malwa SF Express",
+    "status": "running",
+    "delay_minutes": 4,
+    "last_updated_at": "2026-11-02T14:01:51+05:30",
+    "current_location": { "station_code": "UJN", "station_name": "Ujjain Jn", "status": "at-station" },
+    "previous_halt": { "station_code": "DWX", "station_name": "Dewas" },
+    "next_halt": { "station_code": "NAD", "station_name": "Nagda Jn" },
+    "source": "RailRadar live status (crowdsourced; may be delayed or inaccurate)",
+    "cached": false
+  }
+}
+```
+
+Errors are returned as `{"train_number": ..., "error": "<code>", "message": "..."}` with codes `train_not_found`, `train_not_running`, `live_status_quota_reached`, `live_status_busy`, `live_status_unavailable`, `live_status_unreachable` or `live_status_not_configured`.
+
+---
+
 ### `POST /chat`
 
 Send a message to the AI assistant. The assistant maintains per-session conversation history using `thread_id`.
@@ -503,8 +533,10 @@ AI-Indian-Rail-Travel-Assistant/
 │   │                            #   train_details, railway_knowledge_search
 │   ├── train_service.py         # High-level train search helpers used by tools and routes
 │   ├── train_ranker.py          # Sorts and recommends trains by preference
-│   ├── railway_repository.py    # pandas-based data access layer over the CSV dataset
-│   ├── data_loader.py           # Reads and parses the train schedule CSV
+│   ├── railway_repository.py    # SQLite data access layer (stations, direct trains, routes)
+│   ├── train_db.py              # Builds the indexed SQLite timetable from the CSV
+│   ├── railradar_client.py      # Optional live running status (cached, budgeted)
+│   ├── conversation_store.py    # Bounded per-conversation chat history
 │   ├── time_utils.py            # Duration calculation (handles overnight journeys)
 │   ├── format_utils.py          # Formats minutes into human-readable "2h 35m"
 │   ├── models.py                # Pydantic models: TrainStop, TrainSearchResult,
@@ -520,7 +552,7 @@ AI-Indian-Rail-Travel-Assistant/
 │       ├── rag_service.py       # Orchestrates retrieval → context building → LLM synthesis
 │       ├── chunks.jsonl         # Pre-processed document chunks (committed to repo)
 │       ├── documents/           # Source PDFs (6 official IRCTC/IR documents)
-│       └── qdrant_data/         # Local Qdrant vector database (git-ignored, built locally)
+│       └── preload_models.py    # Downloads the ONNX models (run at Docker build time)
 ├── frontend/
 │   └── app.py                   # Streamlit UI — search form, chat interface, train cards
 ├── data/
@@ -535,9 +567,11 @@ AI-Indian-Rail-Travel-Assistant/
 │   └── results/                 # Latest evaluation outputs (.json + .md)
 ├── tests/                       # pytest suite for the train data layer and metrics
 ├── Dockerfile                   # Backend Docker image (python:3.11-slim, port 8000)
-├── .dockerignore                # Excludes .venv, .env, qdrant_data from Docker build
-├── .gitignore                   # Excludes .env, .venv, qdrant_data, model weights
-├── requirements.txt             # All Python dependencies (backend + frontend)
+├── .dockerignore                # Keeps frontend, eval, tests, docs and secrets out of the image
+├── .gitignore                   # Excludes .env, .venv, the SQLite DB and model cache
+├── requirements.txt             # Everything for local development
+├── backend/requirements.txt     # Backend runtime only (installed in the Docker image)
+├── frontend/requirements.txt    # Streamlit app only (used by Streamlit Community Cloud)
 ├── requirements-dev.txt         # Adds pytest for tests and evaluation
 └── README.md
 ```
@@ -549,7 +583,7 @@ AI-Indian-Rail-Travel-Assistant/
 | `backend/tool_graph.py` | The main chat pipeline. Contains intent routing, three specialist agents (train, RAG, chat), and the LangGraph state machine. |
 | `backend/rag/ingest.py` | Run **once** to generate `chunks.jsonl` from the PDF documents. |
 | `backend/rag/vector_store.py` | Run **once** to build the Qdrant collection from `chunks.jsonl`. |
-| `backend/rag/qdrant_data/` | Generated locally; excluded from git and Docker. Must be rebuilt on a fresh clone. |
+| `backend/train_db.py` | Builds `data/railway/trains.sqlite` from the CSV (automatically on first use, and at Docker build time). |
 
 ---
 
@@ -597,23 +631,30 @@ Create a `.env` file in the **project root** (alongside `requirements.txt`):
 ```dotenv
 # Required
 GEMINI_API_KEY=your_gemini_api_key_here
+QDRANT_URL=https://your-cluster-endpoint
+QDRANT_API_KEY=your_qdrant_api_key
 
-# Optional — enables automatic LLM fallback when Gemini hits quota
+# Optional — automatic LLM fallback when Gemini hits quota
 GROQ_API_KEY=your_groq_api_key_here
+
+# Optional — live train running status (RailRadar)
+RAILRADAR_API_KEY=your_railradar_key
 ```
 
 > ⚠️ **Never commit `.env` to git.** It is already listed in `.gitignore`.
 
-### 5 — Build the RAG vector store (one-time)
+### 5 — Build the RAG vector store (once per Qdrant cluster)
 
 The `chunks.jsonl` file (pre-extracted text chunks from the PDFs) is already committed.
-You only need to build the Qdrant collection:
+Create a free cluster on [Qdrant Cloud](https://cloud.qdrant.io/), put its endpoint and API key in `.env`, then upload the embeddings:
 
 ```bash
 python backend/rag/vector_store.py
 ```
 
-This embeds the chunks using `BAAI/bge-small-en-v1.5` and writes them to `backend/rag/qdrant_data/`. This step is required on every fresh clone.
+This embeds the 206 chunks with `BAAI/bge-small-en-v1.5` (via fastembed) and uploads them to the `indian_railway_knowledge` collection. Re-run it whenever you create a new cluster; free clusters are suspended and eventually deleted after a period of inactivity.
+
+The train timetable database (`data/railway/trains.sqlite`) is built automatically from the CSV on first use; to build it explicitly run `python -m backend.train_db`.
 
 > If you also want to re-extract chunks from the PDFs (e.g. after changing documents):
 > ```bash
@@ -648,27 +689,52 @@ By default, the frontend points to `http://127.0.0.1:8000` when no `API_URL` env
 
 The project uses a **two-service deployment**:
 
-- FastAPI backend → **Railway** (Docker container)
+- FastAPI backend → **Render** (Docker web service, free 512 MB instance)
 - Streamlit frontend → **Streamlit Community Cloud**
 
-### Backend — Railway
+### Backend — Render
 
-1. Push the repository to GitHub.
-2. Create a new project on [Railway](https://railway.app/) and connect the GitHub repository.
-3. Railway will detect the `Dockerfile` and build automatically.
-4. In Railway's **Variables** tab, add:
+1. In the [Render dashboard](https://dashboard.render.com/), choose **New → Web Service** and connect this GitHub repository.
+2. Settings:
+
+   | Setting | Value |
+   |---|---|
+   | Branch | `main` |
+   | Language / Runtime | Docker (uses the root `Dockerfile`) |
+   | Root directory | *(empty)* |
+   | Instance type | Free |
+   | Health check path | `/health` (under **Advanced**) |
+
+3. Add environment variables:
 
    | Variable | Value |
    |---|---|
    | `GEMINI_API_KEY` | Your Gemini API key |
-   | `GROQ_API_KEY` | Your Groq API key (optional) |
+   | `QDRANT_URL` / `QDRANT_API_KEY` | Your Qdrant Cloud cluster endpoint and key |
+   | `GROQ_API_KEY` | Groq key (optional fallback) |
+   | `RAILRADAR_API_KEY` | RailRadar key (optional live status) |
 
-5. Railway exposes the service on a public URL (e.g. `https://your-app.up.railway.app`).
-6. Verify the deployment:
-   - `GET https://your-app.up.railway.app/health` → `{ "status": "healthy" }`
-   - `GET https://your-app.up.railway.app/docs` → Swagger UI
+   Render sets `PORT` itself; the container listens on it.
+4. Create the service. Render builds the image, which also builds the SQLite timetable and downloads the ONNX models, so the server starts without network downloads. With auto-deploy on, every push to `main` redeploys.
+5. Verify:
+   - `GET https://<service>.onrender.com/health` → `{ "status": "healthy" }`
+   - `GET https://<service>.onrender.com/docs` → Swagger UI
 
-> **Important:** The `qdrant_data/` directory is excluded from the Docker build (see `.dockerignore`). The Qdrant vector store is rebuilt at container startup from `chunks.jsonl`, which is committed to the repository. This happens the first time a RAG query is made (the embedding model is preloaded at startup via the `lifespan` hook).
+> **Free-tier behaviour:** the service sleeps after about 15 minutes without traffic, and the first request afterwards waits for it to start again. The free instance also has only a fraction of a CPU, so RAG answers are slower than locally.
+
+#### Memory budget (512 MB)
+
+The backend was slimmed to fit the free instance:
+
+| Change | Effect |
+|---|---|
+| `sentence-transformers` / PyTorch → **fastembed** (ONNX Runtime), same `bge-small-en-v1.5` and MiniLM cross-encoder (int8 export) | Retrieval metrics unchanged apart from nDCG@5 0.655 → 0.652 (see [Evaluation](#evaluation)); no torch in the image; reranking 2× faster |
+| ONNX Runtime CPU memory arena off, 1 inference thread, reranking in batches of 4 | Memory stays flat across queries; no temporary spike when scoring 15 passages |
+| pandas DataFrame → **SQLite** file built from the CSV at image build time | Timetable is read from disk; results verified identical to the pandas version |
+| LangGraph `MemorySaver` → bounded conversation store (last 20 messages × 200 conversations) | Chat history can no longer grow without limit |
+| Backend-only `backend/requirements.txt` in the image | No Streamlit, pandas, LangChain community or PDF tooling installed |
+
+Tested in Docker with a hard 512 MB limit (`--memory=512m`): after 40 train-endpoint requests and four chat turns (RAG, train search, follow-up) the container's peak memory was **381 MiB**, with no OOM kill. The previous build needed ~770 MB and was OOM-killed on its first RAG question under the same limit.
 
 ### Frontend — Streamlit Community Cloud
 
@@ -678,14 +744,15 @@ The project uses a **two-service deployment**:
    ```
    frontend/app.py
    ```
+   Streamlit installs `frontend/requirements.txt` (Streamlit and requests only).
 4. Under **Advanced settings → Secrets**, add:
    ```toml
-   API_URL = "https://your-app.up.railway.app"
+   API_URL = "https://<service>.onrender.com"
    ```
-   This points the deployed frontend to your Railway backend.
+   This points the deployed frontend to your Render backend.
 5. Click **Deploy**.
 
-> ⚠️ Do **not** add `GEMINI_API_KEY` or `GROQ_API_KEY` to the Streamlit secrets. These belong exclusively in the Railway backend environment. The frontend only needs `API_URL`.
+> ⚠️ Do **not** add `GEMINI_API_KEY`, `GROQ_API_KEY`, `QDRANT_API_KEY` or `RAILRADAR_API_KEY` to the Streamlit secrets. They belong only in the Render backend environment. The frontend only needs `API_URL`.
 
 ---
 
@@ -697,9 +764,21 @@ The project uses a **two-service deployment**:
 | `GEMINI_MODEL` | No | Backend | Gemini model name. Defaults to `gemini-3.1-flash-lite`. |
 | `GROQ_API_KEY` | No | Backend | Groq API key. Enables automatic LLM fallback on quota errors. Leave empty to disable. |
 | `GROQ_MODEL` | No | Backend | Groq model name. Defaults to `llama-3.1-8b-instant`. |
+| `RAILRADAR_API_KEY` | No | Backend | [RailRadar](https://railradar.in/pricing) API key. Enables live running status. Leave empty to disable. |
+| `RAILRADAR_MONTHLY_BUDGET` | No | Backend | Maximum live-status requests per month made by one backend process. Defaults to `90` (the free plan allows 100). |
+| `RAILRADAR_MIN_REMAINING` | No | Backend | Stop calling when RailRadar reports this many requests or fewer left this month. Defaults to `5`. |
+| `RAILRADAR_CACHE_TTL_SECONDS` | No | Backend | How long a live-status answer is reused before calling again. Defaults to `300`. |
+| `QDRANT_URL` | **Yes** | Backend | Qdrant Cloud cluster endpoint for the vector index. |
+| `QDRANT_API_KEY` | **Yes** | Backend | Qdrant Cloud API key. |
+| `MODEL_THREADS` | No | Backend | ONNX Runtime threads for embedding and reranking. Defaults to `1` (lowest memory); raise it on machines with more CPU for faster reranking. |
+| `MODEL_CPU_MEM_ARENA` | No | Backend | `1` enables ONNX Runtime's CPU memory arena (slightly faster, ~200 MB more memory). Defaults to `0`. |
+| `RERANKER_VARIANT` | No | Backend | `quantized` (default, int8, lower memory) or `full` (fp32) cross-encoder. |
+| `RERANK_BATCH_SIZE` | No | Backend | Passages scored per ONNX run. Defaults to `4` to cap peak memory. |
+| `MODEL_CACHE_DIR` | No | Backend | Where the ONNX models are stored. Defaults to `.model_cache/` locally and `/app/.model_cache` in Docker. |
+| `CHAT_MAX_MESSAGES` / `CHAT_MAX_THREADS` | No | Backend | Chat history kept per conversation (default `20` messages) and number of conversations kept (default `200`, least recently used dropped first). |
 | `API_URL` | No (local) | Frontend | Backend base URL. Defaults to `http://127.0.0.1:8000` when not set. Must be set in Streamlit secrets for the deployed frontend. |
 
-All backend variables are loaded from the `.env` file locally, or from the Railway environment in production. Variable names are case-insensitive via pydantic-settings.
+All backend variables are loaded from the `.env` file locally, or from the Render environment in production. Variable names are case-insensitive via pydantic-settings.
 
 ---
 
@@ -707,8 +786,8 @@ All backend variables are loaded from the `.env` file locally, or from the Railw
 
 - **API keys are never committed.** `.env` is listed in `.gitignore` and `.dockerignore`.
 - **`.streamlit/secrets.toml` is git-ignored.** Streamlit secrets are configured through the Streamlit Cloud UI only.
-- **Backend-only secrets.** `GEMINI_API_KEY` and `GROQ_API_KEY` are set in Railway environment variables and are never referenced in the frontend code.
-- **Qdrant data is git-ignored.** `backend/rag/qdrant_data/` is excluded to avoid committing large binary files.
+- **Backend-only secrets.** All API keys are set in Render environment variables and are never referenced in the frontend code.
+- **Generated files are git-ignored.** The SQLite timetable (`data/railway/trains.sqlite`) and downloaded models (`.model_cache/`) are rebuilt rather than committed.
 - **Model weights are git-ignored.** `.safetensors`, `.bin`, `.pt`, `.onnx` files are excluded to keep the repository lightweight.
 - If you accidentally commit a secret, rotate the key immediately and use `git filter-repo` or a similar tool to remove it from history.
 
@@ -721,15 +800,15 @@ All backend variables are loaded from the `.env` file locally, or from the Railw
 | Limitation | Detail |
 |---|---|
 | **Static schedule data** | The train timetable is from December 2017. Train numbers, timings, and routes may have changed. Always verify on [IRCTC](https://www.irctc.co.in/) before booking. |
-| **No real-time data** | There is no integration with live railway APIs for current running status, PNR status, seat availability, or live delays. |
-| **In-memory conversation history** | Chat history is held in the LangGraph `MemorySaver` (process memory). It resets when the backend restarts and is not shared across multiple backend instances. |
+| **Limited real-time data** | Live running status comes from RailRadar, a third-party crowdsourced service, and is capped at a monthly request budget (100 requests on the free plan). PNR status and seat availability are not supported. Train search and routes still use the 2017 timetable. |
+| **In-memory conversation history** | Chat history is held in a bounded in-process store (last 20 messages of the 200 most recent conversations). It resets when the backend restarts, including when the free Render instance sleeps, and is not shared across instances. |
 | **Travel date is UI-only** | The travel date field in the search form is displayed but not passed to the backend or used for filtering — the dataset does not include date-specific availability. |
 | **Direct trains only** | The search finds only direct trains with a common `Train No`. Multi-leg journeys requiring a change are not supported. |
 | **Single backend instance** | There is no horizontal scaling or caching layer. Multiple concurrent long-running RAG requests may slow response times. |
 
 ### Future Improvements
 
-- **Live railway API integration** — connect to the official National Train Enquiry System (NTES) or a third-party API for real-time running status, live delays, and current seat availability.
+- **Live timetable search** — on a paid RailRadar plan, use its trains-between-stations and schedule endpoints for search as well, keeping the 2017 dataset as an offline fallback.
 - **PNR status lookup** — allow users to check PNR status directly from the chat.
 - **Persistent conversation history** — store chat threads in a database so history survives backend restarts and can be retrieved across sessions.
 - **Authentication and user profiles** — enable users to save frequently used routes or receive personalised recommendations.

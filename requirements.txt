@@ -1,3 +1,8 @@
+# Everything for local development: backend + frontend + offline RAG tools.
+# Deployments use the smaller per-app files:
+#   backend/requirements.txt   (Docker image / Render)
+#   frontend/requirements.txt  (Streamlit Community Cloud)
+
 # Backend
 fastapi
 uvicorn[standard]
@@ -5,23 +10,25 @@ pydantic
 pydantic-settings
 python-dotenv
 httpx
-pandas
 
 # Frontend
 streamlit
+requests
 
 # AI / LLM
-langchain
 langchain-core
 langgraph
-langchain-community
-langchain-text-splitters
 langchain-groq
-google-genai
 langchain-google-genai
+google-genai
 
 # RAG / Vector Database
 qdrant-client
-pypdf
-sentence-transformers
+fastembed
 rank-bm25
+numpy
+
+# Offline document ingestion (backend/rag/ingest.py)
+langchain-community
+langchain-text-splitters
+pypdf

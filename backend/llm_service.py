@@ -74,6 +74,19 @@ def is_quota_error(exc: Exception) -> bool:
     return any(signal.lower() in msg for signal in _QUOTA_SIGNALS)
 
 
+# Provider-side failures worth retrying on the fallback model: overload,
+# outages and timeouts, as well as quota errors.
+_TRANSIENT_SIGNALS = (
+    "500", "502", "503", "504", "UNAVAILABLE", "DEADLINE_EXCEEDED",
+    "INTERNAL", "overloaded", "high demand", "timed out", "timeout",
+)
+
+
+def should_fall_back(exc: Exception) -> bool:
+    msg = str(exc).lower()
+    return is_quota_error(exc) or any(s.lower() in msg for s in _TRANSIENT_SIGNALS)
+
+
 # Process-wide counters, read by the offline evaluation scripts.
 LLM_STATS = {"calls": 0, "fallbacks": 0, "errors": 0, "input_tokens": 0, "output_tokens": 0}
 
@@ -94,7 +107,7 @@ def _record_usage(result) -> None:
 class FallbackLLM:
     """
     Wraps primary (Gemini) + optional fallback (Groq).
-    Automatically falls back on quota errors.
+    Automatically falls back on quota errors, overload/outage (5xx) and timeouts.
     Supports .invoke(), .bind_tools(), and .with_structured_output()
     so it can be used as a drop-in replacement for a LangChain ChatModel.
     """
@@ -108,8 +121,8 @@ class FallbackLLM:
         try:
             result = self._primary.invoke(messages, **kwargs)
         except Exception as exc:
-            if is_quota_error(exc) and self._fallback:
-                print(f"⚡ Gemini quota hit — switching to Groq fallback. ({exc})")
+            if should_fall_back(exc) and self._fallback:
+                print(f"⚡ Gemini unavailable — switching to Groq fallback. ({str(exc)[:160]})")
                 LLM_STATS["fallbacks"] += 1
                 result = self._fallback.invoke(messages, **kwargs)
             else:

@@ -3,7 +3,22 @@
 __pycache__
 *.pyc
 .env
+.env.*
 .vscode
 .idea
+.claude
 scratch
+.pytest_cache
+
+# Not needed by the backend image
+frontend
+eval
+tests
+docs
+*.md
+
+# Built inside the image
+.model_cache
+data/railway/trains.sqlite
+data/railway/*.tmp
 backend/rag/qdrant_data

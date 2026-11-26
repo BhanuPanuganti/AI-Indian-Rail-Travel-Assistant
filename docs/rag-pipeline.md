@@ -63,17 +63,17 @@ Steps performed:
 
 ### Vector Store Build (`vector_store.py`)
 
-Run **once** on every fresh clone:
+Run **once** for each Qdrant Cloud cluster (set `QDRANT_URL` and `QDRANT_API_KEY` first):
 
 ```bash
 python backend/rag/vector_store.py
 ```
 
 1. Loads all chunks from `chunks.jsonl`.
-2. Encodes each chunk with **`BAAI/bge-small-en-v1.5`** (384 dimensions, normalised).
+2. Encodes each chunk with **`BAAI/bge-small-en-v1.5`** (384 dimensions, normalised) via fastembed on ONNX Runtime, the same `embed_texts()` function used at query time.
 3. Creates a Qdrant collection `indian_railway_knowledge` with cosine distance.
 4. Upserts all vectors with payloads (`chunk_id`, `text`, `metadata`).
-5. Writes to `backend/rag/qdrant_data/` (local on-disk Qdrant).
+5. Replaces the collection on the configured Qdrant Cloud cluster.
 
 ---
 
@@ -120,7 +120,7 @@ Unlike bi-encoder retrieval (which encodes query and document separately and com
 Steps:
 
 1. Form 15 `(query, chunk_text)` pairs.
-2. `CrossEncoder.predict()` scores all pairs in one batch.
+2. fastembed's `TextCrossEncoder` (ONNX export of `ms-marco-MiniLM-L-6-v2`) scores all pairs in one batch.
 3. Sort descending by score; keep the top **5**.
 
 **Why reranking?** Hybrid retrieval broadens recall (15 candidates). Reranking sharpens precision (top 5 for LLM context), discarding lower-relevance chunks and reducing noise in the prompt.
@@ -170,10 +170,6 @@ This adds a few seconds to cold start but eliminates first-request latency.
 
 ## Production Deployment Note
 
-The Qdrant vector store (`backend/rag/qdrant_data/`) is excluded from git and from the Docker build (`.gitignore` and `.dockerignore`). On Railway, the container starts without a Qdrant collection.
+The vector index lives in Qdrant Cloud, so the container needs only `QDRANT_URL` and `QDRANT_API_KEY`. The ONNX embedding and reranker models are downloaded into the image at build time (`backend/rag/preload_models.py`), so the server starts without network downloads.
 
-**Current workaround options:**
-
-1. Run `python backend/rag/vector_store.py` as part of the container entrypoint (adds startup time but is self-contained).
-2. Attach a Railway volume to persist `qdrant_data/` across deploys.
-3. Migrate to a hosted Qdrant Cloud instance and update `retriever.py` to connect via URL rather than the local file path.
+Free Qdrant Cloud clusters are suspended and eventually deleted after a period of inactivity. If that happens, create a new cluster, update the two variables, and re-run `python backend/rag/vector_store.py`. `python -m eval.eval_retrieval --vector qdrant` confirms the new collection matches the offline baseline.

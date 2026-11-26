@@ -1,0 +1,4 @@
+# Streamlit frontend only (Streamlit Community Cloud uses this file because it
+# sits next to frontend/app.py).
+streamlit==1.61.1
+requests==2.34.2

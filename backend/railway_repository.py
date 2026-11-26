@@ -1,121 +1,114 @@
+import threading
+from functools import lru_cache
 from typing import Any
 
 try:
     from backend.time_utils import calculate_route_duration
-except ModuleNotFoundError:
-    from time_utils import calculate_route_duration
-
-import pandas as pd
-
-try:
-    from backend.data_loader import load_train_data
+    from backend.train_db import DB_FILE, connect, ensure_database
 except ModuleNotFoundError:
     # Allow running backend scripts directly from the backend directory.
-    from data_loader import load_train_data
+    from time_utils import calculate_route_duration
+    from train_db import DB_FILE, connect, ensure_database
+
+
+MIN_NAME_QUERY_LENGTH = 3
+
+# Column names returned for route stops (kept identical to the original CSV
+# headers so the /trains/{number} API response is unchanged).
+_ROUTE_COLUMNS = """
+    train_no AS "Train No",
+    train_name AS "Train Name",
+    seq AS "SEQ",
+    station_code AS "Station Code",
+    station_name AS "Station Name",
+    arrival_time AS "Arrival time",
+    departure_time AS "Departure Time",
+    distance AS "Distance",
+    source_station AS "Source Station",
+    source_station_name AS "Source Station Name",
+    destination_station AS "Destination Station",
+    destination_station_name AS "Destination Station Name"
+"""
 
 
 class RailwayRepository:
+    """Read-only access to the timetable stored in SQLite."""
 
-    def __init__(self):
-        self._data: pd.DataFrame | None = None
-        self._train_routes: dict[str, pd.DataFrame] | None = None
+    def __init__(self, db_path=DB_FILE):
+        self._db_path = db_path
+        self._local = threading.local()
+        self._ready = False
+        self._ready_lock = threading.Lock()
+        self._route_cache = lru_cache(maxsize=256)(self._load_route)
 
-    @property
-    def data(self) -> pd.DataFrame:
+    # -- connection -----------------------------------------------------------
 
-        if self._data is None:
-            self._data = load_train_data()
-            self._data["Station Code"] = self._data["Station Code"].astype(str).str.strip().str.upper()
-            self._data["Station Name"] = self._data["Station Name"].astype(str).str.strip()
+    def _conn(self):
+        if not self._ready:
+            with self._ready_lock:
+                if not self._ready:
+                    ensure_database(self._db_path)
+                    self._ready = True
 
-        return self._data
+        connection = getattr(self._local, "connection", None)
+        if connection is None:
+            connection = connect(self._db_path)
+            self._local.connection = connection
+        return connection
 
-    @property
-    def train_routes(self) -> dict[str, pd.DataFrame]:
+    # -- routes ---------------------------------------------------------------
 
-        if self._train_routes is None:
-
-            self._train_routes = {
-                str(train_number).strip(): group.sort_values(
-                    "SEQ"
-                ).reset_index(drop=True)
-                for train_number, group
-                in self.data.groupby(
-                    "Train No",
-                    sort=False,
-                )
-            }
-
-        return self._train_routes
+    def _load_route(self, train_number: str) -> tuple[dict, ...]:
+        rows = self._conn().execute(
+            f"SELECT {_ROUTE_COLUMNS} FROM stops WHERE train_no = ? ORDER BY seq",
+            (train_number,),
+        ).fetchall()
+        return tuple(dict(row) for row in rows)
 
     def find_train_route(
         self,
         train_number: str,
-    ) -> pd.DataFrame:
+    ) -> list[dict[str, Any]]:
 
-        train_number = str(
-            train_number
-        ).strip()
+        route = self._route_cache(str(train_number).strip())
+        return [dict(stop) for stop in route]
 
-        route = self.train_routes.get(
-            train_number
-        )
-
-        if route is None:
-            return pd.DataFrame()
-
-        # Replace NaN (e.g. missing distances) with None so the result can be
-        # serialised as strict JSON.
-        route = route.astype(object)
-        return route.where(route.notna(), None)
+    # -- stations -------------------------------------------------------------
 
     def find_stations(
         self,
         query: str,
-    ) -> pd.DataFrame:
+    ) -> list[dict[str, Any]]:
 
         query = query.strip().lower()
 
-        empty = pd.DataFrame(columns=["Station Code", "Station Name"])
-
         if not query:
-            return empty
-
-        code_match = (
-            self.data["Station Code"]
-            .str.lower()
-            .eq(query)
-        )
+            return []
 
         # Substring name matching only for queries long enough to be
         # meaningful; very short queries ("a", "ne") would match thousands
         # of stations. Exact station-code matches always apply.
         if len(query) >= MIN_NAME_QUERY_LENGTH:
-            name_match = (
-                self.data["Station Name"]
-                .str.lower()
-                .str.contains(
-                    query,
-                    na=False,
-                    regex=False,
-                )
-            )
-            mask = code_match | name_match
+            sql = """
+                SELECT station_code, station_name FROM stations
+                WHERE lower(station_code) = ? OR instr(name_lower, ?) > 0
+                ORDER BY first_row
+            """
+            params = (query, query)
         else:
-            mask = code_match
+            sql = """
+                SELECT station_code, station_name FROM stations
+                WHERE lower(station_code) = ?
+                ORDER BY first_row
+            """
+            params = (query,)
 
-        results = self.data[mask][
-            [
-                "Station Code",
-                "Station Name",
-            ]
-        ].copy()
+        return [
+            {"Station Code": row["station_code"], "Station Name": row["station_name"]}
+            for row in self._conn().execute(sql, params)
+        ]
 
-        return (
-            results
-            .drop_duplicates()
-            .reset_index(drop=True)
-        )
+    # -- search ---------------------------------------------------------------
 
     def search_trains(
         self,
@@ -134,61 +127,52 @@ class RailwayRepository:
         if not origin_codes or not destination_codes:
             return []
 
-        origin_df = self.data[self.data["Station Code"].isin(origin_codes)]
-        dest_df = self.data[self.data["Station Code"].isin(destination_codes)]
-
-        if origin_df.empty or dest_df.empty:
-            return []
-
-        common_trains = pd.merge(
-            origin_df,
-            dest_df,
-            on="Train No",
-            suffixes=("_orig", "_dest")
-        )
-
-        valid_trains = common_trains[
-            (common_trains["SEQ_orig"] < common_trains["SEQ_dest"])
-            & (common_trains["Station Code_orig"] != common_trains["Station Code_dest"])
-        ]
-
-        if valid_trains.empty:
-            return []
+        rows = self._conn().execute(
+            f"""
+            SELECT
+                o.train_no, o.train_name,
+                o.seq AS origin_seq, o.station_code AS origin_code,
+                o.station_name AS origin_name, o.departure_time,
+                o.distance AS origin_distance,
+                d.seq AS dest_seq, d.station_code AS dest_code,
+                d.station_name AS dest_name, d.arrival_time,
+                d.distance AS dest_distance
+            FROM stops o
+            JOIN stops d ON d.train_no = o.train_no
+            WHERE o.station_code IN ({",".join("?" * len(origin_codes))})
+              AND d.station_code IN ({",".join("?" * len(destination_codes))})
+              AND o.seq < d.seq
+              AND o.station_code != d.station_code
+            """,
+            (*origin_codes, *destination_codes),
+        ).fetchall()
 
         best_by_train: dict[str, dict[str, Any]] = {}
 
-        for row in valid_trains.to_dict(orient="records"):
-            train_number = str(row["Train No"]).strip()
+        for row in rows:
+            train_number = row["train_no"]
+            route = self._route_cache(train_number)
 
-            group = self.train_routes.get(train_number)
-            if group is None:
+            origin_index = _position(route, row["origin_seq"])
+            destination_index = _position(route, row["dest_seq"])
+            if origin_index is None or destination_index is None:
                 continue
-
-            origin_positions = group.index[group["SEQ"].eq(row["SEQ_orig"])]
-            dest_positions = group.index[group["SEQ"].eq(row["SEQ_dest"])]
-
-            if origin_positions.empty or dest_positions.empty:
-                continue
-
-            duration_minutes = calculate_route_duration(
-                route=group,
-                origin_index=origin_positions[0],
-                destination_index=dest_positions[0],
-            )
-
-            distance_km = _safe_distance(row["Distance_orig"], row["Distance_dest"])
 
             candidate = {
                 "train_number": train_number,
-                "train_name": str(row["Train Name_orig"]).strip(),
-                "origin_code": row["Station Code_orig"],
-                "origin_name": str(row["Station Name_orig"]).strip(),
-                "destination_code": row["Station Code_dest"],
-                "destination_name": str(row["Station Name_dest"]).strip(),
-                "departure_time": str(row["Departure Time_orig"]).strip(),
-                "arrival_time": str(row["Arrival time_dest"]).strip(),
-                "duration_minutes": duration_minutes,
-                "distance_km": distance_km,
+                "train_name": row["train_name"],
+                "origin_code": row["origin_code"],
+                "origin_name": row["origin_name"],
+                "destination_code": row["dest_code"],
+                "destination_name": row["dest_name"],
+                "departure_time": row["departure_time"],
+                "arrival_time": row["arrival_time"],
+                "duration_minutes": calculate_route_duration(
+                    route=route,
+                    origin_index=origin_index,
+                    destination_index=destination_index,
+                ),
+                "distance_km": _safe_distance(row["origin_distance"], row["dest_distance"]),
                 "source": "static_schedule_2017",
             }
 
@@ -199,7 +183,11 @@ class RailwayRepository:
         return list(best_by_train.values())
 
 
-MIN_NAME_QUERY_LENGTH = 3
+def _position(route: tuple[dict, ...], seq: int) -> int | None:
+    for index, stop in enumerate(route):
+        if stop["SEQ"] == seq:
+            return index
+    return None
 
 
 def _normalize_codes(codes: str | list[str]) -> list[str]:
@@ -209,7 +197,7 @@ def _normalize_codes(codes: str | list[str]) -> list[str]:
 
 
 def _safe_distance(start, end) -> float | None:
-    if pd.isna(start) or pd.isna(end):
+    if start is None or end is None:
         return None
     return round(float(end) - float(start), 2)
 

@@ -30,6 +30,9 @@ def calculate_route_duration(
     """
     Calculate journey duration between two stops.
 
+    `route` is the train's ordered list of stops (mappings with
+    "Arrival time" and "Departure Time" keys).
+
     Handles journeys that cross midnight by tracking
     day changes between consecutive stations.
     """
@@ -47,7 +50,7 @@ def calculate_route_duration(
         destination_index + 1,
     ):
 
-        row = route.iloc[index]
+        row = route[index]
 
         # Use departure time for intermediate stations.
         # At the final destination, arrival time is used.

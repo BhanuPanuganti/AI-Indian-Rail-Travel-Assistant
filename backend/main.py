@@ -15,6 +15,7 @@ from backend.train_service import (
 )
 
 from backend.chat_service import chat
+from backend.railradar_client import get_live_train_status
 
 from langchain_core.messages import HumanMessage
 
@@ -184,6 +185,21 @@ def chat_endpoint(
         "response": response,
         "thread_id": request.thread_id,
     }
+
+@app.get("/trains/{train_number}/live")
+def train_live_status(
+    train_number: str,
+    date: str | None = None,
+):
+    """Live running status from RailRadar (optional; needs RAILRADAR_API_KEY)."""
+
+    result = get_live_train_status(train_number, date)
+
+    if "error" in result:
+        return {"train_number": train_number, **result}
+
+    return {"train_number": train_number, "live": result}
+
 
 @app.get("/trains/{train_number}")
 def train_details(

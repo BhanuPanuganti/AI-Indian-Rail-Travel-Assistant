@@ -25,12 +25,8 @@ def resolve_station(
     query: str,
 ) -> list[dict]:
 
-    results = repository.find_stations(
+    return repository.find_stations(
         query
-    )
-
-    return results.to_dict(
-        orient="records"
     )
 
 def search_by_stations(
@@ -79,12 +75,8 @@ def get_train_route(
     train_number: str,
 ) -> list[dict]:
 
-    results = repository.find_train_route(
+    return repository.find_train_route(
         train_number
-    )
-
-    return results.to_dict(
-        orient="records"
     )
 
 

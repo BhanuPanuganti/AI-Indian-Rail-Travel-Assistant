@@ -2,7 +2,6 @@
 
 import json
 
-import pandas as pd
 import pytest
 
 from backend import train_service
@@ -82,17 +81,16 @@ def test_time_to_minutes():
 
 
 def test_route_duration_crosses_midnight():
-    route = pd.DataFrame(
-        {
-            "Arrival time": ["00:00:00", "23:30:00", "02:15:00"],
-            "Departure Time": ["22:00:00", "23:40:00", "00:00:00"],
-        }
-    )
+    route = [
+        {"Arrival time": "00:00:00", "Departure Time": "22:00:00"},
+        {"Arrival time": "23:30:00", "Departure Time": "23:40:00"},
+        {"Arrival time": "02:15:00", "Departure Time": "00:00:00"},
+    ]
     assert calculate_route_duration(route, 0, 2) == 4 * 60 + 15
 
 
 def test_route_duration_rejects_reversed_indexes():
-    route = pd.DataFrame({"Arrival time": ["10:00:00"], "Departure Time": ["10:05:00"]})
+    route = [{"Arrival time": "10:00:00", "Departure Time": "10:05:00"}]
     assert calculate_route_duration(route, 0, 0) is None
 
 
@@ -150,3 +148,36 @@ def test_rank_trains_empty():
 )
 def test_normalize_preference(raw, expected):
     assert normalize_preference(raw) == expected
+
+
+def test_route_keeps_original_column_names_and_order():
+    route = train_service.get_train_route("107")
+    assert [stop["Station Code"] for stop in route] == ["SWV", "THVM", "KRMI", "MAO"]
+    assert route[0]["Train Name"] == "SWV-MAO-VLNK"
+    assert route[-1]["Distance"] == 78.0
+
+
+def test_train_route_with_missing_distance_returns_null():
+    route = train_service.get_train_route("6919")
+    assert any(stop["Distance"] is None for stop in route)
+
+
+def test_build_database_from_small_csv(tmp_path):
+    from backend.train_db import build_database, connect
+
+    csv_path = tmp_path / "trains.csv"
+    csv_path.write_text(
+        "Train No,Train Name,SEQ,Station Code,Station Name,Arrival time,Departure Time,"
+        "Distance,Source Station,Source Station Name,Destination Station,Destination Station Name\n"
+        " 1 ,T1,1, aaa ,Alpha ,00:00:00,10:00:00,0,AAA,Alpha,BBB,Beta\n"
+        "1,T1,2,BBB,Beta,12:00:00,00:00:00,,AAA,Alpha,BBB,Beta\n",
+        encoding="utf-8",
+    )
+    db_path = build_database(csv_path, tmp_path / "trains.sqlite")
+
+    with connect(db_path) as conn:
+        rows = [dict(r) for r in conn.execute("SELECT train_no, station_code, station_name, distance FROM stops")]
+    assert rows == [
+        {"train_no": "1", "station_code": "AAA", "station_name": "Alpha", "distance": 0.0},
+        {"train_no": "1", "station_code": "BBB", "station_name": "Beta", "distance": None},
+    ]

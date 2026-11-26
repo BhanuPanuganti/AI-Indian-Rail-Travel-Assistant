@@ -5,9 +5,11 @@ from langchain_core.messages import HumanMessage
 try:
     from backend.tool_graph import tool_graph
     from backend.llm_service import is_quota_error
+    from backend.conversation_store import conversation_store
 except ModuleNotFoundError:
     from tool_graph import tool_graph
     from llm_service import is_quota_error
+    from conversation_store import conversation_store
 
 
 # Upper bound on how long the HTTP request waits for an answer. Python threads
@@ -19,18 +21,17 @@ _executor = concurrent.futures.ThreadPoolExecutor(max_workers=8)
 
 
 def _invoke_graph(message: str, thread_id: str) -> str:
+    history = conversation_store.get(thread_id)
+
     result = tool_graph.invoke(
         {
-            "messages": [
+            "messages": history + [
                 HumanMessage(content=message)
             ]
         },
-        config={
-            "configurable": {
-                "thread_id": thread_id,
-            }
-        }
     )
+
+    conversation_store.save(thread_id, result["messages"])
 
     content = result["messages"][-1].content
 
