@@ -1,7 +1,10 @@
 # 🚆 AI Indian Rail Travel Assistant
 
 **Live app:** https://ai-indian-rail-travel-assistant-2txkfjep3a8dribxmlxfcv.streamlit.app/
-**API:** https://ai-indian-rail-travel-assistant.onrender.com · [API docs (Swagger)](https://ai-indian-rail-travel-assistant.onrender.com/docs)
+
+**API:** https://ai-indian-rail-travel-assistant.onrender.com
+
+[API docs (Swagger)](https://ai-indian-rail-travel-assistant.onrender.com/docs)
 
 > Hosted on free tiers: the backend sleeps after ~15 minutes without traffic, so the first request can take up to a minute.
 
